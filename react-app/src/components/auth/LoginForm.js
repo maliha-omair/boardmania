@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
+import styles from "../auth/LoginForm.module.css"
+import SignUpForm from './SignUpForm';
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
@@ -9,6 +11,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState('');
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onLogin = async (e) => {
     e.preventDefault();
@@ -30,35 +33,61 @@ const LoginForm = () => {
     return <Redirect to='/' />;
   }
 
+  function handleSignUp(){
+    history.push('/sign-up')
+  }
+
   return (
-    <form onSubmit={onLogin}>
-      <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
+    <div className={styles.mainContainer}>
+
+      <div className={styles.mainDiv}>
+
+        <form className={styles.form} onSubmit={onLogin}>
+          <div className={styles.errorMessage}>
+            {errors.map((error, ind) => (
+              <div key={ind}>{error}</div>
+            ))}
+          </div>
+          <div className={styles.innerDiv}>
+
+            <input
+              name='email'
+              type='text'
+              placeholder='Email'
+              value={email}
+              onChange={updateEmail}
+              className={styles.input}
+            />
+          </div>
+          <div className={styles.innerDiv}>
+
+            <input
+              name='password'
+              type='password'
+              placeholder='Password'
+              value={password}
+              onChange={updatePassword}
+              className={styles.input}
+            />
+
+          </div>
+          <div className={styles.innerDiv}>
+            <button className={styles.button} type='submit'>Login</button>
+          </div>
+        </form>
       </div>
-      <div>
-        <label htmlFor='email'>Email</label>
-        <input
-          name='email'
-          type='text'
-          placeholder='Email'
-          value={email}
-          onChange={updateEmail}
-        />
+      <div className={styles.signUpContainer}>
+        <div className={styles.signUpDiv}>
+  
+            <h1 className={styles.headingText}> New Here ?  </h1>
+            <h3 className={styles.subHeadingText}> Sign Up and play Ludo</h3>
+  
+        </div>
+        <div>
+          <button className={styles.signUpButton} onClick={handleSignUp}>Signup</button>
+        </div>
       </div>
-      <div>
-        <label htmlFor='password'>Password</label>
-        <input
-          name='password'
-          type='password'
-          placeholder='Password'
-          value={password}
-          onChange={updatePassword}
-        />
-        <button type='submit'>Login</button>
-      </div>
-    </form>
+    </div>
   );
 };
 

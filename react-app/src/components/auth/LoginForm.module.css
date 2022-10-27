@@ -1,0 +1,124 @@
+.mainDiv{
+    height: 100%;
+    min-height: 900px;
+    display:flex;
+    flex-direction: row;
+    margin: 0 auto;
+    
+    width: 80%;
+    /* border: solid white;     */
+    justify-content: center;
+    align-items: center;
+    
+    width: 400px;
+    /* border: solid white; */
+    
+}
+
+.mainContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    justify-items: center;
+    /* border: solid white;     */
+    max-width: 950px;
+    margin: 0 auto;
+}
+
+.input{
+    width: 550px;
+    height: 30px;
+    
+    border-radius: 12px;
+}
+
+.email{
+    padding-bottom: 10px;
+    /* border: solid yellow; */
+    width: 350px;
+}
+
+.innerDiv{
+    padding-bottom: 2px;
+}
+
+.errorMessage{
+    padding-left: 10px;
+    padding-bottom: 5px;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    
+}
+
+.button{
+    width: 555px;
+    height: 40px;
+    border-radius: 12px;
+    /* color: white; */
+    background-color: #DA7F14;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: pointer;
+}
+
+.signUpButton{
+    width: 150px;
+    height: 40px;
+    border-radius: 12px;
+    /* color: white; */
+    background-color: #DA7F14;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: pointer;
+}
+
+.password{
+    padding-bottom: 5px;
+}
+
+.form{
+    min-width: 200px;
+    /* border: solid red; */
+}
+
+.signUpContainer{
+    background-color:rgba(26, 27, 40);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 20%;
+    top:0;
+    right:0;
+    position: absolute;
+    
+}
+
+
+.signUpDiv{
+    /* border: solid yellow; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    line-height: 0%;
+    text-align: center;
+}
+
+.headingText{
+    font-size: 32px;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    
+}
+.subHeadingText{
+    font-size:14px;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-weight: 400;
+    
+
+}

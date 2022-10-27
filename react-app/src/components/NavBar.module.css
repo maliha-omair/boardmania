@@ -1,0 +1,13 @@
+.mainNav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+
+
+.navLink{
+    text-decoration: none;
+    color: white;
+}
+

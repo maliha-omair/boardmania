@@ -1,0 +1,13 @@
+
+.loginButton{
+    width: 100px;
+    height: 40px;
+    border-radius: 12px;
+    /* color: white; */
+    background-color: #DA7F14;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: pointer;
+}
