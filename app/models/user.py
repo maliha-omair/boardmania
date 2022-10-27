@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
 
     # relationships
     member = db.relationship("members", back_populates="user")
+    room = db.relationship("rooms", back_populates="owner")
 
     @property
     def password(self):
