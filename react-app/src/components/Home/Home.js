@@ -1,5 +1,6 @@
 import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom"
 import CreateRoom from "../CreateRoom/CreateRoom"
+import EditRoom from "../EditRoom/EditRoom";
 import styles from "../Home/Home.module.css"
 import PublicRooms from "../PublicRooms/PublicRooms"
 export default function Home() {
@@ -20,6 +21,9 @@ export default function Home() {
                 <div className={styles.publicRoomDiv}>
                     <NavLink className={styles.publicRoom} to={`/publicRoom`} >Public Rooms</NavLink>
                 </div>
+                <div className={styles.yourRoomDiv}>
+                    <NavLink className={styles.yourRoom} to={`/yourRoom`} >Your Rooms</NavLink>
+                </div>
 
             </div>
             <div className={styles.centerDiv}>
@@ -30,6 +34,12 @@ export default function Home() {
                     <Route exact path="/publicRoom">
                         <PublicRooms />
                     </Route>
+                    <Route exact path="/yourRoom">
+                        {/* <PublicRooms /> */}
+                    </Route>
+                    <Route path="/rooms/:roomId/edit">
+                        <EditRoom />
+                     </Route>
                 </Switch>
 
             </div>

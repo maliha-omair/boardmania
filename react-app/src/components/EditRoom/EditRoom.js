@@ -1,19 +1,32 @@
+import { useEffect } from "react";
 import { useState } from "react"
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { createNewRoomThunk } from "../../store/rooms";
-import styles from "../CreateRoom/CreateRoom.module.css"
+import { useHistory, useParams } from "react-router-dom";
+import { createNewRoomThunk, editRoomThunk } from "../../store/rooms";
+import styles from "../EditRoom/EditRoom.module.css"
 
-export default function CreateRoom() {
+export default function EditRoom({room}) {
     const [title, setTitle] = useState("");
     const [desc, setDesc] = useState("");
     const [isPublic, setIsPublic] = useState(true);
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
-    const history = useHistory();
+    const history = useHistory();    
+    const rooms = useSelector(state => state.rooms && state.rooms.publicRooms);
+    const { roomId } = useParams();
+    const editRoom = rooms.find(room => room.id==roomId);
+
+    useEffect(()=>{
+        if(editRoom){
+            setTitle(editRoom.title);
+            setIsPublic(editRoom.isPublic)
+            setDesc(editRoom.description)
+        }     
+    },[editRoom])
+
     function handleSubmit(e) {
         e.preventDefault();
-
         const room = {
             title: title,
             description: desc,
@@ -32,7 +45,7 @@ export default function CreateRoom() {
             setErrors(validations)
             return
         }
-        return dispatch(createNewRoomThunk(room))
+        return dispatch(editRoomThunk(roomId,room))
             .then((res) => {
 
                 history.push(`/publicRoom`)

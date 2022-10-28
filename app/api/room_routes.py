@@ -52,6 +52,7 @@ def edit_room(id):
     """
     Update item
     """
+    owner = current_user.id
     form = UpdateRoom()
     form['csrf_token'].data = request.cookies['csrf_token']
 
@@ -59,8 +60,13 @@ def edit_room(id):
         room = Room.query.filter_by(id=id).first()
         if room is None:
             return {'error': "Room couldn't be found"}, 404
-        form.populate_obj(room)
-        db.session.commit()
+        else: 
+            room_owner = Room.query.filter_by(id=id, owner_id=owner).first()
+            if room_owner is not None:
+                form.populate_obj(room)
+                db.session.commit()
+            else:
+                return {'errors': ["unauthorized"]}, 403   
         return {'rooms': room.to_dict()}
     else:
         return {'errors': form.errors}, 400

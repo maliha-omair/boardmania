@@ -73,3 +73,12 @@
 .roomMembers{
     padding-top: 20px;
 }
+
+.yourRoomDiv{
+    padding-top:20px;
+}
+
+.yourRoom{
+    text-decoration: none;
+    color:white;
+}

@@ -10,6 +10,7 @@ import User from './components/User';
 import { authenticate } from './store/session';
 import GameBoard from './components/GameBoard/GameBoard';
 import Home from './components/Home/Home';
+import EditRoom from './components/EditRoom/EditRoom';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -47,6 +48,7 @@ function App() {
         <ProtectedRoute path='/users/:userId' exact={true} >
           <User />
         </ProtectedRoute>
+
         <ProtectedRoute path='/' >
           <Home />
         </ProtectedRoute>
