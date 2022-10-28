@@ -6,7 +6,7 @@ import styles from "./NavBar.module.css"
 
 const NavBar = () => {
   return (
-    <nav className={styles.mainNav}>
+    <div className={styles.mainNav}>
       <div>
         <NavLink to='/' exact={true} activeClassName='active' className={styles.navLink}>
           Home
@@ -22,7 +22,7 @@ const NavBar = () => {
         <LogoutButton />
       </div>
 
-    </nav>
+    </div>
   );
 }
 

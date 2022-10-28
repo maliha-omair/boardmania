@@ -2,6 +2,12 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    overflow: hidden;
+    position: fixed;
+    top:0;
+    width: 100%;
+    background-color:rgba(26, 27, 40);
+    
 }
 
 
@@ -9,5 +15,6 @@
 .navLink{
     text-decoration: none;
     color: white;
+    /* position: fixed; */
 }
 
