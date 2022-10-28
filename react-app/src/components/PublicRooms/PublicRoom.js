@@ -22,6 +22,9 @@ export default function PublicRoom({room}) {
                 {room.owner_id!=user.id &&  (
                     <button className={styles.joinButton}>Join</button>
                 )}
+                {room.owner_id==user.id &&  (
+                    <button className={styles.joinButton}>Delete</button>
+                )}
                 
             </div>
         </div>
