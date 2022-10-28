@@ -50,6 +50,7 @@
     align-items: center;
     /* border: solid green; */
     margin-right: 200px;
+    cursor: pointer;
 }
 
 .title{
@@ -62,4 +63,15 @@
     /* padding-left: 10px; */
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
     /* border: solid pink; */
+}
+
+.editRoom{
+    color:#DA7F14;;
+    padding-left: 10px;
+    cursor: pointer;
+}
+
+.titleDiv{
+    display: flex;
+    flex-direction: row;
 }

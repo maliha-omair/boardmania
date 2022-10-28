@@ -11,13 +11,13 @@ export default function Home() {
         <div className={styles.mainContainer}>
 
             <div className={styles.leftDiv}>
-                <div>
+                <div className={styles.homeDiv}>
                     Home
                 </div>
-                <div>
+                <div className={styles.newRoomDiv}>
                     <NavLink className={styles.newRoom} to={`/newRoom`} >New Room</NavLink>
                 </div>
-                <div>
+                <div className={styles.publicRoomDiv}>
                     <NavLink className={styles.publicRoom} to={`/publicRoom`} >Public Rooms</NavLink>
                 </div>
 
@@ -34,7 +34,9 @@ export default function Home() {
 
             </div>
             <div className={styles.rightDiv}>
-                Room Members
+                <div className={styles.roomMembers}>
+                    Room Members
+                </div>
             </div>
 
 

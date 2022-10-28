@@ -6,15 +6,19 @@
     position: fixed;
     top:0;
     width: 100%;
+    left:0;
     background-color:rgba(26, 27, 40);
+    z-index: 1;
+    position: fixed;
     
 }
-
 
 
 .navLink{
     text-decoration: none;
     color: white;
+    margin-left: 10px;
+    
     /* position: fixed; */
 }
 

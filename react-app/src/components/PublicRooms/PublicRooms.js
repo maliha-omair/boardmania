@@ -14,7 +14,7 @@ export default function PublicRooms() {
 
     return rooms && (
         <div className={styles.mainContainer}>
-            <h1>Public Rooms</h1>
+            {/* <h1>Public Rooms</h1> */}
             {Object.values(rooms).map((room) => {
                 return <PublicRoom room={room} />
             })}

@@ -15,20 +15,25 @@
     height: 100%;
     position: fixed;
     overflow: auto;
-    top:5%;
+    top:40px;
     left:0;
-    background-color:rgba(26, 27, 40);
+    background-color:#0C0D14;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
 }
 
 .rightDiv{
     /* border: solid green; */
     width: 15%;
     /* position:absolute; */
-    top:5%;
+    position: fixed;
+    overflow: auto;
+    top:40px;
+    
     right:0;
     height:100%;
-    position: fixed;
-    background-color:rgba(26, 27, 40);
+   
+    background-color:#0C0D14;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
 }
 
 .centerDiv{
@@ -54,4 +59,17 @@
 .newRoom{
     text-decoration: none;
     color:white;    
+}
+
+.newRoomDiv{
+    padding-bottom: 20px;
+}
+
+.homeDiv{
+    padding-top: 20px;;
+    padding-bottom: 20px;
+}
+
+.roomMembers{
+    padding-top: 20px;
 }

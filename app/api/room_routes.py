@@ -64,3 +64,25 @@ def edit_room(id):
         return {'rooms': room.to_dict()}
     else:
         return {'errors': form.errors}, 400
+
+
+@room_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def delete_item_by_id(id):
+    """
+    Delete room by id
+    """
+    owner = current_user.id
+    
+    
+    room = Room.query.filter_by(id=id).first()
+    if room is not None:
+        room_owner = Room.query.filter_by(id=id, owner_id=owner).first()
+        if room_owner is not None:
+            db.session.delete(room)
+            db.session.commit()
+        else:
+            return {'errors': ["unauthorized"]}, 403    
+        return {"message": "Deleted successfuly"}
+    else:
+        return {'errors': ["Room couldn't be found"]}, 404

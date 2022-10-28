@@ -14,7 +14,7 @@ class Room(db.Model):
     # players = db.relationship("game_players", back_populates="room")
     games = db.relationship("Game", cascade="all, delete",back_populates="room", lazy=False)
     members = db.relationship("Member", cascade="all, delete", back_populates="room", lazy=False)
-    owner = db.relationship("User", back_populates="room",cascade="all, delete", lazy=False)
+    owner = db.relationship("User", back_populates="room", lazy=False)
 
 
     def to_dict(self):
