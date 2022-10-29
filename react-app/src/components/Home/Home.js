@@ -3,6 +3,8 @@ import CreateRoom from "../CreateRoom/CreateRoom"
 import EditRoom from "../EditRoom/EditRoom";
 import styles from "../Home/Home.module.css"
 import PublicRooms from "../PublicRooms/PublicRooms"
+import UserRoom from "../UserRooms/UserRoom";
+import UserRooms from "../UserRooms/UserRooms";
 export default function Home() {
 
     let { path, url } = useRouteMatch();
@@ -22,7 +24,7 @@ export default function Home() {
                     <NavLink className={styles.publicRoom} to={`/publicRoom`} >Public Rooms</NavLink>
                 </div>
                 <div className={styles.yourRoomDiv}>
-                    <NavLink className={styles.yourRoom} to={`/yourRoom`} >Your Rooms</NavLink>
+                    <NavLink className={styles.yourRoom} to={`/userRoom`} >Your Rooms</NavLink>
                 </div>
 
             </div>
@@ -34,8 +36,8 @@ export default function Home() {
                     <Route exact path="/publicRoom">
                         <PublicRooms />
                     </Route>
-                    <Route exact path="/yourRoom">
-                        {/* <PublicRooms /> */}
+                    <Route exact path="/userRoom">
+                         <UserRooms />
                     </Route>
                     <Route path="/rooms/:roomId/edit">
                         <EditRoom />

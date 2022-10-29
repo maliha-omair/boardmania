@@ -33,11 +33,11 @@ def seed_rooms():
     db.session.commit()
 
 
-# Uses a raw SQL query to TRUNCATE the users table.
+# Uses a raw SQL query to TRUNCATE the rooms table.
 # SQLAlchemy doesn't have a built in function to do this
 # TRUNCATE Removes all the data from the table, and RESET IDENTITY
 # resets the auto incrementing primary key, CASCADE deletes any
 # dependent entities
 def undo_rooms():
-    db.session.execute('TRUNCATE users RESTART IDENTITY CASCADE;')
+    db.session.execute('TRUNCATE rooms RESTART IDENTITY CASCADE;')
     db.session.commit()

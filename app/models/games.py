@@ -3,7 +3,7 @@ import enum
 
 class MyMode(str,enum.Enum):
     twoPlayer = "twoPlayer"
-    onePlayer = "onePlayer"
+    fourPlayer = "fourPlayer"
 
 class Game(db.Model):
     __tablename__ = "games"

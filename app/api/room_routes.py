@@ -1,4 +1,5 @@
-from flask import Blueprint, request
+from app.models.members import Member
+from flask import Blueprint, request, abort
 from flask_login import login_required, current_user
 from app.models import Room, db
 from app.forms import CreateRoom,UpdateRoom
@@ -12,7 +13,10 @@ def rooms():
     """
     lists all rooms
     """
-    rooms = Room.query.filter_by(isPublic=True).all()
+    owner_id = current_user.id
+    rooms = Room.query.filter(Room.owner_id != owner_id).all()
+    # rooms = Room.query.filter_by(owner_id!=owner_id).all()
+    # rooms = db.session.query(Room).filter_by(Room.owner_id!=owner_id).all()
     return {'rooms': [room.to_dict() for room in rooms]}
 
 
@@ -23,7 +27,31 @@ def room(id):
     list room by Id
     """
     room = Room.query.get(id)
-    return room.to_dict()
+    if room:
+        return room.to_dict()
+    else:
+        return {'message': "Not Found"}, 404
+
+@room_routes.route('/userRooms')
+@login_required
+def userRoom():
+    """
+    list user's rooms 
+    """
+    owner = current_user.id
+    rooms = Room.query.filter(Room.owner_id == owner).all()
+    return {'rooms': [room.to_dict() for room in rooms]}
+
+
+@room_routes.route('/memberRooms')
+@login_required
+def memberRoom():
+    """
+    list user's rooms 
+    """
+    
+    rooms = Member.query.join(Room).filter(Member.user_id == current_user.id).all()
+    return {'members': [room.to_dict() for room in rooms]}
 
 @room_routes.route('', methods=["POST"])
 @login_required
@@ -43,7 +71,7 @@ def create_new_room():
         db.session.commit()
         return {'room': room.to_dict()}
     else:
-        return {'errors': form.errors}, 400
+        return {'message': 'Validation Errors', 'errors': form.errors}, 400
 
     
 @room_routes.route('/<int:id>', methods=["PUT"])
@@ -52,24 +80,24 @@ def edit_room(id):
     """
     Update item
     """
-    owner = current_user.id
+
     form = UpdateRoom()
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
-        room = Room.query.filter_by(id=id).first()
+        room = Room.query.filter(Room.id == id).first()
         if room is None:
             return {'error': "Room couldn't be found"}, 404
         else: 
-            room_owner = Room.query.filter_by(id=id, owner_id=owner).first()
+            room_owner = Room.query.filter(Room.id == id, Room.owner_id == current_user.id).first()
             if room_owner is not None:
                 form.populate_obj(room)
                 db.session.commit()
             else:
-                return {'errors': ["unauthorized"]}, 403   
+                return {'message': "Forbidded"}, 403   
         return {'rooms': room.to_dict()}
     else:
-        return {'errors': form.errors}, 400
+        return {'message': 'Validation Errors','errors': form.errors}, 400
 
 
 @room_routes.route('/<int:id>', methods=["DELETE"])
@@ -78,17 +106,16 @@ def delete_item_by_id(id):
     """
     Delete room by id
     """
-    owner = current_user.id
+    owner = current_user.id  
     
-    
-    room = Room.query.filter_by(id=id).first()
+    room = Room.query.filter(Room.id == id).first()
     if room is not None:
-        room_owner = Room.query.filter_by(id=id, owner_id=owner).first()
+        room_owner = Room.query.filter( Room.id == id , Room.owner_id == owner).first()
         if room_owner is not None:
             db.session.delete(room)
             db.session.commit()
         else:
-            return {'errors': ["unauthorized"]}, 403    
+            return {'message': "Forbidded"}, 403    
         return {"message": "Deleted successfuly"}
     else:
-        return {'errors': ["Room couldn't be found"]}, 404
+        return {'message': 'Not Found'}, 404

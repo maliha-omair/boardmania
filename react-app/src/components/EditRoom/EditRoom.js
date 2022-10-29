@@ -13,7 +13,7 @@ export default function EditRoom({room}) {
     const [errors, setErrors] = useState([]);
     const dispatch = useDispatch();
     const history = useHistory();    
-    const rooms = useSelector(state => state.rooms && state.rooms.publicRooms);
+    const rooms = useSelector(state => state.rooms && state.rooms.userRooms);
     const { roomId } = useParams();
     const editRoom = rooms.find(room => room.id==roomId);
 
@@ -48,7 +48,7 @@ export default function EditRoom({room}) {
         return dispatch(editRoomThunk(roomId,room))
             .then((res) => {
 
-                history.push(`/publicRoom`)
+                history.push(`/userRoom`)
             })
             .catch(async (res) => {
                 const data = await res.json();
