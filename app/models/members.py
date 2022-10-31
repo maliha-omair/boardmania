@@ -25,9 +25,16 @@ class Member(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'user_id': self.user_id,
-            'room_id': self.room_id,
-            'owner':  self.user.to_dict(),
+            # 'user_id': self.user_id,
+            # 'room_id': self.room_id,
+            'user':  self.user.to_dict(),
+            'room':  {
+                'id': self.room.id,
+                'title': self.room.description,
+                'description': self.room.description,
+                'isPublic': self.room.isPublic
+            },
+            'status':  self.membership_status,
             # 'room':  self.room.to_dict(),
             # 'player':  self.player.to_dict(),
         }

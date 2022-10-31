@@ -2,23 +2,24 @@ import { useEffect } from "react"
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux"
 import { getUserRoomsThunk } from "../../store/rooms";
+import { getUserMemberships } from "../../store/session";
 import styles from "../UserRooms/UserRooms.module.css"
+import JoinedRooms from "./JoinedRooms";
+import OwnedRooms from "./OwnedRooms";
 import UserRoom from "./UserRoom";
 
 export default function UserRooms() {
-    const dispatch = useDispatch();
-    const rooms = useSelector(state => state.rooms && state.rooms.userRooms)
-    useEffect(() => {
-        dispatch(getUserRoomsThunk())
-    }, dispatch)
 
-    if (!rooms) return null;
-    return rooms && (
-        <div className={styles.mainContainer}>
-            {/* <h1>Public Rooms</h1> */}
-            {Object.values(rooms).map((room) => {
-                return <UserRoom room={room} />
-            })}
+    return (
+        <div className={styles.userRoomsMainDiv}>
+            <div>
+                <h1>Your Rooms</h1>
+                <OwnedRooms />
+            </div>
+            <div>
+                <h1>Your Memberships</h1>
+                <JoinedRooms />
+            </div>
         </div>
     )
 }

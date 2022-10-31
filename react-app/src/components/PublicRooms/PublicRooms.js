@@ -11,7 +11,7 @@ export default function PublicRooms() {
     useEffect(() => {
         dispatch(getPublicRoomsThunk())
     }, dispatch)
-
+    if (!rooms) return null
     return rooms && (
         <div className={styles.mainContainer}>
             {/* <h1>Public Rooms</h1> */}

@@ -2,6 +2,9 @@
 const SET_USER = 'session/SET_USER';
 const REMOVE_USER = 'session/REMOVE_USER';
 
+const SET_USER_MEMBERSHIPS = "rooms/SET_USER_MEMBERSHIPS";
+
+
 const setUser = (user) => ({
   type: SET_USER,
   payload: user
@@ -11,7 +14,12 @@ const removeUser = () => ({
   type: REMOVE_USER,
 })
 
-const initialState = { user: null };
+
+
+const setUserMemberships = (rooms) => ({
+  type: SET_USER_MEMBERSHIPS,
+  payload: rooms
+})
 
 export const authenticate = () => async (dispatch) => {
   const response = await fetch('/api/auth/', {
@@ -97,12 +105,29 @@ export const signUp = (username, email, password) => async (dispatch) => {
   }
 }
 
+export const getUserMembershipsThunk = () => async dispatch => {
+  const res = await fetch("/api/users/memberships");
+  if (res.ok){
+      const result = await res.json();
+      console.log("result is ...", result)
+      dispatch(setUserMemberships(result))
+      return result
+  } 
+}
+
+const initialState = { user: null };
+
 export default function reducer(state = initialState, action) {
+  let newState = {...state};
   switch (action.type) {
     case SET_USER:
       return { user: action.payload }
     case REMOVE_USER:
       return { user: null }
+    case SET_USER_MEMBERSHIPS:                
+      console.log("action payload is ... ", action.payload)
+      newState.joinedRooms = action.payload;
+      return newState;
     default:
       return state;
   }

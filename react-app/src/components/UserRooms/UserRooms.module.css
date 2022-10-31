@@ -76,3 +76,7 @@
     flex-direction: row;
 }
 
+.userRoomsMainDiv{
+    display: flex;
+    flex-direction: column;
+}

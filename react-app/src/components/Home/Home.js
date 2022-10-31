@@ -45,12 +45,7 @@ export default function Home() {
                 </Switch>
 
             </div>
-            <div className={styles.rightDiv}>
-                <div className={styles.roomMembers}>
-                    Room Members
-                </div>
-            </div>
-
+            
 
         </div>
     )

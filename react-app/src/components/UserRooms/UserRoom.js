@@ -10,10 +10,15 @@ export default function UserRoom({ room }) {
     const user = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const history = useHistory();
-    console.log("user is ....", user)
+   
     function handleDelete() {
 
-        dispatch(deleteRoomThunk(room.id)).catch(async (res) => {
+        dispatch(deleteRoomThunk(room.id))
+        console.log("room is ...",room)
+        .then((res)=>{
+          
+        }).catch(async (res) => {
+
         })
     }
 

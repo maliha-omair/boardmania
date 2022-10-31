@@ -2,12 +2,15 @@ const SET_PUBLIC_ROOMS = "rooms/SET_PUBLIC_ROOMS";
 const CREATE_ROOM = "rooms/CREATE_ROOM";
 const REMOVE_ROOM = "rooms/REMOVE_ROOM";
 const UPDATE_ROOM = "rooms/UPDATE_ROOM";
-const SET_USER_ROOMS = "rooms/USER_ROOM"
+const SET_USER_ROOMS = "rooms/USER_ROOM";
+
 
 const setPublicRooms = (rooms) => ({
     type: SET_PUBLIC_ROOMS,
     payload: rooms
 });
+
+
 
 
 const setUserRooms= (rooms) =>({
@@ -29,11 +32,11 @@ const removeRoom = (id) => ({
     payload: id
 });
 
+  
 export const getPublicRoomsThunk = () => async dispatch => {
     const res = await fetch("/api/rooms");
     if (res.ok){
         const result = await res.json();
-        console.log("rooms....",result)
         dispatch(setPublicRooms(result.rooms))
         return result
     } 
@@ -43,11 +46,13 @@ export const getUserRoomsThunk = () => async dispatch => {
     const res = await fetch("/api/rooms/userRooms");
     if (res.ok){
         const result = await res.json();
-        console.log("rooms....",result)
         dispatch(setUserRooms(result.rooms))
         return result
     } 
 }
+
+
+
 export const createNewRoomThunk=(room)=> async dispatch => {
     const {title,description,isPublic} = room;
     console.log("room value is ",room);
@@ -118,6 +123,7 @@ export default function roomsReducer(state = initialState, action) {
         case UPDATE_ROOM:
             newState[action.room.id] = action.room;
             return newState;
+       
         default:
             return state;
     }

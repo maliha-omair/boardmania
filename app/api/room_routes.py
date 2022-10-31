@@ -1,4 +1,5 @@
-from app.models.members import Member
+from flask_wtf import FlaskForm
+from app.models.members import Member, status
 from flask import Blueprint, request, abort
 from flask_login import login_required, current_user
 from app.models import Room, db
@@ -15,9 +16,10 @@ def rooms():
     """
     owner_id = current_user.id
     rooms = Room.query.filter(Room.owner_id != owner_id).all()
-    # rooms = Room.query.filter_by(owner_id!=owner_id).all()
-    # rooms = db.session.query(Room).filter_by(Room.owner_id!=owner_id).all()
-    return {'rooms': [room.to_dict() for room in rooms]}
+    if rooms: 
+        return {'rooms': [room.to_dict() for room in rooms]}
+    else:
+        return{'message':"No rooms available"}
 
 
 @room_routes.route('/<int:id>')
@@ -41,17 +43,10 @@ def userRoom():
     owner = current_user.id
     rooms = Room.query.filter(Room.owner_id == owner).all()
     return {'rooms': [room.to_dict() for room in rooms]}
-
-
-@room_routes.route('/memberRooms')
-@login_required
-def memberRoom():
-    """
-    list user's rooms 
-    """
     
-    rooms = Member.query.join(Room).filter(Member.user_id == current_user.id).all()
-    return {'members': [room.to_dict() for room in rooms]}
+
+
+
 
 @room_routes.route('', methods=["POST"])
 @login_required
@@ -80,7 +75,6 @@ def edit_room(id):
     """
     Update item
     """
-
     form = UpdateRoom()
     form['csrf_token'].data = request.cookies['csrf_token']
 
@@ -119,3 +113,34 @@ def delete_item_by_id(id):
         return {"message": "Deleted successfuly"}
     else:
         return {'message': 'Not Found'}, 404
+
+
+
+@room_routes.route('/<int:room_id>/members', methods=["POST"])
+@login_required
+def join_room(room_id):
+    """
+    Send request to join a room
+    """
+    m = Member.query.filter(Member.room_id == room_id,Member.user_id == current_user.id).first()
+    if m:
+        return {'message': 'Conflict: Room join request for user already exist'}, 409
+        
+
+    member = Member()
+    member.user_id = current_user.id
+    member.room_id = room_id
+    member.membership_status = status.pending
+    db.session.add(member)
+    db.session.commit()
+    return member.to_dict()
+
+@room_routes.route('/<int:room_id>/members', methods=["GET"])
+@login_required
+def get_room_members(room_id):
+    """
+    Get all room members
+    """
+    members = Member.query.filter(Member.room_id == room_id).all()
+    return {'members': [m.to_dict() for m in members]}
+
