@@ -5,6 +5,7 @@ import { getUserMembershipsThunk } from "../../store/session";
 
 
 import styles from "../UserRooms/UserRooms.module.css"
+import JoinedRoom from "./JoinedRoom";
 import UserRoom from "./UserRoom";
 
 export default function JoinedRooms() {
@@ -20,7 +21,7 @@ export default function JoinedRooms() {
     return memberships && (memberships.length > 0 && (
         <div className={styles.mainContainer}>
             {Object.values(memberships).map((membership) => {
-                return <UserRoom room={membership.room} />
+                return <JoinedRoom room={membership.room} />
             })}         
         </div>
     )) || (
