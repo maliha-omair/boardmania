@@ -18,6 +18,7 @@ class Member(db.Model):
 
     # relationships
     player = db.relationship("GamePlayer", back_populates="member",cascade="all, delete", lazy=False)
+    # check delete cascade on members
     user = db.relationship("User", back_populates="member",cascade="all, delete", lazy=False)
     room = db.relationship("Room", back_populates="members",cascade="all, delete",lazy=False)
 
