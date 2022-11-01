@@ -2,7 +2,7 @@ import styles from "../PublicRooms/PublicRooms.module.css"
 import defaultImage from "../../assets/1.png"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux";
-import { deleteRoomThunk } from "../../store/rooms";
+import { deleteRoomThunk, joinRoomThunk } from "../../store/rooms";
 import { useHistory } from "react-router-dom";
 import EditRoom from "../EditRoom/EditRoom";
 
@@ -19,14 +19,23 @@ export default function PublicRoom({ room }) {
 
     function handleEdit(){
         history.push(`/rooms/${room.id}/edit`)
-        // <EditRoom room={room} />
     }
+
+    function handleJoin(){
+        dispatch(joinRoomThunk(room.id))
+
+    }
+
+    function handleClick(){
+        history.push(`/rooms/${room.id}/view`)
+    }
+
     return room && (
         <div className={styles.innerDiv}>
             <div className={styles.imageDiv}>
                 <img className={styles.image} src={defaultImage}></img>
             </div>
-            <div className={styles.titleDesc}>
+            <div className={styles.titleDesc} onClick={handleClick}>
                 <div className={styles.title}>
                     <div className={styles.titleDiv}>
                         <div>
@@ -43,7 +52,7 @@ export default function PublicRoom({ room }) {
             </div>
             <div className={styles.joinButtonDiv}>
                 {room.owner_id != user.id && (
-                    <button className={styles.joinButton}>Join</button>
+                    <button className={styles.joinButton} onClick={handleJoin}>Join</button>
                 )}
                 {room.owner_id == user.id && (
                     <button className={styles.joinButton} onClick={handleDelete}>Delete</button>

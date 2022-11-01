@@ -3,6 +3,11 @@ const CREATE_ROOM = "rooms/CREATE_ROOM";
 const REMOVE_ROOM = "rooms/REMOVE_ROOM";
 const UPDATE_ROOM = "rooms/UPDATE_ROOM";
 const SET_USER_ROOMS = "rooms/USER_ROOM";
+const SET_CURRENT_ROOM = "rooms/CURRENT_ROOM";
+const SET_ROOM_MEMBERS = "rooms/ROOM_MEMBERS"
+
+
+
 
 
 const setPublicRooms = (rooms) => ({
@@ -10,7 +15,10 @@ const setPublicRooms = (rooms) => ({
     payload: rooms
 });
 
-
+const setCurrentRoom = (room) =>({
+    type: SET_CURRENT_ROOM,
+    payload: room
+})
 
 
 const setUserRooms= (rooms) =>({
@@ -32,6 +40,10 @@ const removeRoom = (id) => ({
     payload: id
 });
 
+const setCurrentRoomMembers = (id) =>({
+    type: SET_ROOM_MEMBERS,
+    payload: id
+})
   
 export const getPublicRoomsThunk = () => async dispatch => {
     const res = await fetch("/api/rooms");
@@ -47,6 +59,26 @@ export const getUserRoomsThunk = () => async dispatch => {
     if (res.ok){
         const result = await res.json();
         dispatch(setUserRooms(result.rooms))
+        return result
+    } 
+}
+
+export const getRoomByIdThunk = (id) => async dispatch => {
+    const res = await fetch(`/api/rooms/${id}`);
+    console.log("sign room details = " ,res)
+    if (res.ok){
+        const result = await res.json();
+        dispatch(setCurrentRoom(result))
+        return result
+    } 
+}
+
+export const getRoomMembersByIdThunk = (id) => async dispatch => {
+    const res = await fetch(`/api/rooms/${id}/members`);
+    console.log("sign room details = " ,res)
+    if (res.ok){
+        const result = await res.json();
+        dispatch(setCurrentRoomMembers(result))
         return result
     } 
 }
@@ -104,6 +136,43 @@ export const deleteRoomThunk = (id) => async dispatch => {
       }
 }
 
+export const joinRoomThunk = (roomId) => async dispatch => {
+    const response = await fetch(`/api/rooms/${roomId}/members`, {
+        method: "POST"
+      });
+      if (response.ok) {
+        const data = await response.json();
+        if (data.errors) {
+          return data.errors;
+        }
+        return response
+      }
+}
+
+
+export const approveMembershipThunk = (id) => async dispatch => {
+    const res = await fetch(`/api/members/${id}/approve`,{
+        method: "PUT"
+    });
+    if (res.ok){
+        const result = await res.json();
+        return result
+    } 
+}
+
+export const rejectMembershipThunk = (id) => async dispatch => {
+    const res = await fetch(`/api/members/${id}/reject`,{
+        method: "PUT"
+    });
+    if (res.ok){
+        const result = await res.json();
+        return result
+    } 
+}
+
+
+
+
 const initialState = null;
 export default function roomsReducer(state = initialState, action) {
     let newState = {...state};
@@ -123,7 +192,12 @@ export default function roomsReducer(state = initialState, action) {
         case UPDATE_ROOM:
             newState[action.room.id] = action.room;
             return newState;
-       
+        case SET_CURRENT_ROOM:
+            newState.currentRoom = action.payload;      
+            return newState;
+        case SET_ROOM_MEMBERS:
+            newState.currentRoomMembers = action.payload.members;
+            return newState;
         default:
             return state;
     }

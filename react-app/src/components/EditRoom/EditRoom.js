@@ -3,7 +3,7 @@ import { useState } from "react"
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
-import { createNewRoomThunk, editRoomThunk } from "../../store/rooms";
+import {  editRoomThunk } from "../../store/rooms";
 import styles from "../EditRoom/EditRoom.module.css"
 
 export default function EditRoom({room}) {

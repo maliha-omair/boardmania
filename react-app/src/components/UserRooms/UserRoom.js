@@ -28,17 +28,17 @@ export default function UserRoom({ room }) {
     }
 
     function handleClick(){
-        
+        history.push(`/rooms/${room.id}/view`)
     }
     return room && (
         <div className={styles.innerDiv}>
             <div className={styles.imageDiv}>
                 <img className={styles.image} src={defaultImage}></img>
             </div>
-            <div className={styles.titleDesc} onClick={handleClick}>
+            <div className={styles.titleDesc} >
                 <div className={styles.title}>
-                    <div className={styles.titleDiv}>
-                        <div>
+                    <div className={styles.titleDiv} >
+                        <div onClick={handleClick}>
                             {room.title}
                         </div>
                         {room.owner_id == user.id && (
@@ -46,7 +46,7 @@ export default function UserRoom({ room }) {
                         )}
                     </div>
                 </div>
-                <div className={styles.description}>
+                <div className={styles.description} onClick={handleClick}>
                     {room.description}
                 </div>
             </div>

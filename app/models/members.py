@@ -32,7 +32,8 @@ class Member(db.Model):
                 'id': self.room.id,
                 'title': self.room.description,
                 'description': self.room.description,
-                'isPublic': self.room.isPublic
+                'isPublic': self.room.isPublic,
+                'owner_id': self.room.owner_id
             },
             'status':  self.membership_status,
             # 'room':  self.room.to_dict(),

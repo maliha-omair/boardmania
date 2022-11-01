@@ -1,8 +1,3 @@
-import { useEffect } from "react"
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux"
-import { getUserRoomsThunk } from "../../store/rooms";
-import { getUserMemberships } from "../../store/session";
 import styles from "../UserRooms/UserRooms.module.css"
 import JoinedRooms from "./JoinedRooms";
 import OwnedRooms from "./OwnedRooms";

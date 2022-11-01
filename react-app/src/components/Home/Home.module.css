@@ -1,11 +1,8 @@
 .mainContainer{
     display: flex;
     flex-direction: row;
-    /* border: solid yellow; */
     width: 100%;
     height: 100%;
-
-
 }
 
 .leftDiv{
@@ -21,20 +18,6 @@
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
 }
 
-.rightDiv{
-    /* border: solid green; */
-    width: 15%;
-    /* position:absolute; */
-    position: fixed;
-    overflow: auto;
-    top:40px;
-    
-    right:0;
-    height:100%;
-   
-    background-color:#0C0D14;
-    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
-}
 
 .centerDiv{
     display:flex;
@@ -42,19 +25,16 @@
     justify-content: center;
     align-items: center;
     height:100%;
-    /* position: fixed; */
     margin-left: 20%;
     margin-right: 20%;
     margin-top:10%;
-    /* border: solid white; */
-    width: 80%;  
+    width: 90%;  
 }
 
 .publicRoom{
     text-decoration: none;
     color:white;    
 }
-
 
 .newRoom{
     text-decoration: none;

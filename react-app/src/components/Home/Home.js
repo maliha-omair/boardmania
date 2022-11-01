@@ -1,14 +1,11 @@
-import { NavLink, Route, Switch, useRouteMatch } from "react-router-dom"
+import { NavLink, Route, Switch } from "react-router-dom"
 import CreateRoom from "../CreateRoom/CreateRoom"
 import EditRoom from "../EditRoom/EditRoom";
 import styles from "../Home/Home.module.css"
 import PublicRooms from "../PublicRooms/PublicRooms"
-import UserRoom from "../UserRooms/UserRoom";
+import SingleRoom from "../SingleRoom/SingleRoom";
 import UserRooms from "../UserRooms/UserRooms";
 export default function Home() {
-
-    let { path, url } = useRouteMatch();
-
 
     return (
         <div className={styles.mainContainer}>
@@ -41,6 +38,9 @@ export default function Home() {
                     </Route>
                     <Route path="/rooms/:roomId/edit">
                         <EditRoom />
+                     </Route>
+                     <Route path="/rooms/:roomId/view">
+                        <SingleRoom />
                      </Route>
                 </Switch>
 

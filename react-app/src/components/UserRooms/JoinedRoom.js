@@ -12,7 +12,6 @@ export default function JoinedRoom({ room }) {
     const history = useHistory();
    
     function handleDelete() {
-
         dispatch(deleteRoomThunk(room.id))
         console.log("room is ...",room)
         .then((res)=>{
@@ -22,12 +21,12 @@ export default function JoinedRoom({ room }) {
         })
     }
 
-    function handleEdit(){
-        history.push(`/rooms/${room.id}/edit`)
-        // <EditRoom room={room} />
+    function handleClick(){
+        history.push(`/rooms/${room.id}/view`)
+        
     }
     return room && (
-        <div className={styles.innerDiv}>
+        <div className={styles.innerDiv}  onClick={handleClick}>
             <div className={styles.imageDiv}>
                 <img className={styles.image} src={defaultImage}></img>
             </div>
@@ -37,9 +36,6 @@ export default function JoinedRoom({ room }) {
                         <div>
                             {room.title}
                         </div>
-                        {room.owner_id == user.id && (
-                            (<div className={styles.editRoom} onClick={handleEdit}><i class="fa-solid fa-pen-to-square"></i></div>)
-                        )}
                     </div>
                 </div>
                 <div className={styles.description}>

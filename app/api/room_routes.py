@@ -15,11 +15,13 @@ def rooms():
     lists all rooms
     """
     owner_id = current_user.id
-    rooms = Room.query.filter(Room.owner_id != owner_id).all()
+    rooms = Room.query.filter(Room.owner_id != owner_id ).all()
+    roomsToFilter = Room.query.join(Member).filter(Room.owner_id != owner_id, Member.user_id == owner_id ).all()
+    filteredRooms = [r for r in rooms if r not in roomsToFilter ]
     if rooms: 
-        return {'rooms': [room.to_dict() for room in rooms]}
+        return {'rooms': [room.to_dict() for room in filteredRooms]}
     else:
-        return{'message':"No rooms available"}
+        return{'message': []}
 
 
 @room_routes.route('/<int:id>')
