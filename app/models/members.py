@@ -1,7 +1,7 @@
 from .db import db
 import enum
 
-class status(str,enum.Enum):
+class MemberStatus(str,enum.Enum):
     pending = "pending"
     member = "member"
     deleted = "deleted"
@@ -14,7 +14,7 @@ class Member(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     room_id = db.Column(db.Integer, db.ForeignKey("rooms.id", ondelete="CASCADE"), nullable=False)
-    membership_status = db.Column(db.Enum(status))
+    membership_status = db.Column(db.Enum(MemberStatus))
 
     # relationships
     player = db.relationship("GamePlayer", back_populates="member",cascade="all, delete", lazy=False)
