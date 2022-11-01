@@ -35,7 +35,7 @@ export default function CreateRoom() {
         return dispatch(createNewRoomThunk(room))
             .then((res) => {
 
-                history.push(`/publicRoom`)
+                history.push(`/userRoom`)
             })
             .catch(async (res) => {
                 const data = await res.json();

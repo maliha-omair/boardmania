@@ -26,7 +26,9 @@ export default function SingleRoom() {
 
                 </div>
                 <div className={styles.description}>
+                    <h3>
                     {room.description}
+                    </h3>
                 </div>
             </div>
             <div className={styles.roomMembers}>

@@ -1,3 +1,46 @@
 .mainDiv{
+    display: flex;
+    flex-direction: row;
     padding-top: 20px;
+}
+
+.innerDiv{
+    display: flex;
+    flex-direction: row;
+}
+
+.emailDiv{
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+}
+
+.approve{
+    width: 90px;
+    height: 25px;
+    border-radius: 12px;
+    color: white;
+    background-color: #DA7F14;
+    /* color: white; */
+    font-size: 16px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.reject{
+    width: 90px;
+    height: 25px;
+    border-radius: 12px;
+    color: white;
+    background-color: #59AAB2;
+    /* color: white; */
+    font-size: 16px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    margin-left: 20px;
+    cursor: pointer;
 }

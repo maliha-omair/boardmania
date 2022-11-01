@@ -3,13 +3,14 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import LogoutButton from './auth/LogoutButton';
 import styles from "./NavBar.module.css"
+import logo from "../assets/logo.png"
 
 const NavBar = () => {
   return (
     <div className={styles.mainNav}>
       <div>
         <NavLink to='/' exact={true} activeClassName='active' className={styles.navLink}>
-          Home
+              <img src={logo} className={styles.logoImage}></img>
         </NavLink>
       </div>
 

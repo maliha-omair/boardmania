@@ -14,7 +14,7 @@
     overflow: auto;
     top:40px;
     left:0;
-    background-color:#0C0D14;
+    background-color:#1E1E1E;
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
 }
 
@@ -36,13 +36,25 @@
     color:white;    
 }
 
-.newRoom{
-    text-decoration: none;
-    color:white;    
+.publicRoomDiv{
+    padding: 40px;
+
 }
 
+.publicRoom.active{
+    border-bottom: solid #DA7F14;
+}
+
+.newRoom{
+    text-decoration: none;
+    color:white;     
+}
+
+
+
 .newRoomDiv{
-    padding-bottom: 20px;
+    /* padding-bottom: 20px; */
+    padding: 40px;
 }
 
 .homeDiv{
@@ -55,7 +67,7 @@
 }
 
 .yourRoomDiv{
-    padding-top:20px;
+    padding:40px;
 }
 
 .yourRoom{

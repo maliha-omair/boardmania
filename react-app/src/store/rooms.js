@@ -131,7 +131,6 @@ export const deleteRoomThunk = (id) => async dispatch => {
         if (data.errors) {
           return data.errors;
         }
-        dispatch(removeRoom(id));
         return response
       }
 }
@@ -187,8 +186,11 @@ export default function roomsReducer(state = initialState, action) {
               newState.currentRoom = action.payload;
               return newState;
         case REMOVE_ROOM:
-            let publicRooms = newState.publicRooms.filter(i => i.id !== action.payload);
-            return { ...state, publicRooms }
+            if(newState.publicRooms){
+                let publicRooms = newState.publicRooms.filter(i => i.id !== action.payload);
+                return { ...state, publicRooms }
+            }
+            return {...state}
         case UPDATE_ROOM:
             newState[action.room.id] = action.room;
             return newState;

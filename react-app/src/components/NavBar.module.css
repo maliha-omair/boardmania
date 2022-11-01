@@ -7,7 +7,7 @@
     top:0;
     width: 100%;
     left:0;
-    background-color:rgba(26, 27, 40);
+    background-color:#1E1E1E;
     z-index: 1;
     position: fixed;
     
@@ -17,8 +17,19 @@
 .navLink{
     text-decoration: none;
     color: white;
-    margin-left: 10px;
+    margin-left: 40px;
+
     
     /* position: fixed; */
 }
 
+.loginButton{
+    margin-right: 40px;
+    margin-top: 5px;
+    border: none;
+}
+
+.logoImage{
+    width: 70px;
+    height: 50px;
+}

@@ -13,7 +13,7 @@ class User(db.Model, UserMixin):
 
     # relationships
     member = db.relationship("Member", back_populates="user")
-    room = db.relationship("Room", back_populates="owner")
+    room = db.relationship("Room", back_populates="owner", cascade='all, delete-orphan')
 
     @property
     def password(self):

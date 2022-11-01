@@ -13,7 +13,6 @@ export default function JoinedRoom({ room }) {
    
     function handleDelete() {
         dispatch(deleteRoomThunk(room.id))
-        console.log("room is ...",room)
         .then((res)=>{
           
         }).catch(async (res) => {

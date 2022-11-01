@@ -11,9 +11,9 @@ export default function Home() {
         <div className={styles.mainContainer}>
 
             <div className={styles.leftDiv}>
-                <div className={styles.homeDiv}>
+                {/* <div className={styles.homeDiv}>
                     Home
-                </div>
+                </div> */}
                 <div className={styles.newRoomDiv}>
                     <NavLink className={styles.newRoom} to={`/newRoom`} >New Room</NavLink>
                 </div>

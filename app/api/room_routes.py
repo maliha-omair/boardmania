@@ -98,23 +98,21 @@ def edit_room(id):
 
 @room_routes.route('/<int:id>', methods=["DELETE"])
 @login_required
-def delete_item_by_id(id):
+def delete_room_by_id(id):
     """
     Delete room by id
     """
-    owner = current_user.id  
-    
+   
     room = Room.query.filter(Room.id == id).first()
-    if room is not None:
-        room_owner = Room.query.filter( Room.id == id , Room.owner_id == owner).first()
-        if room_owner is not None:
-            db.session.delete(room)
-            db.session.commit()
-        else:
-            return {'message': "Forbidded"}, 403    
-        return {"message": "Deleted successfuly"}
-    else:
+    if room is None:
         return {'message': 'Not Found'}, 404
+    if room.owner_id == current_user.id:
+        db.session.delete(room)
+        db.session.commit()
+        return {'message': 'successfuly deleted'}
+    else:
+        return {'message': "Forbidded"}, 403    
+        
 
 
 
