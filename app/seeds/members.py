@@ -14,15 +14,15 @@ def seed_members():
     db.session.add(member2)
 
     member3 = Member(
-        user_id='2', room_id='8', membership_status="member")
+        user_id='2', room_id='1', membership_status="member")
     db.session.add(member3)
 
     member4 = Member(
-        user_id='2', room_id='9', membership_status="member")
+        user_id='2', room_id='2', membership_status="member")
     db.session.add(member4)
 
     member5 = Member(
-        user_id='2', room_id='10', membership_status="pending")
+        user_id='2', room_id='3', membership_status="pending")
     db.session.add(member5)
     
     db.session.commit()
