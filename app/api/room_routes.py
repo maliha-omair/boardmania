@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from app.models.members import Member, status
+from app.models.members import Member, MemberStatus
 from flask import Blueprint, request, abort
 from flask_login import login_required, current_user
 from app.models import Room, db
@@ -132,7 +132,7 @@ def join_room(room_id):
     member = Member()
     member.user_id = current_user.id
     member.room_id = room_id
-    member.membership_status = status.pending
+    member.membership_status = MemberStatus.pending
     db.session.add(member)
     db.session.commit()
     return member.to_dict()

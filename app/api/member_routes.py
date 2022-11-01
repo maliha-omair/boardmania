@@ -1,4 +1,4 @@
-from app.models.members import Member, status, db
+from app.models.members import Member, MemberStatus, db
 from flask import Blueprint
 from flask_login import login_required, current_user
 
@@ -20,10 +20,10 @@ def approve_member_request(member_id):
     if memberRequest.room.owner_id != current_user.id:
         return {'message': "Forbidded: Current user is not owner of group"}, 403
     
-    if memberRequest.membership_status != status.pending:
+    if memberRequest.membership_status != MemberStatus.pending:
         return {'message': "Conflict: Member request should be in pending state"}, 409
 
-    memberRequest.membership_status = status.member
+    memberRequest.membership_status = MemberStatus.member
     db.session.add(memberRequest)
     db.session.commit()
     return memberRequest.to_dict()
@@ -42,10 +42,10 @@ def reject_member_request(member_id):
     if memberRequest.room.owner_id != current_user.id:
         return {'message': "Forbidded: Current user is not owner of group"}, 403
     
-    if memberRequest.membership_status != status.pending:
+    if memberRequest.membership_status != MemberStatus.pending:
         return {'message': "Conflict: Member request should be in pending state"}, 409
 
-    memberRequest.membership_status = status.deleted
+    memberRequest.membership_status = MemberStatus.deleted
     db.session.add(memberRequest)
     db.session.commit()
     return memberRequest.to_dict()
