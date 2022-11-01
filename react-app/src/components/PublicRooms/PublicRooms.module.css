@@ -76,3 +76,7 @@
     flex-direction: row;
 }
 
+.noRoom{
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 23px;
+}

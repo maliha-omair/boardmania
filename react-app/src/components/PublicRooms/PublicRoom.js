@@ -2,9 +2,9 @@ import styles from "../PublicRooms/PublicRooms.module.css"
 import defaultImage from "../../assets/1.png"
 import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux";
-import { deleteRoomThunk, joinRoomThunk } from "../../store/rooms";
+import { deleteRoomThunk, getPublicRoomsThunk, joinRoomThunk } from "../../store/rooms";
 import { useHistory } from "react-router-dom";
-import EditRoom from "../EditRoom/EditRoom";
+
 
 export default function PublicRoom({ room }) {
     const user = useSelector(state => state.session.user);
@@ -22,8 +22,7 @@ export default function PublicRoom({ room }) {
     }
 
     function handleJoin(){
-        dispatch(joinRoomThunk(room.id))
-
+        dispatch(joinRoomThunk(room.id)).then(()=>{dispatch(getPublicRoomsThunk())})
     }
 
     function handleClick(){

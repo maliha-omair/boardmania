@@ -41,6 +41,9 @@ export default function JoinedRoom({ room }) {
                 <div className={styles.description}>
                     {room.description}
                 </div>
+                <div className={styles.description}>
+                    {room.status}
+                </div>
             </div>
             
         </div>

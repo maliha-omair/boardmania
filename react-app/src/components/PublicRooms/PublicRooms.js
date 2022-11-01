@@ -12,12 +12,17 @@ export default function PublicRooms() {
         dispatch(getPublicRoomsThunk())
     }, dispatch)
     if (!rooms) return null
-    return rooms && (
+    return rooms && (rooms.length>0 && (
         <div className={styles.mainContainer}>
             {/* <h1>Public Rooms</h1> */}
             {Object.values(rooms).map((room) => {
                 return <PublicRoom room={room} />
             })}
         </div>
-    )
+    ))
+        ||(
+        <div className={styles.noRoom}>
+            No Public Room available
+        </div>
+        )
 }

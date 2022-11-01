@@ -7,11 +7,11 @@ export default function UserRooms() {
 
     return (
         <div className={styles.userRoomsMainDiv}>
-            <div>
+            <div className={styles.yourRooms}>
                 <h1>Your Rooms</h1>
                 <OwnedRooms />
             </div>
-            <div>
+            <div className={styles.yourMembership}>
                 <h1>Your Memberships</h1>
                 <JoinedRooms />
             </div>
