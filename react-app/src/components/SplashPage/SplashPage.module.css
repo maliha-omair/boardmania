@@ -1,0 +1,51 @@
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    
+    width: 100%;
+}
+
+.welcomeDiv{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-size: 40px;  
+    color:rgb(222, 214, 214);
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+}
+.innerDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    color: rgb(222, 214, 214);
+    flex:1;
+    margin-left: 150px;
+}
+
+.image{
+    width:400px;
+    height:400px;
+    border-radius: 50%;
+    margin-top: 100px;
+    margin-left:50px;
+}
+
+/* .subDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+} */
+
+.imageDiv{
+    flex:1
+}
+.subContainer{
+    display: flex;
+   justify-content: center;
+   flex-direction: row;
+   width: 100vw;
+    
+}

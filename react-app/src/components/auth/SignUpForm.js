@@ -16,8 +16,15 @@ const SignUpForm = () => {
   const onSignUp = async (e) => {
     e.preventDefault();
     let validations = []
-    // let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-    // if (email.match(validRegex)) setErrors
+    if (username.length <4 || username.length > 25) {
+      validations.push("Username: username should be in between 4 and 24 characters")
+    }
+    if(password.length < 6 || password.length > 25){
+      validations.push("Password: password should be in between 6 and 24 characters")
+    }
+    if(email.length < 5 || email.length > 25 ){
+      validations.push("Email: email should be in between 6 and 24 characters")
+    }
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, email, password));
       if (data) {

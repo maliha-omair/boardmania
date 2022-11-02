@@ -8,6 +8,7 @@ import RoomMembers from "../RoomMembers/RoomMembers";
 import styles from "../SingleRoom/SingleRoom.module.css"
 import CreateGame from "./CreateGame";
 import SingleRoomHeader from "./SingleRoomHeader";
+import image from "../../assets/ludoBoard.png"
 
 export default function SingleRoom() {
     const dispatch = useDispatch();
@@ -38,7 +39,9 @@ export default function SingleRoom() {
                         <Games roomId={roomId} />
                     </div>
                 </div>
-    
+                <div>
+                    <img className={styles.image} src={image}></img>
+                </div>
             </div>            
        </div>
     )

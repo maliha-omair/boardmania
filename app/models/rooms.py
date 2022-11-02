@@ -23,5 +23,5 @@ class Room(db.Model):
             'description': self.description,
             'isPublic': self.isPublic,
             'owner_id': self.owner_id,
-            # 'owner':  self.owner.to_dict(),
+            'owner':  self.owner.to_dict(),
         }

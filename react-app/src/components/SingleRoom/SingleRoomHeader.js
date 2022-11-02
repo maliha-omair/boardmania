@@ -11,12 +11,18 @@ export default function SingleRoomHeader({room}) {
                     {room.title}
                 </h1>
             </div>
+            <div className={styles.owner}>
+                <h4>
+                    Created By {room.owner.username}
+                </h4>
+            </div>
 
             <div className={styles.description}>
                 <h3>
                     {room.description}
                 </h3>
             </div>
+        
 
         </div>
     )

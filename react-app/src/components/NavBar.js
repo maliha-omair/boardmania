@@ -13,14 +13,18 @@ const NavBar = () => {
               <img src={logo} className={styles.logoImage}></img>
         </NavLink>
       </div>
-
+       
       {/* <li className={styles.list}>
           <NavLink to='/users' exact={true} activeClassName='active' className={styles.navLink}>
             Users
           </NavLink>
         </li> */}
-      <div className={styles.loginButton}>
-        <LogoutButton />
+      <div className={styles.linkDiv}>
+      
+        <div className={styles.linkedIcon}><a className={styles.linkedIcon} href="https://www.linkedin.com/in/maliha-omair/" target="_blank"><i class="fa-brands fa-linkedin"></i></a></div>
+        <div className={styles.gitHubIcon}><a className={styles.gitHubIcon} href="https://github.com/maliha-omair" target="_blank"><i class="fa-brands fa-github"></i></a></div>
+        <div className={styles.loginButton}> <LogoutButton /></div>
+       
       </div>
 
     </div>
