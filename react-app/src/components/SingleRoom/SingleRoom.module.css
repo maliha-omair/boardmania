@@ -3,15 +3,126 @@
     flex-direction: column;
  
     width: 100%;
+    margin-left: 0 auto;
+    max-height: 80%
+
 }
+
+.secondRow{
+    display: flex;
+    flex-direction: row;
+ 
+    width: 100%;
+    margin-left: 0 auto;
+}
+
 .title{
+    display: flex;
+    flex-direction: row;
     font-size: 20px;  
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
     line-height: 0.1;
+   
+}
+
+.gameInput{
+    border-radius: 12px;
+    height: 30px;
+}
+
+.createGameButton{
+    width: 100px;
+    height: 35px;
+    border-radius: 12px;
+    color: white;
+    background-color: #59AAB2;
+    /* color: white; */
+    font-size: 16px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    /* margin-left: 20px; */
+    cursor: pointer;
 }
 
 .description{
     font-size: 14px;  
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    padding-bottom: 60px;;
 }
 
+.centerDiv{
+    display: flex;
+    flex-direction:  column;
+    width: 50%;
+    max-height: calc(90vh - 46px); 
+}
+
+.leftDiv{
+    grid-area: UL;
+    display: flex;
+    flex-direction:column;
+    padding: 3px 6px 0 16px;
+
+    width: 15%;  
+    overflow-y: scroll;
+    max-height: calc(90vh - 46px);
+    margin-right: 10px;
+}
+
+.leftDiv::-webkit-scrollbar{
+    width:2px;   
+}
+
+.leftDiv::-webkit-scrollbar-trumb{
+    background-color: var(--tertiary);
+    border-radius: 2px;
+}
+
+.leftDiv::-webkit-scrollbar-track{
+    background-color: var(--secondary);
+}
+
+.roomMembers{
+    display: flex;
+    flex-direction: column;
+    /* width: 20%; */
+    height: 100%;
+    /* position: fixed; */
+    top:30px;
+    /* border:solid white; */
+    /* background-color:#1E1E1E; */
+}
+
+
+
+.games{
+    width: 100%;
+}
+
+.sectionHeader{
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 32px;
+}
+
+.rightDiv{
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    overflow-y: scroll;
+    max-height: calc(90vh - 46px); 
+}
+
+.rightDiv::-webkit-scrollbar{
+    width:2px;   
+}
+
+.rightDiv::-webkit-scrollbar-trumb{
+    background-color: var(--tertiary);
+    border-radius: 2px;
+}
+
+.rightDiv::-webkit-scrollbar-track{
+    background-color: var(--secondary);
+}

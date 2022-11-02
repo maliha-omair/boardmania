@@ -1,6 +1,7 @@
 import { NavLink, Route, Switch } from "react-router-dom"
 import CreateRoom from "../CreateRoom/CreateRoom"
 import EditRoom from "../EditRoom/EditRoom";
+import GameBoard from "../GameBoard/GameBoard";
 import styles from "../Home/Home.module.css"
 import PublicRooms from "../PublicRooms/PublicRooms"
 import SingleRoom from "../SingleRoom/SingleRoom";
@@ -41,6 +42,9 @@ export default function Home() {
                      </Route>
                      <Route path="/rooms/:roomId/view">
                         <SingleRoom />
+                     </Route>
+                     <Route path="/rooms/:roomId/games/:gameId">
+                        <GameBoard />
                      </Route>
                 </Switch>
 

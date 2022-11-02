@@ -1,0 +1,93 @@
+.border{
+    border: solid 1px rgb(157, 145, 145);
+    width: 40px;
+    height: 40px;
+}
+
+.noBorder{
+    border: solid 1px white;
+    width: 40px;
+    height: 40px;
+}
+
+
+.mainContainer{
+    margin-top:20%;
+}
+.board{
+    display: flex;
+    flex-direction: row;
+}
+
+.red{
+    background-color: red;
+}
+
+.green{
+    background-color: green;
+}
+
+.yellow{
+    background-color: yellow;
+}
+
+.blue{
+    background-color: blue;
+}
+
+.white{
+    background-color: white;
+}
+
+
+.arrowUp {
+    width: 40px;
+    height: 40px;
+    background: yellow ;
+    clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
+}
+
+.arrowDown {
+    width: 40px;
+    height: 40px;
+    background: red ;
+    clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
+}
+
+
+.arrowLeft {
+    width: 40px;
+    height: 40px;
+    background: blue ;
+    clip-path: polygon(100% 100%, 0% 50%, 100% 0%);
+}
+
+.arrowRight {
+    width: 40px;
+    height: 40px;
+    background: green ;
+    clip-path: polygon(0% 0%, 0% 100%, 100% 50%);
+}
+
+.arrowRedLeftDown {
+    width: 40px;
+    height: 40px;
+    background: rgb(255, 64, 0) ;
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
+}
+
+.arrowRedRight {
+    width: 40px;
+    height: 40px;
+    background: red;
+    clip-path: polygon(0% 0%, 0% 100%, 100% 0%);
+
+}
+
+
+.arrowGreenTop {
+    width: 40px;
+    height: 40px;
+    background: green ;
+    clip-path: polygon(0% 100%, 0% 0%, 100% 100%);
+}

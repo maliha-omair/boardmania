@@ -9,7 +9,6 @@ class Room(db.Model):
     isPublic = db.Column(db.Boolean, nullable=False)
     owner_id = db.Column(db.Integer,db.ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
   
-
     # relationships
     # players = db.relationship("game_players", back_populates="room")
     games = db.relationship("Game", cascade="all, delete",back_populates="room", lazy=False)
@@ -24,5 +23,5 @@ class Room(db.Model):
             'description': self.description,
             'isPublic': self.isPublic,
             'owner_id': self.owner_id,
-            'owner':  self.owner.to_dict(),
+            # 'owner':  self.owner.to_dict(),
         }

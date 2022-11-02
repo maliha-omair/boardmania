@@ -21,13 +21,12 @@
 
 .centerDiv{
     display:flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+    /* flex-direction: row; */
+    /* justify-content: center; */
+    /* align-items: center; */
     height:100%;
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-top:10%;
+    margin-left: 10%;
+    margin-top:5%;
     width: 90%;  
 }
 
@@ -38,23 +37,34 @@
 
 .publicRoomDiv{
     padding: 40px;
-
 }
 
-.publicRoom.active{
-    border-bottom: solid #DA7F14;
+.publicRoomDiv:hover{
+    background-color:  #DA7F14;
+    cursor: pointer;
 }
+
+
+.yourRoomDiv:hover{
+    background-color:  #DA7F14;
+    cursor: pointer;
+}
+
 
 .newRoom{
     text-decoration: none;
     color:white;     
 }
 
-
-
 .newRoomDiv{
     /* padding-bottom: 20px; */
     padding: 40px;
+}
+
+
+.newRoomDiv:hover{
+    background-color:  #DA7F14;
+    cursor: pointer;
 }
 
 .homeDiv{

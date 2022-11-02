@@ -1,8 +1,11 @@
 from flask_wtf import FlaskForm
+from app.forms.create_game import CreateGame
+from app.models.game_players import GamePlayer, PlayerColor, PlayerType
+from app.models.games import GameStatus, MemberMode
 from app.models.members import Member, MemberStatus
 from flask import Blueprint, request, abort
 from flask_login import login_required, current_user
-from app.models import Room, db
+from app.models import Room, db, Game
 from app.forms import CreateRoom,UpdateRoom
 
 room_routes = Blueprint('rooms', __name__)
@@ -36,6 +39,54 @@ def room(id):
     else:
         return {'message': "Not Found"}, 404
 
+@room_routes.route('/<int:id>/games')
+@login_required
+def games(id):
+    """
+    list games of room by Id
+    """
+    games = Game.query.filter(Game.room_id == id).all()
+    return {'games': [game.to_dict() for game in games]}
+    
+@room_routes.route('/<int:roomId>/games', methods=["POST"])
+@login_required
+def create_game(roomId):
+    """
+    Create a new game 
+    """
+    member = Member.query.filter(Member.user_id == current_user.id, Member.room_id == roomId).first()
+    if member is None:
+        return {'message': 'Validation Errors', 'errors':  ['User must be member of the room']}, 400
+
+    game = Game()
+    form = CreateGame()
+    form['csrf_token'].data = request.cookies['csrf_token']
+
+
+
+    if form.validate_on_submit():
+        form.populate_obj(game)
+
+        if Game.query.filter(Game.name == game.name).first() is not None:
+            return {'message': 'Validation Errors', 'errors':  ['Name must be unique']}, 400
+
+        game.room_id = roomId
+        game.mode = MemberMode.TWO_PLAYER
+        game.game_status = GameStatus.NEW
+        player = GamePlayer()
+        player.member_id = member.id
+        player.type = PlayerType.PLAYER
+        player.game_position = 1
+        player.color = PlayerColor.BLUE
+        game.players.append(player)
+        
+        db.session.add(game)
+        db.session.commit()
+        return game.to_dict()
+    else: 
+        return {'message': 'Validation Errors', 'errors': form.errors}, 400
+
+
 @room_routes.route('/userRooms')
 @login_required
 def userRoom():
@@ -65,6 +116,14 @@ def create_new_room():
         form.populate_obj(room)
         room.owner_id = owner_id
         db.session.add(room)
+        db.session.commit()
+
+        member = Member()
+        member.room_id = room.id
+        member.user_id = owner_id
+        member.membership_status = MemberStatus.member
+        db.session.add(member)
+
         db.session.commit()
         return {'room': room.to_dict()}
     else:

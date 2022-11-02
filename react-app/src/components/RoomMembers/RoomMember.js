@@ -24,8 +24,8 @@ export default function RoomMember({ member }) {
             </div>
             {member.status === "pending" && member.room.owner_id === user.id &&
                 <div className={styles.innerDiv}>
-                    <div className={styles.approve} onClick={handleApprove}>Approve</div>
-                    <div className={styles.reject} onClick={handleReject}>Reject</div>
+                    <div className={styles.approve} onClick={handleApprove}><i class="fa-solid fa-check"></i></div>
+                    <div className={styles.reject} onClick={handleReject}><i class="fa-solid fa-xmark"></i></div>
                 </div>}
         </div>
     )
