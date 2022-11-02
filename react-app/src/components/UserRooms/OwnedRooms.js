@@ -13,7 +13,7 @@ export default function OwnedRooms() {
     const rooms = useSelector(state => state.rooms && state.rooms.userRooms)
     useEffect(() => {
           dispatch(getUserRoomsThunk());
-    }, dispatch)
+    }, [dispatch])
     function handleClick(){
         history.push("/newRoom")
     }
@@ -21,7 +21,7 @@ export default function OwnedRooms() {
     return rooms && (rooms.length > 0 && (
         <div className={styles.mainContainer}>
             {Object.values(rooms).map((room) => {
-                return <UserRoom room={room} />
+                return <UserRoom key={room.id} room={room} />
             })}         
         </div>
     )) || (

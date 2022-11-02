@@ -16,12 +16,12 @@ export default function JoinedRooms() {
     useEffect(() => { 
        dispatch(getUserMembershipsThunk())
        console.log(memberships,"....memberships")
-    }, dispatch)
+    }, [dispatch])
 
     return memberships && (memberships.length > 0 && (
         <div className={styles.mainContainer}>
             {Object.values(memberships).map((membership) => {
-                return <JoinedRoom room={membership.room} />
+                return <JoinedRoom key={membership.id} room={membership.room} />
             })}         
         </div>
     )) || (

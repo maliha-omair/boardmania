@@ -1,10 +1,4 @@
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-import { createGameThunk, getRoomByIdThunk } from "../../store/rooms";
-import Games from "../Games/Games";
-import RoomMembers from "../RoomMembers/RoomMembers";
+
 import styles from "../SingleRoom/SingleRoom.module.css"
 
 export default function SingleRoomHeader({room}) {

@@ -126,3 +126,10 @@
 .rightDiv::-webkit-scrollbar-track{
     background-color: var(--secondary);
 }
+
+.errorMessage{
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    padding-bottom: 5px;
+    padding-top:5px;
+    color:red;   
+}

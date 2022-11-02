@@ -1,3 +1,7 @@
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
+import { getGameThunk } from "../../store/rooms"
 import styles from "../LudoBoard/LudoBoard.module.css"
 import BlueBlock from "./BlueBlock"
 import GreenBlock from "./GreenBlock"
@@ -7,10 +11,22 @@ import WhiteBlockNoBorder from "./WhiteBlockNoBorder"
 import YellowBlock from "./YellowBlock"
 
 export default function LudoBoard() {
-    return (
+
+    const boardState = useSelector(state =>  state.rooms &&  state.rooms.board)
+    const dispatch = useDispatch()
+    
+    
+    // const {roomId,gameId} = useParams();
+    
+    // useEffect(()=>{
+    //     dispatch(getGameThunk(gameId))
+    // },[dispatch, gameId])
+
+    if (!boardState) return null;
+    return boardState && (
         <div className={styles.mainContainer}>
             <div id="row1" className={styles.board}>
-                <GreenBlock/>
+                <GreenBlock s = {boardState[0][0]}/>
                 <GreenBlock/>
                 <GreenBlock/>
                 <GreenBlock/>

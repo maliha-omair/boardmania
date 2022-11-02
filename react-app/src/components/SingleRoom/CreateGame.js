@@ -1,12 +1,10 @@
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
-import { createGameThunk, getRoomByIdThunk } from "../../store/rooms";
-import Games from "../Games/Games";
-import RoomMembers from "../RoomMembers/RoomMembers";
+
+import { useHistory} from "react-router-dom";
+import { createGameThunk } from "../../store/rooms";
 import styles from "../SingleRoom/SingleRoom.module.css"
-import SingleRoomHeader from "./SingleRoomHeader";
+
 
 export default function CreateGame({room}) {
 
@@ -17,11 +15,12 @@ export default function CreateGame({room}) {
     function handleCreateGame(e) {
         e.preventDefault();
         setError("")
+
         if(name.length > 50) {
-            setError("name should be less than 50 characters")
+            setError("Name should be less than 50 characters")
         }
-        if(name.length< 4){
-            setError("name should be more than 4 characters")
+        if(name.length < 4){
+            setError("Name should be more than 4 characters")
         }
         if (error.length === 0){
             dispatch(createGameThunk(room.id,name))
@@ -31,7 +30,6 @@ export default function CreateGame({room}) {
             .catch(async res => {
                 if(res.status && res.status === 400){
                     const body = await res.json();
-                    console.log(body.errors);
                     setError(body.errors);
                 }
                 
@@ -44,8 +42,8 @@ export default function CreateGame({room}) {
 
     return room && (
         <div>
-            <div>
-                {error}                
+            <div className={styles.errorMessage}>
+              {error.length >0 && ( error)}                
             </div>
             <form onSubmit={()=>handleCreateGame}>
                 <input placeholder="Game Name" value={name} onChange={(e)=>setName(e.target.value)} className={styles.gameInput}></input>   

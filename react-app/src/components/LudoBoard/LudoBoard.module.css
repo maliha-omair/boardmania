@@ -23,9 +23,18 @@
     background-color: red;
 }
 
+.redPawn{
+    color: red;
+}
+
 .green{
     background-color: green;
 }
+
+.greenPawn{
+    color: green;
+}
+
 
 .yellow{
     background-color: yellow;

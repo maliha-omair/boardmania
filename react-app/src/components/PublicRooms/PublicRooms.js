@@ -10,7 +10,7 @@ export default function PublicRooms() {
     const rooms = useSelector(state => state.rooms && state.rooms.publicRooms)
     useEffect(() => {
         dispatch(getPublicRoomsThunk())
-    }, dispatch)
+    }, [dispatch])
     if (!rooms) return null
     return rooms && (rooms.length>0 && (
         <div className={styles.mainContainer}>

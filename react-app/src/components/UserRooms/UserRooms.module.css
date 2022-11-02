@@ -17,8 +17,9 @@
 .titleDesc{
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 60%;
     cursor: pointer;
+
 }
 
 .imageDiv{
@@ -45,6 +46,25 @@
     cursor: pointer;
 }
 
+.deleteButton{
+    display: flex;
+    
+    width: 200px;
+    height: 40px;
+    border-radius: 12px;
+    color: white;
+    background-color: #DA7F14;
+    /* color: white; */
+    font-size: 16px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    align-content: space-around;
+    margin-left: 10px;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: pointer;
+}
+
 .noRooms{
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
     font-size: 18px;
@@ -61,13 +81,16 @@
     cursor: pointer;
 }
 
+
 .title{
     /* padding-left: 10px; */
+    
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
     /* border: solid white; */
 }
 
 .description{
+    max-width:70%;
     /* padding-left: 10px; */
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
     /* border: solid pink; */
@@ -122,4 +145,9 @@
     display: flex;
     flex-direction: column;
     align-items: left;
+}
+
+.confirmDelete{
+    display: flex;
+    flex-direction: row;
 }

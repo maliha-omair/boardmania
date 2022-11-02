@@ -54,7 +54,7 @@ def create_game(roomId):
     """
     Create a new game 
     """
-    member = Member.query.filter(Member.user_id == current_user.id, Member.room_id == roomId).first()
+    member = Member.query.filter(Member.user_id == current_user.id, Member.room_id == roomId, Member.membership_status == "member").first()
     if member is None:
         return {'message': 'Validation Errors', 'errors':  ['User must be member of the room']}, 400
 

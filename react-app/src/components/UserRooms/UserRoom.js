@@ -4,14 +4,17 @@ import { useSelector } from "react-redux"
 import { useDispatch } from "react-redux";
 import { deleteRoomThunk, getUserRoomsThunk } from "../../store/rooms";
 import { useHistory } from "react-router-dom";
+import { useState } from "react";
 // import EditRoom from "../EditRoom/EditRoom";
 
 export default function UserRoom({ room }) {
     const user = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const history = useHistory();
+    const [confirmDelete, setConfirmDelete] = useState(false);
 
     function handleDelete() {
+       
         dispatch(deleteRoomThunk(room.id))
             .then(() => {
                 dispatch(getUserRoomsThunk())
@@ -40,7 +43,7 @@ export default function UserRoom({ room }) {
                             <div onClick={handleClick}>
                                 {room.title}
                             </div>
-                            {room.owner_id == user.id && (
+                            {room.owner_id === user.id && (
                                 (<div className={styles.editRoom} onClick={handleEdit}><i class="fa-solid fa-pen-to-square"></i></div>)
                             )}
                         </div>
@@ -50,13 +53,19 @@ export default function UserRoom({ room }) {
                     </div>
                 </div>
                 <div className={styles.joinButtonDiv}>
-                    {room.owner_id != user.id && (
+                    {room.owner_id !== user.id && (
                         <button className={styles.joinButton}>Join</button>
                     )}
-                    {room.owner_id == user.id && (
-                        <button className={styles.joinButton} onClick={handleDelete}>Delete</button>
+                    {room.owner_id === user.id && !confirmDelete && (
+                       <div className={styles.deleteButton} onClick={()=>setConfirmDelete(true)}>Delete</div>
                     )}
-
+                    {room.owner_id === user.id && confirmDelete && (
+                        <div className={styles.confirmDelete}>
+                            <div className={styles.deleteButton} onClick={handleDelete}>Click again to confirm</div>
+                            <div className={styles.deleteButton} onClick={()=>setConfirmDelete(false)}>Cancel</div>
+                       </div>
+                    )}
+                    
                 </div>
             </div>
         </div>

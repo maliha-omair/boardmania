@@ -4,11 +4,28 @@ const REMOVE_ROOM = "rooms/REMOVE_ROOM";
 const UPDATE_ROOM = "rooms/UPDATE_ROOM";
 const SET_USER_ROOMS = "rooms/USER_ROOM";
 const SET_CURRENT_ROOM = "rooms/CURRENT_ROOM";
-const SET_ROOM_MEMBERS = "rooms/ROOM_MEMBERS"
-const SET_ROOM_GAMES = "rooms/ROOM_GAMES"
-const SET_CURRENT_GAME = "rooms/SET_CURRENT_GAME"
+const SET_ROOM_MEMBERS = "rooms/ROOM_MEMBERS";
+const SET_ROOM_GAMES = "rooms/ROOM_GAMES";
+const SET_CURRENT_GAME = "rooms/SET_CURRENT_GAME";
+const SETUP_GAME_BOARD = "rooms/SETUP_GAME_BOARD";
 
-
+const initialGameBoard = [
+    ["R","","","","","","","","","","","","","","R"],
+    ["","R","R","","","","","","","","","","","",""],
+    ["","R","R","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["R","","","","","","","","","","","","","","R"],
+]
 
 const setPublicRooms = (rooms) => ({
     type: SET_PUBLIC_ROOMS,
@@ -53,6 +70,12 @@ const setCurrentRoomGames = (games) =>({
 const setCurrentGame = (game) => ({
     type: SET_CURRENT_GAME,
     payload: game
+})
+
+const setupGameBoard = (game) =>({
+    type: SETUP_GAME_BOARD,
+    payload: game
+
 })
 
 export const getPublicRoomsThunk = () => async dispatch => {
@@ -111,6 +134,8 @@ export const createNewRoomThunk=(room)=> async dispatch => {
         const data = await res.json();
         dispatch(setNewRoom(data))
         return res;
+    }else{
+        throw res;
     }
 }
 
@@ -207,13 +232,14 @@ export const createGameThunk = (gameId,name) => async dispatch =>{
 }
 
 export const getGameThunk = (gameId) => async dispatch =>{
-    const res = await fetch(`/api/rooms/${gameId}`,{
+    const res = await fetch(`/api/games/${gameId}`,{
         method: "GET"
     });
 
     if (res.ok){
         const result = await res.json();
         dispatch(setCurrentGame(result))
+        dispatch(setupGameBoard(result))
         return result
     } 
 }
@@ -226,6 +252,7 @@ export const joinGameThunk = (id) => async dispatch =>{
     if (res.ok){
         const result = await res.json();
         dispatch(setCurrentGame(result))
+        dispatch(setupGameBoard(result))
         return result
     } 
 }
@@ -275,6 +302,9 @@ export default function roomsReducer(state = initialState, action) {
             return newState;
         case SET_CURRENT_GAME:
             newState.currentGame = action.payload;
+            return newState;
+        case SETUP_GAME_BOARD:
+            newState.board = initialGameBoard;
             return newState;
         default:
             return state;

@@ -22,43 +22,48 @@ export default function CreateRoom() {
 
         setErrors([]);
         let validations = [];
-        if (title.length < 4){
-            validations.push("Title length should be atleast 4 character")
+        if (title.length < 4 || title.length > 100) {
+            validations.push("Title: Title needs to be between 4 and 100 characters")
         }
-        if (desc.length < 10){
-            validations.push("Description length should be atleast 10 character")
+        if (desc.length < 10 || desc.length > 500) {
+            validations.push("Description: Description needs to be between 10 and 500 characters")
         }
-        if(validations && validations.length > 0) {
+
+
+        if (validations && validations.length > 0) {
             setErrors(validations)
             return
         }
-        return dispatch(createNewRoomThunk(room))
+        if (errors.length === 0) {
+            dispatch(createNewRoomThunk(room))
             .then((res) => {
-
-                history.push(`/userRoom`)
-            })
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) {
-                    setErrors(Object.values(data.errors))
-                    return
-                }
-            });
-
+                    console.log(res, "create res is")
+                    history.push(`/userRoom`)
+                })
+                .catch(async (res) => {
+                    if (res.status && res.status === 400) {
+                        const body = await res.json();
+                        for(let i in body.errors){
+                            validations.push(body.errors[i])
+                        }
+                        setErrors(body.errors);
+                    }
+                });
+        }
     }
     return (
         <div className={styles.mainDiv}>
             <form className={styles.form} onSubmit={handleSubmit}>
                 <div className={styles.errorMessage}>
-                    {errors.map((error, ind) => (
+                    {Object.values(errors).map((error, ind) => (
                         <div key={ind}>{error}</div>
                     ))}
                 </div>
                 <div>
-                    <input type="text" placeholder="title" className={styles.input} value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <input type="text" placeholder="Title" className={styles.input} value={title} onChange={(e) => setTitle(e.target.value)} />
                 </div>
                 <div>
-                    <input type="text" placeholder="description" className={styles.input} value={desc} onChange={(e) => setDesc(e.target.value)} />
+                    <input type="text" placeholder="Description" className={styles.input} value={desc} onChange={(e) => setDesc(e.target.value)} />
                 </div>
                 <div>
                     <input type="checkbox" className={styles.inputPrivate} checked={isPublic} onChange={(e) => setIsPublic(!isPublic)} ></input>

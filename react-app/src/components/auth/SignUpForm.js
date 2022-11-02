@@ -15,14 +15,21 @@ const SignUpForm = () => {
   const history = useHistory();
   const onSignUp = async (e) => {
     e.preventDefault();
-    alert("button is clicked")
+    let validations = []
+    // let validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    // if (email.match(validRegex)) setErrors
     if (password === repeatPassword) {
       const data = await dispatch(signUp(username, email, password));
       if (data) {
-        setErrors(data)
-        console.log(data)
+        for (let values in data){
+          validations.push(data[values])        
+        }        
       }
     }
+    else{
+      validations.push("password should match repeatPassword")
+    }
+    if(validations.length >0) setErrors(validations)
   };
   function handleLogin() {
     history.push('/login')

@@ -24,12 +24,12 @@ export default function JoinedRoom({ room }) {
         history.push(`/rooms/${room.id}/view`)
         
     }
-    return room && (
-        <div className={styles.innerDiv}  onClick={handleClick}>
+    return room && room.owner_id !== user.id && (
+        <div className={styles.innerDiv} >
             <div className={styles.imageDiv}>
                 <img className={styles.image} src={defaultImage}></img>
             </div>
-            <div className={styles.titleDesc}>
+            <div className={styles.titleDesc}  onClick={handleClick}>
                 <div className={styles.title}>
                     <div className={styles.titleDiv}>
                         <div>
