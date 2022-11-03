@@ -9,11 +9,15 @@
     /* border: solid white;     */
     justify-content: center;
     align-items: center;
-    
+  
     width: 400px;
     /* border: solid white; */
+    /* background-image: url("../../assets/gameBoard.png"); */
+    
     
 }
+
+
 
 .mainContainer{
     display: flex;
@@ -24,8 +28,28 @@
     /* border: solid white;     */
     max-width: 950px;
     margin: 0 auto;
+    /* background-image: url("../../assets/gameBoard.png"); */
+    /* opacity: 0.12; */
+    /* position: relative;  */
+    /* height: 100vh; */
+    /* width: 100%; */
+    /* display: flex;
+    align-items: center;
+    justify-content: center; */
+    
 }
 
+/* .mainContainer::before {    
+    content: "";
+    background-image: url('../../assets/gameBoard.png');
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.09;
+} */
 .input{
     width: 550px;
     height: 30px;
@@ -96,6 +120,7 @@
     top:0;
     right:0;
     position: absolute;
+
     
 }
 
