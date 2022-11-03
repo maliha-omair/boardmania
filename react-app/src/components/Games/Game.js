@@ -14,8 +14,8 @@ export default function Game({ game }) {
     // const showDeleteButton = game.players.at(-1).member.user.id === user.id
     // const showEditButton = game.players.at(-1).member.user.id === user.id
 
-    const [showEditButton, setShowEditButton] = useState(game.players.at(-1).member.user.id === user.id)
-    const[showDeleteButton,setShowDeleteButton] = useState(game.players.at(-1).member.user.id === user.id)
+    const [showEditButton, setShowEditButton] = useState(false)
+    const[showDeleteButton,setShowDeleteButton] = useState(false)
     const [error, setError] = useState([])
     const [editMode, setEditMode] = useState(false);
     const [gameName, setGameName] = useState(game.name);
@@ -32,12 +32,18 @@ export default function Game({ game }) {
         if (members && user) {
             isMember = members.filter(m => m.user.id === user.id && m.status === "member").length > 0
         }
-        
-        if (!isMember) {
+        const isGameCreater = game.players.at(-1).member.user.id === user.id;
+        if(isGameCreater && isMember){
+            setShowEditButton(true)
+            setShowDeleteButton(true)
+            setEditMode(true)
+        } 
+        else{
             setShowEditButton(false)
             setShowDeleteButton(false)
             setEditMode(false)
-        }
+        } 
+        
         if (isMember && !gameFull && !alreadyPlayer) {
             
             setShowJoinButton(true)
