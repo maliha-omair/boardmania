@@ -84,9 +84,14 @@ Only owner of game can delete the game by clicking on delete icon next to game. 
 
 ![Delete game](screenshots_readme/create_game.png)
 
-# View or play game
+# join game
 
-A user can click on join game if there is only one player as only 2 player can play game. The join icon will turn into view game if there are two players already playing the game. 
+A user can click on join game if there is only one player as only 2 player can play the game. The join icon will turn into view game if there are two players already playing the game. 
 
 ![Join game](screenshots_readme/join_game.png)
 
+# View game
+
+A user can view game or play game by clicking on eye next to that game. 
+
+![Join game](screenshots_readme/game_page.png)
