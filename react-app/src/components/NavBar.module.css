@@ -56,3 +56,10 @@
     padding-right: 10px;
     padding-top: 5px;
 }
+
+.userName{
+    font-size: 38px;
+    color:#59AAB2;
+    margin-top:5px;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+}

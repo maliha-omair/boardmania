@@ -1,8 +1,9 @@
+import { useEffect } from "react";
 import {  useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { useHistory} from "react-router-dom";
-import { createGameThunk } from "../../store/rooms";
+import { createGameThunk, getGamesByRoomID } from "../../store/rooms";
 import styles from "../SingleRoom/SingleRoom.module.css"
 
 
@@ -12,6 +13,22 @@ export default function CreateGame({room}) {
     const history = useHistory();
     const [name, setName] = useState("")
     const [error,setError] = useState([])
+    const roomMembers = useSelector(state => state.rooms.currentRoomMembers);
+    const user = useSelector(state => state.session.user);
+
+    const [showCreateButton, setShowCreateButton] = useState(false) 
+
+    useEffect(()=>{
+        if(user && roomMembers ){
+            const thisMember = roomMembers.find(m => m.user.id === user.id)
+            if(thisMember && thisMember.status === "member"){
+                setShowCreateButton(true);
+            }else{
+                setShowCreateButton(false);
+            }
+        }
+    },[roomMembers, user])
+
     function handleCreateGame(e) {
         e.preventDefault();
         setError("")
@@ -25,7 +42,8 @@ export default function CreateGame({room}) {
         if (error.length === 0){
             dispatch(createGameThunk(room.id,name))
             .then((res) => {
-                history.push(`/rooms/${room.id}/games/${res.id}`)
+                dispatch(getGamesByRoomID(room.id));
+                // history.push(`/rooms/${room.id}/view`)
             })
             .catch(async res => {
                 if(res.status && res.status === 400){
@@ -47,7 +65,7 @@ export default function CreateGame({room}) {
             </div>
             <form onSubmit={()=>handleCreateGame}>
                 <input placeholder="Game Name" value={name} onChange={(e)=>setName(e.target.value)} className={styles.gameInput}></input>   
-                <button type="submit" className={styles.createGameButton} onClick={handleCreateGame}> Create</button>
+                <button type="submit" disabled={!showCreateButton} className={showCreateButton?styles.createGameButton:styles.disabledCreateGameButton} onClick={handleCreateGame}> Create</button>
             </form>
             
         </div>

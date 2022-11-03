@@ -18,7 +18,7 @@ export default function RoomMembers({roomId}){
     return roomMembers && (
         <div>
             {Object.values(roomMembers).map(r => {
-                return <RoomMember member={r}/>
+                return <RoomMember key={r.id} member={r}/>
             })}
         </div>
     )

@@ -16,7 +16,7 @@ export default function Games({ roomId }) {
            
             {Object.values(games).map((game) => {
                 return (
-                    <div className={styles.games}><Game game={game} /></div>
+                    <div key={game.id} className={styles.games}><Game key={game.id} game={game} /></div>
                 )
                 
             })}

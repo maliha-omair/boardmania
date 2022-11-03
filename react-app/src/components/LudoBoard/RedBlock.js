@@ -1,9 +1,10 @@
 import styles from "../LudoBoard/LudoBoard.module.css"
+import Pawn from "./Pawn"
 
-export default function RedBlock({s}) {
+export default function RedBlock({s,x, y}) {
     return (
         <div className={[styles.border, styles.red].join(' ')} >
-            {s && <i class="fa-solid fa-chess-pawn fa-2xl"></i>}
+            <Pawn s={s} />
         </div>
    )
 }

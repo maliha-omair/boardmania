@@ -54,15 +54,13 @@ def create_game(roomId):
     """
     Create a new game 
     """
-    member = Member.query.filter(Member.user_id == current_user.id, Member.room_id == roomId, Member.membership_status == "member").first()
+    member = Member.query.filter(Member.user_id == current_user.id, Member.room_id == roomId).first()
     if member is None:
         return {'message': 'Validation Errors', 'errors':  ['User must be member of the room']}, 400
 
     game = Game()
     form = CreateGame()
     form['csrf_token'].data = request.cookies['csrf_token']
-
-
 
     if form.validate_on_submit():
         form.populate_obj(game)
@@ -97,10 +95,6 @@ def userRoom():
     rooms = Room.query.filter(Room.owner_id == owner).all()
     return {'rooms': [room.to_dict() for room in rooms]}
     
-
-
-
-
 @room_routes.route('', methods=["POST"])
 @login_required
 def create_new_room():
@@ -123,9 +117,8 @@ def create_new_room():
         member.user_id = owner_id
         member.membership_status = MemberStatus.member
         db.session.add(member)
-
         db.session.commit()
-        return {'room': room.to_dict()}
+        return room.to_dict()
     else:
         return {'message': 'Validation Errors', 'errors': form.errors}, 400
 

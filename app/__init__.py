@@ -1,4 +1,5 @@
 import os
+from flask_socketio import SocketIO
 from flask import Flask, render_template, request, session, redirect
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -17,11 +18,18 @@ from .seeds import seed_commands
 
 from .config import Config
 
+from .socket import socketio
+
+
 app = Flask(__name__)
 
 # Setup login manager
 login = LoginManager(app)
 login.login_view = 'auth.unauthorized'
+
+socketio.init_app(app)
+if __name__ == '__main__':
+    socketio.run(app)
 
 
 @login.user_loader

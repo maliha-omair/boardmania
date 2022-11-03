@@ -10,9 +10,10 @@ const SET_CURRENT_GAME = "rooms/SET_CURRENT_GAME";
 const SETUP_GAME_BOARD = "rooms/SETUP_GAME_BOARD";
 
 const initialGameBoard = [
-    ["R","","","","","","","","","","","","","","R"],
-    ["","R","R","","","","","","","","","","","",""],
-    ["","R","R","","","","","","","","","","","",""],
+    ["","","R","","","","","","","","","","","",""],
+    ["","","","","","","","","","","","","","",""],
+    ["","","G","G","","","","","","","","R","R","",""],
+    ["","","G","G","","","","","","","","R","R","",""],
     ["","","","","","","","","","","","","","",""],
     ["","","","","","","","","","","","","","",""],
     ["","","","","","","","","","","","","","",""],
@@ -20,11 +21,10 @@ const initialGameBoard = [
     ["","","","","","","","","","","","","","",""],
     ["","","","","","","","","","","","","","",""],
     ["","","","","","","","","","","","","","",""],
+    ["","","Y","Y","","","","","","","","B","B","",""],
+    ["","","Y","Y","","","","","","","","B","B","",""],
     ["","","","","","","","","","","","","","",""],
     ["","","","","","","","","","","","","","",""],
-    ["","","","","","","","","","","","","","",""],
-    ["","","","","","","","","","","","","","",""],
-    ["R","","","","","","","","","","","","","","R"],
 ]
 
 const setPublicRooms = (rooms) => ({
@@ -269,6 +269,21 @@ export const deleteGameThunk = (id) => async dispatch =>{
     } 
 }
 
+export const editGameThunk = (gameId, name) => async dispatch =>{
+    const res = await fetch(`/api/games/${gameId}`,{
+        method: "PUT",
+        headers: { 'Content-Type': 'application/json' },
+        body:JSON.stringify({
+            name,
+        }),
+    });
+    if (res.ok){
+        const result = await res.json();
+        return result
+    } else{
+        throw res;
+    }
+}
 const initialState = null;
 export default function roomsReducer(state = initialState, action) {
     let newState = {...state};

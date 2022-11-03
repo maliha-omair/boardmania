@@ -16,9 +16,9 @@ export default function SplashPage() {
                         Welcome {user.username}
                     </div>
                     <h1>Board Mania</h1>
-                    PUZZLE»BOARD
+                  
 
-                    BoardMania is an online Ludo game. You can play Ludo King in online multiplayer mode or locally, as well as against computer opponents. The first player to move all four pieces into their home triangle wins the game!
+                    BoardMania is an online Ludo game. You can play Ludo King in multiplayer mode. The first player to move all four pieces into their home triangle wins the game!
 
                     <h2>About Boarmania</h2>
                     Boardmania is an online version of the classic board game Ludo. You can play with your friends and family, or against the computer. It’s a really easy game to learn, making it suitable for players of all ages.

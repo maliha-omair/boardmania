@@ -23,7 +23,7 @@
 .innerDiv{
     display: flex;
     flex-direction: row;
-
+    justify-content: space-between;
     margin-right: 10px;
 }
 
@@ -32,6 +32,13 @@
     flex-direction: column;
     padding-top: 20px;
     margin-bottom: 10px;
+}
+
+.noRoom{
+    display: flex;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    margin-left: 10px;
+    margin-top:10px;
 }
 
 .gameMode{
@@ -55,15 +62,17 @@
     width: 10%;
 }
 
-.buttonDiv{
+/* .buttonDiv{
     width: 20%;
-}
+} */
 
 .joinButton{
-    margin-left: 10px;
+    /* margin-left: 10px; */
     font-size: 16px;
     color: #DA7F14;
-    cursor: pointer;       
+    cursor: pointer;  
+    /* width: 200px; */
+    width: 20%;
 }
 
 .deleteButton{
@@ -73,3 +82,10 @@
     cursor: pointer;  
 }
 
+.editButton{
+    font-size: 16px;
+    color: #DA7F14;
+    cursor: pointer;
+ 
+    
+}

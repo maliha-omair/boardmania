@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from app.forms.update_game import UpdateGame
 from app.models.game_players import GamePlayer, PlayerColor, PlayerType
 from app.models.members import Member, MemberStatus
 from flask import Blueprint, request, abort
@@ -57,3 +58,23 @@ def get_game(gameId):
     if game is None:
         return {'message': 'Not Found' }, 404
     return game.to_dict()    
+
+@game_routes.route('/<int:gameId>', methods=["PUT"])
+@login_required
+def edit_game(gameId):
+    """
+    Edit game by Id
+    """
+    
+    form = UpdateGame()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        game = Game.query.filter(Game.id == gameId).first()
+        if game is None:
+            return {'error': "Game not found"}, 404 
+        else:
+            form.populate_obj(game)
+            if Game.query.filter(Game.name == game.name, Game.id != gameId, Game.room_id == game.room_id).first() is not None:
+                return {'message': 'Validation Errors', 'errors':  ['Name must be unique']}, 400
+            db.session.commit()
+            return game.to_dict()

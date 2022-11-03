@@ -28,6 +28,7 @@
 .gameInput{
     border-radius: 12px;
     height: 30px;
+    margin-left: 10px;
 }
 
 .image{
@@ -42,14 +43,14 @@
     height: 35px;
     border-radius: 12px;
     color: white;
-    background-color: #59AAB2;
+    background-color: #DA7F14;
     /* color: white; */
     font-size: 16px;
     text-align: center;
     align-items: center;
     justify-content: center;
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
-    /* margin-left: 20px; */
+    margin-left: 15px;
     cursor: pointer;
 }
 
@@ -65,6 +66,21 @@
     color: rgb(222, 214, 214);
 }
 
+.disabledCreateGameButton{
+    width: 100px;
+    height: 35px;
+    border-radius: 12px;
+    color: white;
+    background-color: #cbbdad;
+    /* color: white; */
+    font-size: 16px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    margin-left: 15px;
+    
+}
 .centerDiv{
     display: flex;
     flex-direction:  column;
@@ -120,15 +136,18 @@
 }
 
 .sectionHeader{
+    display: flex;
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
     font-size: 32px;
+    
 }
 
 .rightDiv{
     display: flex;
     flex-direction: column;
-    width: 30%;
+    width:40%;
     overflow-y: scroll;
+    
     max-height: calc(90vh - 46px); 
 }
 

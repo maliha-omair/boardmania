@@ -1,13 +1,13 @@
 .border{
     border: solid 1px rgb(157, 145, 145);
-    width: 40px;
-    height: 40px;
+    width: var(--blockWidth);
+    height: var(--blockWidth);
 }
 
 .noBorder{
     border: solid 1px white;
-    width: 40px;
-    height: 40px;
+    width: var(--blockWidth);
+    height: var(--blockWidth);
 }
 
 
@@ -20,74 +20,86 @@
 }
 
 .red{
-    background-color: red;
-}
-
-.redPawn{
-    color: red;
+    background-color: #F47960;
+    color: black;
 }
 
 .green{
-    background-color: green;
+    background-color: #35DF91;
+    color: black;
 }
-
-.greenPawn{
-    color: green;
-}
-
 
 .yellow{
-    background-color: yellow;
+    background-color: #FAC762;
+    color: black;
 }
 
 .blue{
-    background-color: blue;
+    background-color: #33A9FE;
+    color: black;    
+}
+
+.redPawn{
+    color: #B41A1A;
+}
+
+.greenPawn{
+    color: #179058;
+}
+
+.yellowPawn{
+    color: #E39907;
+}
+
+.bluePawn{
+    color: #0073C4;
 }
 
 .white{
     background-color: white;
+    color: black;    
 }
 
 
 .arrowUp {
-    width: 40px;
-    height: 40px;
+    width: var(--blockWidth);
+    height: var(--blockWidth);
     background: yellow ;
     clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
 }
 
 .arrowDown {
-    width: 40px;
-    height: 40px;
+    width: var(--blockWidth);
+    height: var(--blockWidth);
     background: red ;
     clip-path: polygon(0% 0%, 50% 100%, 100% 0%);
 }
 
 
 .arrowLeft {
-    width: 40px;
-    height: 40px;
+    width: var(--blockWidth);
+    height: var(--blockWidth);
     background: blue ;
     clip-path: polygon(100% 100%, 0% 50%, 100% 0%);
 }
 
 .arrowRight {
-    width: 40px;
-    height: 40px;
+    width: var(--blockWidth);
+    height: var(--blockWidth);
     background: green ;
     clip-path: polygon(0% 0%, 0% 100%, 100% 50%);
 }
 
 .arrowRedLeftDown {
-    width: 40px;
-    height: 40px;
+    width: var(--blockWidth);
+    height: var(--blockWidth);
     background: rgb(255, 64, 0) ;
     clip-path: polygon(0% 0%, 100% 0%, 100% 100%);
 }
 
 .arrowRedRight {
-    width: 40px;
-    height: 40px;
+    width: var(--blockWidth);
+    height: var(--blockWidth);
     background: red;
     clip-path: polygon(0% 0%, 0% 100%, 100% 0%);
 
@@ -95,8 +107,8 @@
 
 
 .arrowGreenTop {
-    width: 40px;
-    height: 40px;
+    width: var(--blockWidth);
+    height: var(--blockWidth);
     background: green ;
     clip-path: polygon(0% 100%, 0% 0%, 100% 100%);
 }

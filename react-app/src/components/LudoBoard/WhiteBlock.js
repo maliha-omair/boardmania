@@ -1,9 +1,10 @@
 import styles from "../LudoBoard/LudoBoard.module.css"
+import Pawn from "./Pawn"
 
-export default function WhiteBlock({s}) {
+export default function WhiteBlock({s, x, y}) {
     return (
         <div className={[styles.border, styles.white].join(' ')} >
-            {s && <i class="fa-solid fa-chess-pawn fa-2xl"></i>}
+            <Pawn s={s} />
         </div>
    )
 }

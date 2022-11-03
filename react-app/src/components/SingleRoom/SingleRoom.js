@@ -29,14 +29,14 @@ export default function SingleRoom() {
                 <div className={styles.leftDiv}>
                     <div className={styles.roomMembers}>
                         <div className={styles.sectionHeader}> Members</div>
-                        <RoomMembers roomId={roomId} />
+                        <RoomMembers roomId={roomId}  key = {room.id}/>
                     </div>
                 </div>
                 <div className={styles.rightDiv}>
                     <div >
                     <div className={styles.sectionHeader}>Room Games</div>
-                        <CreateGame room={room} />
-                        <Games roomId={roomId} />
+                        <CreateGame room={room}  />
+                        <Games key={room.id} roomId={roomId}  />
                     </div>
                 </div>
                 <div>
