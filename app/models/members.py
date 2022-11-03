@@ -21,8 +21,7 @@ class Member(db.Model):
     # check delete
     user = db.relationship("User", back_populates="member", lazy=False)
     room = db.relationship("Room", back_populates="members",lazy=False)
-
-
+    
     def to_dict(self):
         return {
             'id': self.id,
