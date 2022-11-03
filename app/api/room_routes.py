@@ -11,6 +11,8 @@ from app.forms import CreateRoom,UpdateRoom
 room_routes = Blueprint('rooms', __name__)
 
 
+
+
 @room_routes.route('')
 @login_required
 def rooms():
@@ -22,6 +24,8 @@ def rooms():
     roomsToFilter = Room.query.join(Member).filter(Room.owner_id != owner_id, Member.user_id == owner_id ).all()
     filteredRooms = [r for r in rooms if r not in roomsToFilter ]
     if rooms: 
+        # filteredRooms = filteredRooms.sort(key = lambda e: e.id, reverse=True)
+        print(filteredRooms)
         return {'rooms': [room.to_dict() for room in filteredRooms]}
     else:
         return{'message': []}
@@ -45,7 +49,7 @@ def games(id):
     """
     list games of room by Id
     """
-    games = Game.query.filter(Game.room_id == id).all()
+    games = Game.query.filter(Game.room_id == id).order_by(Game.id.desc()).all()
     return {'games': [game.to_dict() for game in games]}
     
 @room_routes.route('/<int:roomId>/games', methods=["POST"])
@@ -92,7 +96,7 @@ def userRoom():
     list user's rooms 
     """
     owner = current_user.id
-    rooms = Room.query.filter(Room.owner_id == owner).all()
+    rooms = Room.query.filter(Room.owner_id == owner).order_by(Room.id.desc()).all()
     return {'rooms': [room.to_dict() for room in rooms]}
     
 @room_routes.route('', methods=["POST"])
@@ -193,6 +197,6 @@ def get_room_members(room_id):
     """
     Get all room members
     """
-    members = Member.query.filter(Member.room_id == room_id).all()
+    members = Member.query.filter(Member.room_id == room_id).order_by(Member.id.desc()).all()
     return {'members': [m.to_dict() for m in members]}
 

@@ -65,10 +65,10 @@ export default function CreateRoom() {
                 <div>
                     <input type="text" placeholder="Description" className={styles.input} value={desc} onChange={(e) => setDesc(e.target.value)} />
                 </div>
-                <div>
+                {/* <div>
                     <input type="checkbox" className={styles.inputPrivate} checked={isPublic} onChange={(e) => setIsPublic(!isPublic)} ></input>
                     <label className={styles.label}>Private</label>
-                </div>
+                </div> */}
                 <div>
                     <button className={styles.button}>Submit</button>
                 </div>

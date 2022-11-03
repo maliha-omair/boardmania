@@ -21,6 +21,7 @@ export default function CreateGame({room}) {
     useEffect(()=>{
         if(user && roomMembers ){
             const thisMember = roomMembers.find(m => m.user.id === user.id)
+            
             if(thisMember && thisMember.status === "member"){
                 setShowCreateButton(true);
             }else{
