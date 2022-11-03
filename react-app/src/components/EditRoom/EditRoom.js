@@ -30,7 +30,7 @@ export default function EditRoom({room}) {
         const room = {
             title: title,
             description: desc,
-            isPublic: isPublic
+            isPublic: true
         }
 
         setErrors([]);
@@ -73,10 +73,10 @@ export default function EditRoom({room}) {
                 <div>
                     <input type="text" placeholder="description" className={styles.input} value={desc} onChange={(e) => setDesc(e.target.value)} />
                 </div>
-                <div>
+                {/* <div>
                     <input type="checkbox" className={styles.inputPrivate} checked={isPublic} onChange={(e) => setIsPublic(!isPublic)} ></input>
                     <label className={styles.label}>Private</label>
-                </div>
+                </div> */}
                 <div>
                     <button className={styles.button}>Submit</button>
                 </div>
