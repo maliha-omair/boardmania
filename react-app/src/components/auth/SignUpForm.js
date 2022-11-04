@@ -13,6 +13,8 @@ const SignUpForm = () => {
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
   const history = useHistory();
+
+  
   const onSignUp = async (e) => {
     e.preventDefault();
     let validations = []

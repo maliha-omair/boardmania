@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import {  useParams } from "react-router-dom"
+import { useParams } from "react-router-dom"
 import { getGameThunk, updateBoard } from "../../store/rooms"
 import styles from "../GameBoard/GameBoard.module.css"
 import LudoBoard from "../LudoBoard/LudoBoard"
@@ -18,7 +18,7 @@ export default function GameBoard() {
     const [chatMessages, setChatMessages] = useState([]);
     const [chatInput, setChatInput] = useState("");
 
-    const chatRoomId = roomId +"-"+gameId
+    const chatRoomId = roomId + "-" + gameId
 
     function sendChat(e) {
         e.preventDefault();
@@ -73,8 +73,8 @@ export default function GameBoard() {
     }, [dispatch, game, gameId])
 
 
-    function buildMessage(payload){
-        return {user: 'demo@aa.io', room:chatRoomId, payload: payload};
+    function buildMessage(payload) {
+        return { user: user.username, room: chatRoomId, payload: payload };
     }
 
     function startGame() {
@@ -109,23 +109,27 @@ export default function GameBoard() {
                     <LudoBoard />
                 </div>
                 <div className={styles.player2}>Player 2 </div>
-                
+
             </div>
             <div className={styles.rightDiv}>
-            <form onSubmit={sendChat}>
-                    <input
-                        className={styles.chatInput}
-                        value={chatInput}
-                        onChange={(e) => setChatInput(e.target.value)}
-                    />
-                    <button type="submit" className={styles.sendButton}>Send</button>
-                    <div>
-                        {chatMessages.map((m, ind) => (
-                            <div className={styles.chatMessages} key={ind}>{`${m.user}: ${m.payload.msg}`}</div>
-                        ))}
-                    </div>
-                </form>
-                right div
+                <div className={styles.chatDiv}>
+                    {chatMessages.map((m, ind) => (
+                        <div className={styles.chatMessages} key={ind}>{`${m.user}: ${m.payload.msg}`}</div>
+                    ))}
+                </div>
+                <div id="anchor"></div>
+                <div>
+                    <form onSubmit={sendChat}>
+                        <div>
+                            <input
+                                className={styles.chatInput}
+                                value={chatInput}
+                                onChange={(e) => setChatInput(e.target.value)}
+                            />
+                            <button type="submit" className={styles.sendButton}>Send</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 

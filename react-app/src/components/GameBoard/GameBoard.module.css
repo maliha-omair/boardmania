@@ -43,7 +43,7 @@
     gap: 10px;
     height:100%;
     width: 100%;;
-    border: solid yellow;
+    /* border: solid yellow; */
 }
 .chatInput{
     width: 200px;
@@ -71,16 +71,47 @@
 
 .player1{
     font-size: 32px;  
-    border: solid white;
+    /* border: solid white; */
 }
 
 .player2{
     font-size: 32px;
-    border:solid white;
+    /* border:solid white; */
 }
 
 .rightDiv{
-    border: solid red;
- 
+    /* border: solid red; */
+    margin-top: 5px;
+}
 
+.chatDiv{
+    overflow-y: scroll;
+    max-height: calc(90vh - 60px);
+    /* display:flex; */
+    /* flex-direction: column-reverse; */
+    overflow-anchor: none;
+}
+
+#anchor{
+    overflow-anchor: auto;
+    height: 1px;
+}
+
+.chatDiv::-webkit-scrollbar{
+    width:5px;   
+}
+
+.chatDiv::-webkit-scrollbar-trumb{
+    background-color: var(--tertiary);
+    border-radius: 2px;
+}
+
+.chatDiv::-webkit-scrollbar-track{
+    background-color:white;
+
+}
+
+.styles.chatDiv{
+    overflow-y: scroll;
+    max-height: calc(90vh - 46px);
 }

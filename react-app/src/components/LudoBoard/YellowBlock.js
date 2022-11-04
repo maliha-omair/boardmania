@@ -5,7 +5,7 @@ export default function YellowBlock({s,x, y}) {
     return (
      <div className={[styles.border, styles.yellow].join(' ')} >
           <Pawn s={s} />    
-          {x},{y}    
+          {/* {x},{y}     */}
      </div>
    )
 }

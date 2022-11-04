@@ -5,7 +5,7 @@ export default function WhiteBlock({s, x, y}) {
     return (
         <div className={[styles.border, styles.white].join(' ')} >
             <Pawn s={s} />
-            {x},{y}
+            {/* {x},{y} */}
         </div>
    )
 }
