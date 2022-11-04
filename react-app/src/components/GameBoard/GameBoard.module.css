@@ -36,6 +36,15 @@
     cursor: pointer;
 }
 
+
+.mainDiv{
+    display:grid;
+    grid-template-columns: auto auto;
+    gap: 10px;
+    height:100%;
+    width: 100%;;
+    border: solid yellow;
+}
 .chatInput{
     width: 200px;
     height: 30px;
@@ -55,10 +64,9 @@
     padding: 0 auto;
     display: grid;
     /* grid-template-columns: repeat(3, 1fr); */
-    grid-template-columns: auto auto auto auto auto;
+    grid-template-columns: 10% 10% 60% 10% 10%;
     row-gap: 12px;
     column-gap: 32px;
-
 }
 
 .player1{
@@ -69,4 +77,10 @@
 .player2{
     font-size: 32px;
     border:solid white;
+}
+
+.rightDiv{
+    border: solid red;
+ 
+
 }
