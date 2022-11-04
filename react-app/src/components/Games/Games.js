@@ -18,7 +18,6 @@ export default function Games({ roomId }) {
                 return (
                     <div key={game.id} className={styles.games}><Game key={game.id} game={game} /></div>
                 )
-                
             })}
         </div>
     ))

@@ -15,7 +15,7 @@ export default function Game({ game }) {
     // const showEditButton = game.players.at(-1).member.user.id === user.id
 
     const [showEditButton, setShowEditButton] = useState(false)
-    const[showDeleteButton,setShowDeleteButton] = useState(false)
+    const [showDeleteButton, setShowDeleteButton] = useState(false)
     const [error, setError] = useState([])
     const [editMode, setEditMode] = useState(false);
     const [gameName, setGameName] = useState(game.name);
@@ -25,27 +25,28 @@ export default function Game({ game }) {
         let isMember = false;
         let alreadyPlayer = false;
         let gameFull = false;
+
         if (game) {
             alreadyPlayer = game.players.filter(g => g.member.user.id === user.id).length === 1;
-            gameFull = game.players.length >= 2          
+            gameFull = game.players.length >= 2
         }
         if (members && user) {
             isMember = members.filter(m => m.user.id === user.id && m.status === "member").length > 0
         }
         const isGameCreater = game.players.at(-1).member.user.id === user.id;
-        if(isGameCreater && isMember){
+        if (isGameCreater && isMember) {
             setShowEditButton(true)
             setShowDeleteButton(true)
             setEditMode(true)
-        } 
-        else{
+        }
+        else {
             setShowEditButton(false)
             setShowDeleteButton(false)
             setEditMode(false)
-        } 
-        
+        }
+
         if (isMember && !gameFull && !alreadyPlayer) {
-            
+
             setShowJoinButton(true)
         }
     }, [members, game, user])
@@ -69,6 +70,7 @@ export default function Game({ game }) {
     }
     function handleEdit() {
         setError([]);
+        if (gameName.length > 20) setError("Name should be less than 20 characters");
         if (gameName !== game.name) {
             dispatch(editGameThunk(game.id, gameName))
                 .then(() => dispatch(getGamesByRoomID(game.room_id)))
@@ -104,7 +106,7 @@ export default function Game({ game }) {
                 </div>
 
                 <div className={styles.gameName}>
-                    {editMode ? <input maxLength={15} autoFocus ref={nameFieldRef} type="text" value={gameName} onKeyDown={(e) => handleKeyPress(e)} onChange={(e) => setGameName(e.target.value)} onBlur={handleEdit} /> : <span onDoubleClick={handleClick}>{game.name}</span>}
+                    {editMode ? <input maxLength={20} autoFocus ref={nameFieldRef} type="text" value={gameName} onKeyDown={(e) => handleKeyPress(e)} onChange={(e) => setGameName(e.target.value)} onBlur={handleEdit} /> : <span onDoubleClick={handleClick}>{game.name}</span>}
                 </div>
                 <div className={styles.gameMode}>
                     {game.mode}
@@ -112,17 +114,19 @@ export default function Game({ game }) {
                 <div className={styles.gameStatus}>
                     {game.game_status}
                 </div>
-                <div className={styles.buttonDiv}>
- 
-                    {showJoinButton ? <div className={styles.joinButton}
-                        onClick={handleJoin} title="join game">
-                        <i class="fa-solid fa-user-plus" ></i>
-                    </div> : <div className={styles.joinButton} onClick={handleJoin} title="view game"><i class="fa-regular fa-eye"></i></div>}
-                </div>
+                <div className={styles.icon}>
+                    <div className={styles.buttonDiv}>
 
-                {showEditButton && <div className={styles.editButton} onClick={() => setEditMode(true)}><i class="fa-solid fa-pen-to-square"></i></div>}
-                <div>
-                    {showDeleteButton && <div className={styles.deleteButton} onClick={handleDelete} title="delete game"><i class="fa-solid fa-trash"></i></div>}
+                        {showJoinButton ? <div className={styles.joinButton}
+                            onClick={handleJoin} title="join game">
+                            <i class="fa-solid fa-user-plus" ></i>
+                        </div> : <div className={styles.joinButton} onClick={handleJoin} title="view game"><i class="fa-regular fa-eye"></i></div>}
+                    </div>
+
+                    {showEditButton && <div className={styles.editButton} onClick={() => setEditMode(true)}><i class="fa-solid fa-pen-to-square"></i></div>}
+                    <div>
+                        {showDeleteButton && <div className={styles.deleteButton} onClick={handleDelete} title="delete game"><i class="fa-solid fa-trash"></i></div>}
+                    </div>
                 </div>
             </div>
         </div>

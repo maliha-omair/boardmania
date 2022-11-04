@@ -59,13 +59,19 @@
 }
 
 .description{
-    font-size: 14px;  
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
-    padding-bottom: 60px;
-    line-height: 0.5px;
-    color: rgb(222, 214, 214);
+    overflow: hidden;
+    word-wrap: break-word;
+    max-width: 800px
+    /* text-overflow: ellipsis; */
+    /* white-space: nowrap; */
 }
-
+.showCreate{
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    color:#DA7F14;
+    margin-top:10px;
+    margin-bottom: 10px;
+}
 .disabledCreateGameButton{
     width: 100px;
     height: 35px;
@@ -138,6 +144,7 @@
 .sectionHeader{
     display: flex;
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    
     font-size: 32px;
     
 }
@@ -145,7 +152,7 @@
 .rightDiv{
     display: flex;
     flex-direction: column;
-    width:40%;
+    width:60%;
     overflow-y: scroll;
     
     max-height: calc(90vh - 46px); 

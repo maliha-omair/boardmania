@@ -4,7 +4,8 @@ import Pawn from "./Pawn"
 export default function YellowBlock({s,x, y}) {
     return (
      <div className={[styles.border, styles.yellow].join(' ')} >
-          <Pawn s={s} />        
+          <Pawn s={s} />    
+          {/* {x},{y}     */}
      </div>
    )
 }

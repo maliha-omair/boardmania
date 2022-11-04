@@ -20,7 +20,7 @@
 }
 
 .red{
-    background-color: #F47960;
+    background-color: #FF4343;
     color: black;
 }
 
@@ -30,17 +30,17 @@
 }
 
 .yellow{
-    background-color: #FAC762;
+    background-color: #FFD240;
     color: black;
 }
 
 .blue{
-    background-color: #33A9FE;
+    background-color: #7AC9F9;
     color: black;    
 }
 
 .redPawn{
-    color: #B41A1A;
+    color: #931414;
 }
 
 .greenPawn{
@@ -48,11 +48,11 @@
 }
 
 .yellowPawn{
-    color: #E39907;
+    color: #F29B00;
 }
 
 .bluePawn{
-    color: #0073C4;
+    color: #2282FC;
 }
 
 .white{

@@ -1,12 +1,25 @@
+.gameContainer{
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* display: flex;
+    flex-direction: row; */
+    padding-top: 20px;
+    margin-bottom: 10px;
+}
+
+
 .mainContainer{
     display: flex;
     flex-direction:  column;
+ 
     /* cursor: pointer; */
     /* transition: background 0.2s;
     background: transparent;
     cursor: pointer;
     border-radius: 4px; */
-
+    /* box-shadow: 18px 18px 0 0 rgb(185, 184, 180), 18px 18px 0 4px black; */
+  
 }
 /* 
 .mainContainer:hover {
@@ -22,17 +35,17 @@
 
 .innerDiv{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     margin-right: 10px;
+    background-color: #1E1E1E;
+    border-radius: 20px;
+    padding: 10px 10px 10px 10px;
+    box-shadow: rgba(218, 127, 20, 0.2) 0px 7px 29px 0px;
+    
+ 
 }
 
-.gameContainer{
-    display: flex;
-    flex-direction: column;
-    padding-top: 20px;
-    margin-bottom: 10px;
-}
 
 .noRoom{
     display: flex;
@@ -52,7 +65,7 @@
     font-size: 16px;  
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
     padding-right: 20px;    
-    width: 20%;
+    width: 80%;
 }
 
 .gameStatus{
@@ -62,6 +75,13 @@
     width: 10%;
 }
 
+.icon{
+    display: flex;
+    flex-direction: row;
+    /* justify-content: space-evenly; */
+    column-gap: 20px;
+    margin-top: 5px;
+}
 /* .buttonDiv{
     width: 20%;
 } */
@@ -69,7 +89,7 @@
 .joinButton{
     /* margin-left: 10px; */
     font-size: 16px;
-    color: #DA7F14;
+    color: #da7f14;
     cursor: pointer;  
     /* width: 200px; */
     width: 20%;

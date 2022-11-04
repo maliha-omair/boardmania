@@ -29,7 +29,6 @@ export default function CreateRoom() {
             validations.push("Description: Description needs to be between 10 and 500 characters")
         }
 
-
         if (validations && validations.length > 0) {
             setErrors(validations)
             return

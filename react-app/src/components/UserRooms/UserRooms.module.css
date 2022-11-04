@@ -90,9 +90,11 @@
 }
 
 .description{
-    max-width:70%;
-    /* padding-left: 10px; */
+    width:70%;
+    max-width: 600px;
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    overflow: hidden;
+    word-wrap: break-word;
     /* border: solid pink; */
 }
 
@@ -132,8 +134,7 @@
 }
 .yourRooms{
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
-    display: flex;
-      
+    display: flex;      
     flex-direction: column;
     align-items: left;
     padding-bottom: 10px;

@@ -137,7 +137,7 @@ export default function LudoBoard() {
                 <RedBlock s ={boardState[5][10]}  x={5} y={10}/>
                 <RedBlock s ={boardState[5][11]}  x={5} y={11}/>
                 <RedBlock s ={boardState[5][12]}  x={5} y={12}/>
-                <RedBlock s ={boardState[5][12]}  x={5} y={13}/>
+                <RedBlock s ={boardState[5][13]}  x={5} y={13}/>
                 <RedBlock s ={boardState[5][14]}  x={5} y={14}/>
             </div>
             <div id="row7" className={styles.board}>

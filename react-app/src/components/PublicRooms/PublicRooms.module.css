@@ -63,7 +63,9 @@
 .description{
     /* padding-left: 10px; */
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
-    /* border: solid pink; */
+    overflow: hidden;
+    word-wrap: break-word;
+    max-width: 800px;
 }
 
 .editRoom{

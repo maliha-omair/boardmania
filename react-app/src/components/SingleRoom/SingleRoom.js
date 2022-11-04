@@ -14,7 +14,24 @@ export default function SingleRoom() {
     const dispatch = useDispatch();
     const history = useHistory();
     const room = useSelector(state => state.rooms && state.rooms.currentRoom);
+    const [showCreate, setShowCreate] = useState(false);
+    const roomMembers = useSelector(state => state.rooms && state.rooms.currentRoomMembers);
+    const user = useSelector(state => state.session.user);
     const { roomId } = useParams();
+    
+    useEffect(()=>{
+        if(user && roomMembers ){
+            const thisMember = roomMembers.find(m => m.user.id === user.id)
+            
+            if(thisMember && thisMember.status === "member"){
+                setShowCreate(true);
+            }else{
+                setShowCreate(false);
+            }
+        }
+    },[roomMembers,user])
+
+
     useEffect(() => {
         dispatch(getRoomByIdThunk(roomId))
     }, [dispatch, roomId]);
@@ -35,7 +52,7 @@ export default function SingleRoom() {
                 <div className={styles.rightDiv}>
                     <div >
                     <div className={styles.sectionHeader}>Room Games</div>
-                        <CreateGame room={room}  />
+                      {showCreate? <CreateGame room={room} /> : <div className={styles.showCreate}>Become a member to create games</div>}
                         <Games key={room.id} roomId={roomId}  />
                     </div>
                 </div>

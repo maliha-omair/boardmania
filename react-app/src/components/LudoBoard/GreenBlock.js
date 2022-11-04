@@ -8,6 +8,7 @@ export default function GreenBlock({s,x,y}) {
     return (
         <div className={[styles.border, styles.green].join(' ')} >
             <Pawn s={s} />
+            {/* {x},{y} */}
         </div>
    )
 }
