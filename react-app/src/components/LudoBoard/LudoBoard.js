@@ -1,7 +1,7 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
-import { getGameThunk } from "../../store/rooms"
+import { getGameThunk, updateBoard } from "../../store/rooms"
 import styles from "../LudoBoard/LudoBoard.module.css"
 import BlueBlock from "./BlueBlock"
 import GreenBlock from "./GreenBlock"
@@ -17,27 +17,71 @@ let socket;
 
 export default function LudoBoard() {
 
-    const boardState = useSelector(state =>  state.rooms &&  state.rooms.board)
+    const boardState = useSelector(state => state.rooms &&  state.rooms.board);
+    const user = useSelector(state=> state.session.user)
+    const [chatMessages, setChatMessages] = useState([]);
+    const [chatInput, setChatInput] = useState("");
+
+    // use state for controlled form input
     const dispatch = useDispatch()
     
-    
-    // const {roomId,gameId} = useParams();
-    
-    // useEffect(()=>{
-    //     socket = io();
 
-    //     socket.on("game_move", (move) =>{
-    //         console.log(move);
-    //     });
+    useEffect(() => {
 
-    //     return(()=> {
-    //         socket.disconnect()
-    //     })
-    // },[]);
+        // create websocket/connect
+        socket = io();
+
+        socket.on('connect', function() {
+            console.log("Connected to server");
+        });
+
+        // listen for chat events
+        socket.on("move", (move) => {
+            // when we recieve a chat, add it into our messages array in state
+            console.log("Received: " + move);
+            dispatch(updateBoard(move));
+        })
+
+        socket.on("chat", (msg) => {
+            // when we recieve a chat, add it into our messages array in state
+            console.log("Received: " + msg);
+            setChatMessages(messages => [...messages, msg])
+        })
+
+        // when component unmounts, disconnect
+        return (() => {
+            socket.disconnect()
+        })
+    }, []);
+
+    function startGame(){
+        socket.emit("move", {action: "INIT"});
+    }
+
+    function sendChat(e){
+        e.preventDefault();
+        socket.emit("chat", {from: user.email, msg: chatInput});
+        setChatInput("")
+    }
+
+    function rollDice(player, roll ){
+        if(roll === 6){
+            socket.emit("move", {action: "BASE_TO_START", p: player});
+        }else{
+            if(player === 1){
+                socket.emit("move", {action: "MOVE", p: player, payload: {from: {x: 13,y: 6}, to: {x: 11,y: 6} }});
+            }else if(player === 2){
+                socket.emit("move", {action: "MOVE", p: player, payload: {from: {x: 1,y: 8}, to: {x: 3,y: 8} }});
+            }
+        }
+    }
 
     if (!boardState) return null;
     return boardState && (
         <div className={styles.mainContainer}>
+            <button onClick={startGame} >Start Game</button>
+            <button onClick={() => rollDice(1, 6)} >Roll 6 (Player 1)</button>
+            <button onClick={() => rollDice(2, 6)} >Roll 6 (Player 2)</button>
             <div id="row1" className={styles.board}>
                 <GreenBlock s = {boardState[0][0]} x={0} y={0}/>
                 <GreenBlock s = {boardState[0][1]} x={0} y={1}/>
@@ -292,6 +336,19 @@ export default function LudoBoard() {
                 <BlueBlock s={boardState[14][12]}  x={14} y={12}/>
                 <BlueBlock s={boardState[14][13]}  x={14} y={13}/>
                 <BlueBlock s={boardState[14][14]}  x={14} y={14}/>
+            </div>
+           
+            <form onSubmit={sendChat}>
+                <input
+                    value={chatInput}
+                    onChange={(e)=>setChatInput(e.target.value)}
+                />
+                <button type="submit">Send</button>
+            </form>
+            <div>
+                {chatMessages.map((m, ind) => (
+                    <div key={ind}>{`${m.from}: ${m.msg}`}</div>
+                ))}
             </div>
         </div>
     )

@@ -22,7 +22,23 @@
 .mainContainer{
     /* border: solid red; */
     /* width:90%; */
+    display: grid;
     margin: 0 auto;
     padding: 0 auto;
+    display: grid;
+    /* grid-template-columns: repeat(3, 1fr); */
+    grid-template-columns: auto auto auto;
+    row-gap: 12px;
+    column-gap: 32px;
 
+}
+
+.player1{
+    font-size: 32px;  
+    border: solid white;
+}
+
+.player2{
+    font-size: 32px;
+    border:solid white;
 }

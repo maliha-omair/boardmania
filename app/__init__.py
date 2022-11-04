@@ -29,6 +29,7 @@ login.login_view = 'auth.unauthorized'
 
 socketio.init_app(app)
 if __name__ == '__main__':
+    socketio.init_app(app)
     socketio.run(app)
 
 

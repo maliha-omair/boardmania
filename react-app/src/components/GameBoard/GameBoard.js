@@ -18,11 +18,14 @@ export default function GameBoard() {
             dispatch(getGameThunk(gameId));
         }
     },[dispatch,game,gameId])
-    return (
+    return (   
         <div className={styles.mainContainer}>
+        <div className={styles.player1}>Player 1 </div>
             <div className={styles.boardDiv}>
                 <LudoBoard />
             </div>
+            <div className={styles.player2}>Player 2 </div>
         </div>
+        
     )
 }

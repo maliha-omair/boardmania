@@ -5,6 +5,7 @@ export default function WhiteBlockNoBorder({s, x, y}) {
     return (
         <div className={[styles.noBorder, styles.white].join(' ')} >
              <Pawn s={s} />
+             {x},{y}
         </div>
    )
 }
