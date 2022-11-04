@@ -55,14 +55,9 @@ def upgrade():
     )
     op.create_table('game_moves',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('player_id', sa.Integer(), nullable=False),
     sa.Column('game_id', sa.Integer(), nullable=False),
     sa.Column('move_order', sa.Integer(), nullable=False),
-    sa.Column('diceroll', sa.Integer(), nullable=False),
-    sa.Column('move_start_position', sa.String(length=50), nullable=False),
-    sa.Column('move_end_position', sa.String(length=50), nullable=False),
     sa.ForeignKeyConstraint(['game_id'], ['games.id'], ondelete='CASCADE'),
-    sa.ForeignKeyConstraint(['player_id'], ['game_players.id'], ondelete='CASCADE'),
     sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###

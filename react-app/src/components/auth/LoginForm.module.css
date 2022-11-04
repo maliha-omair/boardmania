@@ -4,17 +4,10 @@
     display:flex;
     flex-direction: row;
     margin: 0 auto;
-    
     width: 80%;
-    /* border: solid white;     */
     justify-content: center;
     align-items: center;
-  
     width: 400px;
-    /* border: solid white; */
-    /* background-image: url("../../assets/gameBoard.png"); */
-    
-    
 }
 
 
@@ -25,41 +18,18 @@
     justify-content: center;
     align-items: center;
     justify-items: center;
-    /* border: solid white;     */
     max-width: 950px;
-    margin: 0 auto;
-    /* background-image: url("../../assets/gameBoard.png"); */
-    /* opacity: 0.12; */
-    /* position: relative;  */
-    /* height: 100vh; */
-    /* width: 100%; */
-    /* display: flex;
-    align-items: center;
-    justify-content: center; */
-    
+    margin: 0 auto;  
 }
 
-/* .mainContainer::before {    
-    content: "";
-    background-image: url('../../assets/gameBoard.png');
-    background-size: cover;
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    bottom: 0px;
-    left: 0px;
-    opacity: 0.09;
-} */
 .input{
     width: 550px;
     height: 30px;
-    
     border-radius: 12px;
 }
 
 .email{
     padding-bottom: 10px;
-    /* border: solid yellow; */
     width: 350px;
 }
 

@@ -1,5 +1,8 @@
 from flask_socketio import SocketIO, emit
 import os
+from app.models.game_moves import GameMove
+
+from app.models.games import Game
 
 
 # configure cors_allowed_origins
@@ -19,6 +22,7 @@ socketio = SocketIO(cors_allowed_origins= "*")
 @socketio.on("move")
 def handle_move(data):
     print(data)
+    # GameMove.query.filter()
     emit("move", data, broadcast=True)
 
 # handle chat messages

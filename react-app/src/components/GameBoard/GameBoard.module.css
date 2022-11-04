@@ -3,20 +3,48 @@
     width: 100%;
     height: 80%;
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     /* border: solid white; */
     top:0;
     margin: 0 auto;
     padding: 0 auto;
-    /* position: absolute; */
-    
+    /* position: absolute; */    
+}
+
+.testSocket{
+    display: flex;
+    flex-direction: column;
 }
 
 .boardImage{
     width: 50%;
     height: 50%;
+}
+
+.sendButton{
+    width: 80px;
+    height: 40px;
+    border-radius: 12px;
+    /* color: white; */
+    background-color: #DA7F14;
+    color: white;
+    font-size: 20px;
+    text-align: center;
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    cursor: pointer;
+}
+
+.chatInput{
+    width: 200px;
+    height: 30px;
+    border-radius: 12px;
+}
+
+.chatMessages{
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    margin-top:4px;
 }
 
 .mainContainer{
@@ -27,7 +55,7 @@
     padding: 0 auto;
     display: grid;
     /* grid-template-columns: repeat(3, 1fr); */
-    grid-template-columns: auto auto auto;
+    grid-template-columns: auto auto auto auto auto;
     row-gap: 12px;
     column-gap: 32px;
 

@@ -23,7 +23,6 @@ class GamePlayer(db.Model):
     game_position = db.Column(db.String(50), nullable=False)
 
     # relationships
-    game_moves = db.relationship("GameMove", back_populates="player",cascade="all, delete", lazy=False)
     member = db.relationship("Member", back_populates="player", lazy=False)
     game = db.relationship("Game", back_populates="players",cascade="all, delete", lazy=False)
 
