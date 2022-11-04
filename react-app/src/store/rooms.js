@@ -205,7 +205,7 @@ export const approveMembershipThunk = (id) => async dispatch => {
 
 export const rejectMembershipThunk = (id) => async dispatch => {
     const res = await fetch(`/api/members/${id}/reject`, {
-        method: "PUT"
+        method: "DELETE"
     });
     if (res.ok) {
         const result = await res.json();

@@ -14,7 +14,6 @@ const SignUpForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  
   const onSignUp = async (e) => {
     e.preventDefault();
     let validations = []

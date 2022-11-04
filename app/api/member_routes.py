@@ -18,7 +18,7 @@ def approve_member_request(member_id):
         return {'message': "Not Found"}, 404
 
     if memberRequest.room.owner_id != current_user.id:
-        return {'message': "Forbidded: Current user is not owner of group"}, 403
+        return {'message': "Forbidded: Current user is not owner of room"}, 403
     
     if memberRequest.membership_status != MemberStatus.pending:
         return {'message': "Conflict: Member request should be in pending state"}, 409
@@ -29,7 +29,7 @@ def approve_member_request(member_id):
     return memberRequest.to_dict()
 
 
-@member_routes.route('/<int:member_id>/reject', methods=["PUT"])
+@member_routes.route('/<int:member_id>/reject', methods=["DELETE"])
 @login_required
 def reject_member_request(member_id):
     """
@@ -38,14 +38,15 @@ def reject_member_request(member_id):
     memberRequest = Member.query.get(member_id)
     if memberRequest is None:
         return {'message': "Not Found"}, 404
-
+    print(str(memberRequest))
     if memberRequest.room.owner_id != current_user.id:
-        return {'message': "Forbidded: Current user is not owner of group"}, 403
+        return {'message': "Forbidded: Current user is not owner of room"}, 403
     
     if memberRequest.membership_status != MemberStatus.pending:
         return {'message': "Conflict: Member request should be in pending state"}, 409
 
-    memberRequest.membership_status = MemberStatus.deleted
-    db.session.add(memberRequest)
+    # memberRequest.membership_status = MemberStatus.deleted
+    
+    db.session.delete(memberRequest)
     db.session.commit()
     return memberRequest.to_dict()
