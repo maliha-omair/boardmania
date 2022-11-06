@@ -4,8 +4,8 @@ from app.models import db, Room
 # Adds a demo user, you can add other users here if you want
 def seed_rooms():
     
-    roomDemo = Room(
-        title='Demo', description='this is a demo room', isPublic=True, owner_id= 1)
+    # roomDemo = Room(
+    #     title='Demo', description='this is a demo room', isPublic=True, owner_id= 1)
    
     friendsClub = Room(
         title='Friends Club', description='this is a room for friends to play ludo', isPublic=False, owner_id= 1)

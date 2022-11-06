@@ -1,3 +1,5 @@
+import { PawnCoordinate } from "../types";
+
 const SET_PUBLIC_ROOMS = "rooms/SET_PUBLIC_ROOMS";
 const CREATE_ROOM = "rooms/CREATE_ROOM";
 const REMOVE_ROOM = "rooms/REMOVE_ROOM";
@@ -341,12 +343,7 @@ export default function roomsReducer(state = initialState, action) {
 }
 
 
-class PawnCoordinate {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
+
 
 function removePawn(string, char) {
     let strArr = [...string];
@@ -392,7 +389,7 @@ function movePawn(from, to, color, board) {
 function executeMove(board, move) {
     if (!move) return board;
     if (move.action === "INIT") return initialGameBoard;
-    if (move.action === "DICE_ROLL") {
+    if (move.action === "ROLL_DICE") {
         return board;
     }
     if (move.action === "BASE_TO_START") {

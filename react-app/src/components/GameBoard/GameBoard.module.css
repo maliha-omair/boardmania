@@ -24,10 +24,11 @@
 }
 
 .sendButton{
-    width: 80px;
+    width: 60px;
+    margin-left: 5px;
     height: 40px;
+    
     border-radius: 12px;
-    /* color: white; */
     background-color: #DA7F14;
     color: white;
     font-size: 20px;
@@ -46,8 +47,8 @@
     /* border: solid yellow; */
 }
 .chatInput{
-    width: 200px;
-    height: 30px;
+    width: 250px;
+    height: 35px;
     border-radius: 12px;
 }
 
@@ -82,14 +83,29 @@
 .rightDiv{
     /* border: solid red; */
     margin-top: 5px;
+    position: relative;
+    height:800px;
+    
 }
-
+.sendField{
+    position:absolute;
+    bottom:0px;
+    
+}
+.divider{
+   
+   /* border: solid px #DA7F14; */
+   
+}
 .chatDiv{
     overflow-y: scroll;
-    max-height: calc(90vh - 60px);
-    /* display:flex; */
-    /* flex-direction: column-reverse; */
+    max-height: calc(82vh - 60px);
+    padding-right:10px;
     overflow-anchor: none;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    width:300px;
+    
 }
 
 #anchor{
@@ -98,7 +114,7 @@
 }
 
 .chatDiv::-webkit-scrollbar{
-    width:5px;   
+    width:1px;
 }
 
 .chatDiv::-webkit-scrollbar-trumb{

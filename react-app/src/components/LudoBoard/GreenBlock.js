@@ -3,12 +3,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChessPawn, faCircle} from '@fortawesome/free-solid-svg-icons'
 import {fa} from '@fortawesome/fontawesome-svg-core'
 import Pawn from "./Pawn"
+import GenericBlock from "./GenericBlock"
 
-export default function GreenBlock({s,x,y}) {
+export default function GreenBlock({s,x,y, legalMoves, currentPlayer}) {
     return (
         <div className={[styles.border, styles.green].join(' ')} >
-            <Pawn s={s} />
-            {/* {x},{y} */}
+            <GenericBlock s={s} x={x} y={y} legalMoves={legalMoves} currentPlayer={currentPlayer}/>
         </div>
    )
 }

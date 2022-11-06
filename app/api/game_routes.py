@@ -24,7 +24,7 @@ def join_game(gameId):
     player.member_id = member.id
     player.type = PlayerType.PLAYER
     player.game_position = 2
-    player.color = PlayerColor.BLUE
+    player.color = PlayerColor.RED
     game.players.append(player)
     db.session.add(game)
     db.session.commit()

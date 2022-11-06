@@ -1,7 +1,9 @@
+import { useSelector } from "react-redux";
 import { NavLink, Route, Switch, useHistory } from "react-router-dom"
 import CreateRoom from "../CreateRoom/CreateRoom"
 import EditRoom from "../EditRoom/EditRoom";
 import GameBoard from "../GameBoard/GameBoard";
+import GameBoardWrapper from "../GameBoard/GameBoardWrapper";
 import styles from "../Home/Home.module.css"
 import PublicRooms from "../PublicRooms/PublicRooms"
 import SingleRoom from "../SingleRoom/SingleRoom";
@@ -10,6 +12,7 @@ import UserRooms from "../UserRooms/UserRooms";
 
 export default function Home() {
     const history = useHistory();
+
     return (
         <div className={styles.mainContainer}>
 
@@ -56,7 +59,7 @@ export default function Home() {
                         <SingleRoom />
                      </Route>
                      <Route path="/rooms/:roomId/games/:gameId">
-                        <GameBoard />
+                        <GameBoardWrapper/>
                      </Route>
                 </Switch>
 

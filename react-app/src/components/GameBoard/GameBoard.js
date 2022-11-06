@@ -1,55 +1,122 @@
 import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
-import { getGameThunk, updateBoard } from "../../store/rooms"
+import { useDispatch} from "react-redux"
+import { updateBoard } from "../../store/rooms"
 import styles from "../GameBoard/GameBoard.module.css"
 import LudoBoard from "../LudoBoard/LudoBoard"
 import { io } from 'socket.io-client';
 import { useState } from "react"
+import Die from "./Die"
+import { LegalMove, PawnCoordinate } from "../../types"
 
 let socket;
-export default function GameBoard() {
+export default function GameBoard({gameId, roomId, game, user, boardState}) {
     const dispatch = useDispatch();
 
-    const game = useSelector(state => state.rooms && state.rooms.currentGame);
-    const user = useSelector(state => state.session.user)
 
-    const { gameId, roomId } = useParams()
+    const [playerTurn, setPlayerTurn] = useState(0);
+    const [diceValue, setDiceValue] = useState(0);
+    const [currentAction, setCurrentAction] = useState("NONE");
+    const [legalMoves, setLegalMoves] = useState([]);
+    const [currentPlayerColor, setCurrentPlayerColor] = useState("");
+
     const [chatMessages, setChatMessages] = useState([]);
     const [chatInput, setChatInput] = useState("");
 
     const chatRoomId = roomId + "-" + gameId
 
+
+
+    function handlePawnClick(x, y){
+        alert(`pawn at ${x}, ${y} clicked`);
+    }
+
+    function askUserForLegalMove(msg) {
+
+    }
+
+    function findAllPawnPositions(boardState, playerColor){
+        const playerColors = ["","Y","R","G","B"]
+        const currentPlayer = game.players.find(p => p.member.user.id === user.id);
+        const currentPlayerColor = playerColors[currentPlayer.game_position];
+        setCurrentPlayerColor(currentPlayerColor);
+
+        let p = [];
+        for(let y=0;y<boardState.length;y++){
+            for(let x=0;x<boardState.length;x++){
+                if(boardState[x][y].includes(currentPlayerColor)){
+                    console.log(`Found color ${currentPlayerColor} at [${x},${y}]` );
+                    p.push(new PawnCoordinate(x,y));     
+                }
+            }
+        }
+        return p;
+
+    }
+
+    function findLegalMovesHelper(boardState, playerColor, allPositions){
+        let lm = []
+        for(let p in allPositions){
+           lm.push(new LegalMove(allPositions[p], new PawnCoordinate(13,6)));
+        }
+        return lm;
+    }
+
+    function findLegalMoves(diceRoll, playerColor){
+        const allPositions = findAllPawnPositions(boardState, playerColor);
+        const lm = findLegalMovesHelper(boardState, playerColor, allPositions)
+        setLegalMoves(lm);
+        return lm;
+
+    }
+
+
     function sendChat(e) {
         e.preventDefault();
-        socket.emit("chat", buildMessage({ msg: chatInput }));
-        setChatInput("")
+        if (chatInput.trim().length > 0 && chatInput.trim().length < 200) {
+            socket.emit("chat", buildMessage({ msg: chatInput }));
+            setChatInput("")
+        }
+
     }
 
     useEffect(() => {
-
         // create websocket/connect
         socket = io();
 
         socket.on('connect', function () {
             console.log("Connected to server");
             console.log("joining room:", chatRoomId);
-            // socket.join(chatRoomId);
             socket.emit("join", buildMessage({ action: "JOIN" }));
         });
 
 
         // listen for chat events
         socket.on("move", (msg) => {
-            // when we recieve a chat, add it into our messages array in state
+            console.log(JSON.stringify(msg));
+            setPlayerTurn(msg.switchTurn);
+            if (msg.payload.action === "ROLL_DICE") {
+                setDiceValue(msg.payload.payload);
+                findLegalMoves(diceValue,currentPlayerColor)
+                setCurrentAction("MOVE_PAWN");
+                if (msg.user === user.username) {
+                    socket.emit("chatControl", buildMessage({ msg: `${msg.user} rolled ${msg.payload.payload}` }));
+                }
+                askUserForLegalMove(msg);
+            } else {
+                dispatch(updateBoard(msg.payload));
+            }
+
+
             console.log("Received: " + msg);
-            dispatch(updateBoard(msg.payload));
+
         })
+
 
         socket.on("chat", (msg) => {
             // when we recieve a chat, add it into our messages array in state
             console.log("Received: " + msg);
-            setChatMessages(messages => [...messages, msg])
+
+            setChatMessages(messages => [...messages, msg]);
         })
 
         socket.on("chatControl", (msg) => {
@@ -66,51 +133,59 @@ export default function GameBoard() {
     }, []);
 
 
-    useEffect(() => {
-        if (!game) {
-            dispatch(getGameThunk(gameId));
-        }
-    }, [dispatch, game, gameId])
 
 
-    function buildMessage(payload) {
-        return { user: user.username, room: chatRoomId, payload: payload };
+    function buildMessage(payload, switchTurn) {
+        return { user: user.username, room: chatRoomId, switchTurn: switchTurn, payload: payload };
     }
 
     function startGame() {
-        socket.emit("move", buildMessage({ action: "INIT" }));
+        socket.emit("move", buildMessage({ action: "INIT" }, 1));
     }
 
 
 
-    function rollDice(player, roll) {
+    function rollDice(player) {
+        let roll = Math.floor(Math.random() * 6) + 1;
+
         if (roll === 6) {
-            socket.emit("move", buildMessage({ action: "BASE_TO_START", p: player }));
+            // socket.emit("move", buildMessage({ action: "BASE_TO_START", p: player }, playerTurn));
+            socket.emit("move", buildMessage({ action: "ROLL_DICE", p: player, payload: roll }, playerTurn));
         } else {
             if (player === 1) {
-                socket.emit("move", buildMessage({ action: "MOVE", p: player, payload: { from: { x: 13, y: 6 }, to: { x: 11, y: 6 } } }));
+                socket.emit("move", buildMessage({ action: "ROLL_DICE", p: player, payload: roll }, 2));
             } else if (player === 2) {
-                socket.emit("move", buildMessage({ action: "MOVE", p: player, payload: { from: { x: 1, y: 8 }, to: { x: 3, y: 8 } } }));
+                socket.emit("move", buildMessage({ action: "ROLL_DICE", p: player, payload: roll }, 1));
             }
         }
     }
 
-    return (
-        <div className={styles.mainDiv}>
+    if (!(boardState && user && game)) return null;
 
+
+    return boardState && user && game && (
+        <div className={styles.mainDiv}>
             <div className={styles.mainContainer}>
                 <div className={styles.testSocket}>
                     Test board moves
                     <button onClick={startGame} >Start Game</button>
-                    <button onClick={() => rollDice(1, 6)} >Roll 6 (Player 1)</button>
-                    <button onClick={() => rollDice(2, 6)} >Roll 6 (Player 2)</button></div>
-                <div className={styles.player1}>Player 1 </div>
-                <div className={styles.boardDiv}>
-                    <LudoBoard />
-                </div>
-                <div className={styles.player2}>Player 2 </div>
+                    <button onClick={() => rollDice(1)} >Roll 6 (Player 1)</button>
+                    <button onClick={() => rollDice(2)} >Roll 6 (Player 2)</button></div>
+                <div className={styles.player1}>{playerTurn === 1 ? "*" : ""}Player1
+                    {playerTurn === 1 && <div onClick={() => rollDice(1)}> <Die face={diceValue} /></div>}
 
+                    {/* {playerTurn === 1 && <span>rolled {diceValue}</span> } */}
+                </div>
+                <div className={styles.boardDiv}>
+                    <LudoBoard boardState={boardState} currentPlayer={currentPlayerColor} legalMoves={legalMoves} />
+                </div>
+                <div className={styles.player2}>{playerTurn === 2 ? "*" : ""}Player2
+                    {playerTurn === 2 && <div onClick={() => rollDice(2)}> <Die face={diceValue} /></div>}
+                    {/* {playerTurn === 2 && <span>rolled {diceValue}</span> } */}
+                </div>
+                <hr className={styles.divider}></hr>
             </div>
+
             <div className={styles.rightDiv}>
                 <div className={styles.chatDiv}>
                     {chatMessages.map((m, ind) => (
@@ -118,7 +193,8 @@ export default function GameBoard() {
                     ))}
                 </div>
                 <div id="anchor"></div>
-                <div>
+
+                <div className={styles.sendField}>
                     <form onSubmit={sendChat}>
                         <div>
                             <input
@@ -126,12 +202,12 @@ export default function GameBoard() {
                                 value={chatInput}
                                 onChange={(e) => setChatInput(e.target.value)}
                             />
-                            <button type="submit" className={styles.sendButton}>Send</button>
+                            <button type="submit" className={styles.sendButton}><i class="fa-solid fa-play"></i></button>
                         </div>
                     </form>
                 </div>
             </div>
+            
         </div>
-
     )
 }

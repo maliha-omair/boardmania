@@ -12,7 +12,7 @@ def seed_members():
         db.session.add(member1)
 
     member2 = Member(
-        user_id='1', room_id='5', membership_status="member")
+        user_id='1', room_id='3', membership_status="member")
     if Member.query.filter(Member.user_id == member2.user_id, Member.room_id == member2.room_id).first() is None:
         db.session.add(member2)
 

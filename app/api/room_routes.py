@@ -79,7 +79,7 @@ def create_game(roomId):
         player.member_id = member.id
         player.type = PlayerType.PLAYER
         player.game_position = 1
-        player.color = PlayerColor.BLUE
+        player.color = PlayerColor.YELLOW
         game.players.append(player)
         
         db.session.add(game)
