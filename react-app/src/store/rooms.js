@@ -435,11 +435,11 @@ function executeMove(board, move) {
     if (move.action === "MOVE") {
         const fromC = new PawnCoordinate(move.payload.from.x, move.payload.from.y);
         const toC = new PawnCoordinate(move.payload.to.x, move.payload.to.y);
-        if (move.p === 1) {
-            return movePawn(fromC, toC, "Y", board)
-        }
-        else if (move.p === 2) {
-            return movePawn(fromC, toC, "R", board)
+        if (move.payload.playerColor === "R" 
+            || move.payload.playerColor === "Y"
+            || move.payload.playerColor === "G"
+            || move.payload.playerColor === "B" ) {
+            return movePawn(fromC, toC, move.payload.playerColor, board)
         }
         else {
             return board;

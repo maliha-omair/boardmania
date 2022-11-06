@@ -12,12 +12,12 @@ PawnCoordinate.prototype.toString = function(){
 
 export class LegalMove {
 
-    constructor(fromCoordinate, toCoordicate){
-        this.fromCoordinate = fromCoordinate;
-        this.toCoordicate = toCoordicate;        
+    constructor(from, to){
+        this.from = from;
+        this.to = to;        
     }
 }
 
 LegalMove.prototype.toString = function(){
-    return `from: ${this.fromCoordinate} to ${this.toCoordicate}`;
+    return `from: ${this.from} to ${this.to}`;
 }

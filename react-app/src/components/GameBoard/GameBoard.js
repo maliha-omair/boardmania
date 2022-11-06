@@ -25,26 +25,54 @@ export default function GameBoard({gameId, roomId, game, user, boardState}) {
     const chatRoomId = roomId + "-" + gameId
 
 
+    useEffect(()=> {
+        if(socket){
+            socket.off('move');
 
-    function handlePawnClick(x, y){
-        alert(`pawn at ${x}, ${y} clicked`);
+            socket.on("move", (msg) => {
+                console.log(JSON.stringify(msg));
+                setPlayerTurn(msg.switchTurn);
+                if (msg.payload.action === "ROLL_DICE") {
+                    setDiceValue(msg.payload.payload);
+                    findLegalMoves(msg.payload.payload,currentPlayerColor)
+                    setCurrentAction("MOVE_PAWN");
+                    if (msg.user === user.username) {
+                        socket.emit("chatControl", buildMessage({ msg: `${msg.user} rolled ${msg.payload.payload}` }));
+                    }
+                } else {
+                    dispatch(updateBoard(msg.payload));
+                }
+
+
+                console.log("Received: " + msg);
+
+            })
+        }
+    }, [boardState])
+
+
+    function onPawnClick(x, y){
+        const selectedMove = legalMoves.find(lm => lm.from.x === x && lm.from.y === y);
+        console.log(`user selected ${selectedMove}`);
+        socket.emit("move", buildMessage({ action: "MOVE",payload: {from:selectedMove.from, to: selectedMove.to, playerColor: currentPlayerColor} }, 1));
+
     }
 
-    function askUserForLegalMove(msg) {
-
-    }
-
-    function findAllPawnPositions(boardState, playerColor){
+    function findCurrentPlayColor(){
         const playerColors = ["","Y","R","G","B"]
-        const currentPlayer = game.players.find(p => p.member.user.id === user.id);
-        const currentPlayerColor = playerColors[currentPlayer.game_position];
-        setCurrentPlayerColor(currentPlayerColor);
+        const cp =  game.players.find(p => p.member.user.id === user.id);        
+        return playerColors[cp.game_position];
+    }
+
+    function findAllPawnPositions(boardState){
+        const cpc = findCurrentPlayColor();
+        setCurrentPlayerColor(cpc);
 
         let p = [];
         for(let y=0;y<boardState.length;y++){
             for(let x=0;x<boardState.length;x++){
-                if(boardState[x][y].includes(currentPlayerColor)){
-                    console.log(`Found color ${currentPlayerColor} at [${x},${y}]` );
+                if(boardState[x][y].includes(cpc)){
+                    console.log(`Found color ${cpc} at [${x},${y}]` );
                     p.push(new PawnCoordinate(x,y));     
                 }
             }
@@ -52,18 +80,87 @@ export default function GameBoard({gameId, roomId, game, user, boardState}) {
         return p;
 
     }
+    
+    function isStartCoordinate(color,pos){
+        if(color==="Y"){
+            return (pos.x === 11 && pos.y === 2)
+            || (pos.x === 11 && pos.y === 3)
+            || (pos.x === 12 && pos.y === 2)
+            || (pos.x === 12 && pos.y === 3)
+        }
+        if(color==="R"){
+            return (pos.x === 2 && pos.y === 11)
+            || (pos.x === 2 && pos.y === 12)
+            || (pos.x === 3 && pos.y === 11)
+            || (pos.x === 3 && pos.y === 12)
+        }
+        if(color==="G"){
+            return (pos.x === 2 && pos.y === 2)
+            || (pos.x === 2 && pos.y === 3)
+            || (pos.x === 3 && pos.y === 2)
+            || (pos.x === 3 && pos.y === 3)
+        }
+        if(color==="B"){
+            return (pos.x === 11 && pos.y === 11)
+            || (pos.x === 11 && pos.y === 12)
+            || (pos.x === 12 && pos.y === 11)
+            || (pos.x === 12 && pos.y === 12)
+        }
+        return false;
+    }
 
-    function findLegalMovesHelper(boardState, playerColor, allPositions){
+    function findLegalMovesHelper(boardState, allPositions, diceRoll){
         let lm = []
+        const cpc = findCurrentPlayColor();
         for(let p in allPositions){
-           lm.push(new LegalMove(allPositions[p], new PawnCoordinate(13,6)));
+            let curPos = allPositions[p];
+            if(cpc === "Y") {
+                if(isStartCoordinate("Y",curPos)){
+                    lm.push(new LegalMove(curPos,new PawnCoordinate(13,6)));
+                }else{
+                    const curPosIndex = yellowPath.findIndex(yp => yp.x === curPos.x && yp.y === curPos.y);
+                    const nextPos = yellowPath[curPosIndex+diceRoll];
+                    lm.push(new LegalMove(curPos, new PawnCoordinate(nextPos.x,nextPos.y)))
+                }                        
+            } 
+            else if(cpc === "R") {
+                if(isStartCoordinate("R",allPositions[p])){
+                    lm.push(new LegalMove(allPositions[p], new PawnCoordinate(1,8)));
+                }else{
+                    const curPosIndex = redPath.findIndex(rp => rp.x === curPos.x && rp.y === curPos.y);
+                    const nextPos = redPath[curPosIndex+diceRoll];
+                    lm.push(new LegalMove(curPos, new PawnCoordinate(nextPos.x,nextPos.y)))
+
+                }                        
+            } 
+            else if(cpc === "G") {
+                if(isStartCoordinate("G",allPositions[p])){
+                    lm.push(new LegalMove(allPositions[p], new PawnCoordinate(6,1)));
+                }else{
+                    const curPosIndex = greenPath.findIndex(rp => rp.x === curPos.x && rp.y === curPos.y);
+                    const nextPos = greenPath[curPosIndex+diceRoll];
+                    lm.push(new LegalMove(curPos, nextPos))
+
+                }                        
+            } 
+            else if(cpc === "B") {
+                if(isStartCoordinate("B",allPositions[p])){
+                    lm.push(new LegalMove(allPositions[p], new PawnCoordinate(8,13)));
+                }else{
+                    const curPosIndex = bluePath.findIndex(rp => rp.x === curPos.x && rp.y === curPos.y);
+                    const nextPos = bluePath[curPosIndex+diceRoll];
+                    lm.push(new LegalMove(curPos, nextPos))
+
+                }                        
+            } 
+       
         }
         return lm;
     }
 
-    function findLegalMoves(diceRoll, playerColor){
-        const allPositions = findAllPawnPositions(boardState, playerColor);
-        const lm = findLegalMovesHelper(boardState, playerColor, allPositions)
+    function findLegalMoves(diceRoll){
+        const allPositions = findAllPawnPositions(boardState);
+        const lm = findLegalMovesHelper(boardState, allPositions, diceRoll)
         setLegalMoves(lm);
         return lm;
 
@@ -89,19 +186,16 @@ export default function GameBoard({gameId, roomId, game, user, boardState}) {
             socket.emit("join", buildMessage({ action: "JOIN" }));
         });
 
-
-        // listen for chat events
         socket.on("move", (msg) => {
             console.log(JSON.stringify(msg));
             setPlayerTurn(msg.switchTurn);
             if (msg.payload.action === "ROLL_DICE") {
                 setDiceValue(msg.payload.payload);
-                findLegalMoves(diceValue,currentPlayerColor)
+                findLegalMoves(msg.payload.payload,currentPlayerColor)
                 setCurrentAction("MOVE_PAWN");
                 if (msg.user === user.username) {
                     socket.emit("chatControl", buildMessage({ msg: `${msg.user} rolled ${msg.payload.payload}` }));
                 }
-                askUserForLegalMove(msg);
             } else {
                 dispatch(updateBoard(msg.payload));
             }
@@ -110,6 +204,7 @@ export default function GameBoard({gameId, roomId, game, user, boardState}) {
             console.log("Received: " + msg);
 
         })
+
 
 
         socket.on("chat", (msg) => {
@@ -177,7 +272,7 @@ export default function GameBoard({gameId, roomId, game, user, boardState}) {
                     {/* {playerTurn === 1 && <span>rolled {diceValue}</span> } */}
                 </div>
                 <div className={styles.boardDiv}>
-                    <LudoBoard boardState={boardState} currentPlayer={currentPlayerColor} legalMoves={legalMoves} />
+                    <LudoBoard boardState={boardState} currentPlayer={currentPlayerColor} legalMoves={legalMoves} onPawnClick={onPawnClick} />
                 </div>
                 <div className={styles.player2}>{playerTurn === 2 ? "*" : ""}Player2
                     {playerTurn === 2 && <div onClick={() => rollDice(2)}> <Die face={diceValue} /></div>}
@@ -211,3 +306,252 @@ export default function GameBoard({gameId, roomId, game, user, boardState}) {
         </div>
     )
 }
+
+
+const greenPath = [
+    {x:6, y:1},
+    {x:6, y:2},
+    {x:6, y:3},
+    {x:6, y:4},
+    {x:6, y:5},
+    {x:5, y:6},
+    {x:4, y:6},
+    {x:3, y:6},
+    {x:2, y:6},
+    {x:1, y:6},
+    {x:0, y:6},
+    {x:0, y:7},
+    {x:0, y:8},
+    {x:1, y:8},
+    {x:2, y:8},
+    {x:3, y:8},
+    {x:4, y:8},
+    {x:5, y:8},
+    {x:6, y:9},
+    {x:6, y:10},
+    {x:6, y:11},
+    {x:6, y:12},
+    {x:6, y:13},
+    {x:6, y:14},
+    {x:7, y:14},
+    {x:8, y:14},
+    {x:8, y:13},
+    {x:8, y:12},
+    {x:8, y:11},
+    {x:8, y:10},
+    {x:8, y:9},
+    {x:9, y:8},
+    {x:10, y:8},
+    {x:11, y:8},
+    {x:12, y:8},
+    {x:13, y:8},
+    {x:14, y:8},
+    {x:14, y:7},
+    {x:14, y:6},
+    {x:13, y:6},
+    {x:12, y:6},
+    {x:11, y:6},
+    {x:10, y:6},
+    {x:9, y:6},
+    {x:8, y:5},
+    {x:8, y:4},
+    {x:8, y:3},
+    {x:8, y:2},
+    {x:8, y:1},
+    {x:8, y:0},
+    {x:7, y:0},
+    {x:7, y:1},
+    {x:7, y:2},
+    {x:7, y:3},
+    {x:7, y:4},
+    {x:7, y:5},
+]
+
+
+const bluePath = [
+    {x:8, y:13},
+    {x:8, y:12},
+    {x:8, y:11},
+    {x:8, y:10},
+    {x:9, y:8},
+    {x:10, y:8},
+    {x:11, y:8},
+    {x:12, y:8},
+    {x:13, y:8},
+    {x:14, y:8},
+    {x:14, y:7},
+    {x:14, y:6},
+    {x:13, y:6},
+    {x:12, y:6},
+    {x:11, y:6},
+    {x:10, y:6},
+    {x:9, y:6},
+    {x:8, y:5},
+    {x:8, y:4},
+    {x:8, y:3},
+    {x:8, y:2},
+    {x:8, y:1},
+    {x:8, y:0},
+    {x:7, y:0},
+    {x:6, y:0},
+    {x:6, y:1},
+    {x:6, y:2},
+    {x:6, y:3},
+    {x:6, y:4},
+    {x:6, y:5},
+    {x:5, y:6},
+    {x:4, y:6},
+    {x:3, y:6},
+    {x:2, y:6},
+    {x:1, y:6},
+    {x:0, y:6},
+    {x:0, y:7},
+    {x:0, y:8},
+    {x:1, y:8},
+    {x:2, y:8},
+    {x:3, y:8},
+    {x:4, y:8},
+    {x:5, y:8},
+    {x:6, y:9},
+    {x:6, y:10},
+    {x:6, y:11},
+    {x:6, y:12},
+    {x:6, y:13},
+    {x:6, y:14},
+    {x:7, y:14},
+    {x:7, y:13},
+    {x:7, y:12},
+    {x:7, y:11},
+    {x:7, y:10},
+    {x:7, y:9},      
+]
+
+const redPath = [
+    {x:1, y:8},
+    {x:2, y:8},
+    {x:3, y:8},
+    {x:4, y:8},
+    {x:5, y:8},
+    {x:6, y:9},
+    {x:6, y:10},
+    {x:6, y:11},
+    {x:6, y:12},
+    {x:6, y:13},
+    {x:6, y:14},
+    {x:7, y:14},
+    {x:8, y:14},
+    {x:8, y:13},
+    {x:8, y:12},
+    {x:8, y:11},
+    {x:8, y:10},
+    {x:8, y:9},
+    {x:9, y:8},
+    {x:10, y:8},
+    {x:11, y:8},
+    {x:12, y:8},
+    {x:13, y:8},
+    {x:14, y:8},
+    {x:14, y:7},
+    {x:14, y:6},
+    {x:13, y:6},
+    {x:12, y:6},
+    {x:11, y:6},
+    {x:10, y:6},
+    {x:9, y:6},
+    {x:8, y:5},
+    {x:8, y:4},
+    {x:8, y:3},
+    {x:8, y:2},
+    {x:8, y:1},
+    {x:8, y:0},
+    {x:7, y:0},
+    {x:6, y:0},
+    {x:6, y:1},
+    {x:6, y:2},
+    {x:6, y:3},
+    {x:6, y:4},
+    {x:6, y:5},
+    {x:5, y:6},
+    {x:4, y:6},
+    {x:3, y:6},
+    {x:2, y:6},
+    {x:1, y:6},
+    {x:0, y:6},
+    {x:0, y:7},
+    {x:0, y:8},
+    {x:1, y:8},
+    {x:2, y:8},
+    {x:3, y:8},
+    {x:4, y:8},
+    {x:5, y:8},
+    {x:6, y:9},
+    {x:6, y:10},
+    {x:6, y:11},
+    {x:6, y:12},
+    {x:6, y:13},
+    {x:6, y:14},
+    {x:7, y:14},
+    {x:7, y:13},
+    {x:7, y:12},
+    {x:7, y:11},
+    {x:7, y:10},
+    {x:7, y:9},
+]
+
+const yellowPath = [
+    {x:13, y:6},
+    {x:12, y:6},
+    {x:11, y:6},
+    {x:10, y:6},
+    {x:9, y:6},
+    {x:8, y:5},
+    {x:8, y:4},
+    {x:8, y:3},
+    {x:8, y:2},
+    {x:8, y:1},
+    {x:8, y:0},
+    {x:7, y:0},
+    {x:6, y:1},
+    {x:6, y:2},
+    {x:6, y:3},
+    {x:6, y:4},
+    {x:6, y:5},
+    {x:5, y:6},
+    {x:4, y:6},
+    {x:3, y:6},
+    {x:2, y:6},
+    {x:1, y:6},
+    {x:0, y:6},
+    {x:0, y:7},
+    {x:0, y:8},
+    {x:1, y:8},
+    {x:2, y:8},
+    {x:3, y:8},
+    {x:4, y:8},
+    {x:5, y:8},
+    {x:6, y:9},
+    {x:6, y:10},
+    {x:6, y:11},
+    {x:6, y:12},
+    {x:6, y:13},
+    {x:6, y:14},
+    {x:7, y:14},
+    {x:8, y:14},
+    {x:8, y:13},
+    {x:8, y:12},
+    {x:8, y:11},
+    {x:8, y:10},
+    {x:8, y:9},
+    {x:9, y:8},
+    {x:10, y:8},
+    {x:11, y:8},
+    {x:12, y:8},
+    {x:13, y:8},
+    {x:14, y:8},
+    {x:14, y:7},
+    {x:13, y:7},
+    {x:12, y:7},
+    {x:11, y:7},
+    {x:10, y:7},
+    {x:9, y:7}
+]

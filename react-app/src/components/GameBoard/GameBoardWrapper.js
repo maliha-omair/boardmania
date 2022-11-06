@@ -27,6 +27,6 @@ export default function GameBoardWrapper() {
     if (!(boardState && user && game)) return null;
     
     return boardState && user && game && (
-        <GameBoard gameId={gameId} roomId={roomId} game={game} user={user} boardState={boardState}/>
+        <GameBoard key={"4b7ac114-b699-4902-82b1-022b463e63b0"} gameId={gameId} roomId={roomId} game={game} user={user} boardState={boardState}/>
     )
 }
