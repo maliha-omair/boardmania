@@ -9,6 +9,7 @@ export default function GreenBlock({s,x,y, legalMoves, currentPlayerColor, isMyT
     return (
         <div className={[styles.border, styles.green].join(' ')} >
             <GenericBlock s={s} x={x} y={y} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
+            
         </div>
    )
 }

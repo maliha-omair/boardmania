@@ -39,6 +39,10 @@
     cursor: pointer;
 }
 
+.playerInfo{
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 32px;;
+}
 
 .mainDiv{
     display:grid;
@@ -66,7 +70,7 @@
     margin: 0 auto;
     padding: 0 auto;
     display: grid;
-    grid-template-columns:10% 70% 10% 10%;
+    grid-template-columns:15% 60% 15% 10%;
     row-gap: 12px;
     column-gap: 32px;
 }
@@ -86,6 +90,7 @@
     margin-top: 5px;
     position: relative;
     height:800px;
+    overflow: hidden;
     
 }
 .sendField{
@@ -99,14 +104,14 @@
    
 }
 .chatDiv{
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     max-height: calc(82vh - 60px);
     padding-right:10px;
     overflow-anchor: none;
     overflow-x: hidden;
     word-wrap: break-word;
     width:300px;
-    
+    scroll-padding-right: 0;
 }
 
 #anchor{
@@ -131,4 +136,13 @@
 .styles.chatDiv{
     overflow-y: scroll;
     max-height: calc(90vh - 46px);
+}
+
+.handPointer{
+    cursor: pointer;
+    /* width: 200px; */
+    height: 200px;
+    margin-top:50px;
+    margin-left: 10px; 
+    text-align: center;
 }

@@ -1,5 +1,6 @@
 .border{
     border: solid 1px rgb(157, 145, 145);
+    
     width: var(--blockWidth);
     height: var(--blockWidth);
 }

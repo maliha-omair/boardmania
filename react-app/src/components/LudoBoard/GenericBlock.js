@@ -13,7 +13,7 @@ export default function GenericBlock({s,x,y, legalMoves, currentPlayerColor, isM
     return (
         <>              
             <Pawn s={s} x={x} y={y} playable={playable} shake={shake} currentPlayerColor={currentPlayerColor} onPawnClick={onPawnClick} />
-            {x}, {y}
+            {/* {x}, {y} */}
         </>
    )
 }
