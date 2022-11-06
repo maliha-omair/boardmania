@@ -20,7 +20,7 @@ class GamePlayer(db.Model):
     member_id = db.Column(db.Integer, db.ForeignKey("members.id", ondelete="CASCADE"), nullable=False)
     type = db.Column(db.String(100), nullable=False)
     color = db.Column(db.String(50),nullable=False)
-    game_position = db.Column(db.String(50), nullable=False)
+    game_position = db.Column(db.String(50), nullable=False) #@TODO: This should be number
 
     # relationships
     member = db.relationship("Member", back_populates="player", lazy=False)

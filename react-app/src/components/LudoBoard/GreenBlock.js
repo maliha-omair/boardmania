@@ -5,10 +5,10 @@ import {fa} from '@fortawesome/fontawesome-svg-core'
 import Pawn from "./Pawn"
 import GenericBlock from "./GenericBlock"
 
-export default function GreenBlock({s,x,y, legalMoves, currentPlayer,  onPawnClick}) {
+export default function GreenBlock({s,x,y, legalMoves, currentPlayerColor, isMyTurn,  onPawnClick}) {
     return (
         <div className={[styles.border, styles.green].join(' ')} >
-            <GenericBlock s={s} x={x} y={y} legalMoves={legalMoves} currentPlayer={currentPlayer} onPawnClick={onPawnClick} />
+            <GenericBlock s={s} x={x} y={y} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
         </div>
    )
 }

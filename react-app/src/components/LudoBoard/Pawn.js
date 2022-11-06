@@ -2,7 +2,7 @@ import styles from "../LudoBoard/LudoBoard.module.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChessPawn, faCircle} from '@fortawesome/free-solid-svg-icons'
 
-export default function Pawn({s,x,y, playable, shake, currentPlayer, onPawnClick}) {
+export default function Pawn({s,x,y, playable, shake, currentPlayerColor, onPawnClick}) {
 
     const redPawnCount = [...s].reduce((count, char) => char === "R"?count+1:count,0);
     const greenPawnCount = [...s].reduce((count, char) => char === "G"?count+1:count,0);
@@ -24,7 +24,7 @@ export default function Pawn({s,x,y, playable, shake, currentPlayer, onPawnClick
                         <span class="fa-layers fa-lg fa-fw">
                             {playable && 
                                 <div onClick={handleClick} className={styles.legalPawn}>
-                                    <FontAwesomeIcon icon={faCircle} beat={shake && currentPlayer === "R"}/>
+                                    <FontAwesomeIcon icon={faCircle} beat={shake && currentPlayerColor === "R"}/>
                                     <span className="fa-layers-text fa-inverse">{redPawnCount}</span>
                                 </div>
                             || 
@@ -46,7 +46,7 @@ export default function Pawn({s,x,y, playable, shake, currentPlayer, onPawnClick
                         <span class="fa-layers fa-lg fa-fw">
                             {playable && 
                                 <div onClick={handleClick} className={styles.legalPawn}>
-                                    <FontAwesomeIcon icon={faCircle} beat={shake && currentPlayer === "G"}/>
+                                    <FontAwesomeIcon icon={faCircle} beat={shake && currentPlayerColor === "G"}/>
                                     <span className="fa-layers-text fa-inverse">{greenPawnCount}</span>
                                 </div>
                                 ||  
@@ -68,7 +68,7 @@ export default function Pawn({s,x,y, playable, shake, currentPlayer, onPawnClick
                         <span class="fa-layers fa-lg fa-fw">
                             {playable && 
                                 <div onClick={handleClick} className={styles.legalPawn}>
-                                    <FontAwesomeIcon icon={faCircle}   beat={shake && currentPlayer === "Y"} />
+                                    <FontAwesomeIcon icon={faCircle}   beat={shake && currentPlayerColor === "Y"} />
                                     <span className="fa-layers-text fa-inverse">{yellowPawnCount}</span>
                                 </div>
                             || 
@@ -90,7 +90,7 @@ export default function Pawn({s,x,y, playable, shake, currentPlayer, onPawnClick
                         <span class="fa-layers fa-lg fa-fw">
                             {playable && 
                                 <div onClick={handleClick} className={styles.legalPawn}> 
-                                    <FontAwesomeIcon icon={faCircle}  beat={shake && currentPlayer === "B"}/>
+                                    <FontAwesomeIcon icon={faCircle}  beat={shake && currentPlayerColor === "B"}/>
                                     <span className="fa-layers-text fa-inverse">{bluePawnCount}</span>
                                 </div>
                             || 
