@@ -41,17 +41,13 @@ def handle_move(msg):
     gameMove.move_order = 0
     gameMove.payload = json.dumps(msg)
     game.game_moves.append(gameMove)
-    db.session.add(game)
-    db.session.commit()
-
     if msg['payload']['action'] == "INIT":
         game.game_status = GameStatus.IN_PROGRESS
-
-
     if msg['payload']['action'] == "GAME_END":
         game.game_status = GameStatus.DONE
-    
-    
+
+    db.session.add(game)
+    db.session.commit()    
 
     emit("move", msg, room = msg['room'])
 

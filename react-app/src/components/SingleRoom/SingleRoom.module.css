@@ -1,17 +1,14 @@
 .mainDiv{
     display: flex;
     flex-direction: column;
- 
     width: 100%;
     margin-left: 0 auto;
     max-height: 80%
-
 }
 
 .secondRow{
     display: flex;
     flex-direction: row;
- 
     width: 100%;
     margin-left: 0 auto;
 }
@@ -62,9 +59,9 @@
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
     overflow: hidden;
     word-wrap: break-word;
-    max-width: 800px
-    /* text-overflow: ellipsis; */
-    /* white-space: nowrap; */
+    max-width: 100%;
+    height: 100%;    
+    margin-bottom: 100px;
 }
 .showCreate{
     font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
@@ -92,7 +89,7 @@
     flex-direction:  column;
     width: 50%;
     max-height: calc(90vh - 46px); 
-    line-height: 1px;
+    /* line-height: 1px; */
 }
 
 .leftDiv{

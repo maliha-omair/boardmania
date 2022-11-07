@@ -20,11 +20,11 @@ export default function SingleRoomHeader({room}) {
                 </h4>
             </div>
 
-            {/* <div className={styles.description}>
+            <div className={styles.description}>
                 <div className={styles.descSubDiv}>
                     {room.description}
                 </div>
-            </div> */}
+            </div>
 
         </div>
     )

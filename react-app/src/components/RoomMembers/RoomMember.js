@@ -17,6 +17,8 @@ export default function RoomMember({ member }) {
         dispatch(rejectMembershipThunk(member.id)).then(() => dispatch(getRoomMembersByIdThunk(member.room.id)));
     }
 
+    
+
     return user && (
         <div className={styles.mainDiv}>
             <div className={styles.emailDiv}>
