@@ -33,7 +33,7 @@ export default function Game({ game }) {
         if (members && user) {
             isMember = members.filter(m => m.user.id === user.id && m.status === "member").length > 0
         }
-        const isGameCreater = game.players.at(-1).member.user.id === user.id;
+        const isGameCreater = game.players.find(m => Number(m.game_position) === 1  && m.member.user.id === user.id);
         if (isGameCreater && isMember) {
             setShowEditButton(true)
             setShowDeleteButton(true)
@@ -107,7 +107,6 @@ export default function Game({ game }) {
         }
 
     }
-
 
     return game && (
         <div className={styles.mainContainer}>
