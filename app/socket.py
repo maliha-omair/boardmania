@@ -44,8 +44,13 @@ def handle_move(msg):
     db.session.add(game)
     db.session.commit()
 
+    if msg['payload']['action'] == "INIT":
+        game.game_status = GameStatus.IN_PROGRESS
+
+
     if msg['payload']['action'] == "GAME_END":
         game.game_status = GameStatus.DONE
+    
     
 
     emit("move", msg, room = msg['room'])

@@ -13,10 +13,6 @@ import YellowBlock from "./YellowBlock"
 import YellowHomeBlock from "./YellowHomeBlock"
 
 
-
-
-
-
 export default function LudoBoard({boardState, currentPlayerColor, passTurnToNextPlayer,  legalMoves, isMyTurn, onPawnClick}) {
 
     const shake=true;
@@ -144,11 +140,11 @@ export default function LudoBoard({boardState, currentPlayerColor, passTurnToNex
                 <WhiteBlock s ={boardState[6][3]}  x={6} y={3} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
                 <WhiteBlock s ={boardState[6][4]}  x={6} y={4} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
                 <WhiteBlock s ={boardState[6][5]}  x={6} y={5} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
-                <div className={[styles.border].join(" ")} ></div>
+                <div className={[styles.border,styles.endBlock].join(" ")} ></div>
                 {/* <div className={[styles.border, styles.arrowDown].join(" ")}></div> */}
                 <RedHomeBlock s={boardState[6][7]}  x={6} y={7} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
                 
-                <div className={[styles.border].join(' ')}  />
+                <div className={[styles.border,styles.endBlock].join(' ')}  />
                 <WhiteBlock s ={boardState[6][9]}  x={6} y={9} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
                 <WhiteBlock s ={boardState[6][10]}  x={6} y={10} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
                 <WhiteBlock s ={boardState[6][11]}  x={6} y={11} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
@@ -164,7 +160,7 @@ export default function LudoBoard({boardState, currentPlayerColor, passTurnToNex
                 <GreenBlock s ={boardState[7][4]}  x={7} y={4} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
                 <GreenBlock s ={boardState[7][5]}  x={7} y={5} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
                 <GreenHomeBlock s ={boardState[7][6]}  x={7} y={6} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
-                <div className={styles.border}></div>
+                <div className={[styles.border,styles.endBlock].join(" ")}></div>
                 <BlueHomeBlock s ={boardState[7][8]}  x={7} y={8} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
                 <BlueBlock s ={boardState[7][9]}  x={7} y={9} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />
                 <BlueBlock s ={boardState[7][10]}  x={7} y={10} legalMoves={legalMoves} currentPlayerColor={currentPlayerColor} isMyTurn={isMyTurn} onPawnClick={onPawnClick} />

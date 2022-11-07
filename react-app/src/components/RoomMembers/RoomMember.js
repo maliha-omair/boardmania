@@ -28,6 +28,11 @@ export default function RoomMember({ member }) {
                     <div className={styles.reject} onClick={handleReject}><i class="fa-solid fa-xmark"></i></div>
                 </div>
             ) }
+             {member.status === "member" && member.room.owner_id === user.id &&  member.user.id !== user.id &&   (
+                <div className={styles.innerDiv}>
+                   <div className={styles.reject} onClick={handleReject}><i class="fa-solid fa-trash"></i></div>
+                </div>
+            ) }
         </div>
     )
 }

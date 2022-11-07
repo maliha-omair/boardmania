@@ -69,7 +69,7 @@ def create_game(roomId):
     if form.validate_on_submit():
         form.populate_obj(game)
 
-        if Game.query.filter(Game.name == game.name).first() is not None:
+        if Game.query.filter(Game.name == game.name , Game.room_id == roomId).first() is not None:
             return {'message': 'Validation Errors', 'errors':  ['Name must be unique']}, 400
 
         game.room_id = roomId

@@ -42,8 +42,8 @@ def reject_member_request(member_id):
     if memberRequest.room.owner_id != current_user.id:
         return {'message': "Forbidded: Current user is not owner of room"}, 403
     
-    if memberRequest.membership_status != MemberStatus.pending:
-        return {'message': "Conflict: Member request should be in pending state"}, 409
+    # if memberRequest.membership_status != MemberStatus.pending:
+    #     return {'message': "Conflict: Member request should be in pending state"}, 409
 
     # memberRequest.membership_status = MemberStatus.deleted
     

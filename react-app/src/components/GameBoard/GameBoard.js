@@ -9,10 +9,12 @@ import Die from "./Die"
 import { LegalMove, PawnCoordinate } from "../../types"
 import move_sound from "../../assets/move_sound.wav"
 import dice_roll_sound from "../../assets/roll_dice_audio.mp3"
+import success_bell from "../../assets/success_bell.mp3"
 
 let socket;
 const audio = new Audio(move_sound);
 const dice_audio = new Audio(dice_roll_sound);
+const success = new Audio(success_bell);
 
 export default function GameBoard({ gameId, roomId, game, user, boardState, currentGameState }) {
     const dispatch = useDispatch();
@@ -37,12 +39,10 @@ export default function GameBoard({ gameId, roomId, game, user, boardState, curr
         }else if (e === EnumAllowedActions.ROLL_DICE){
             return "roll dice"
         }
-        return "--";
-        
+        return "--";  
     }
 
     const chatRoomId = roomId + "-" + gameId
-
 
     function handleMoveMessage(msg) {
         setPlayerTurn(msg.switchTurn);
@@ -65,22 +65,23 @@ export default function GameBoard({ gameId, roomId, game, user, boardState, curr
         
             findLegalMoves(msg.payload.payload, currentPlayerColor)
             if (msg.user === user.username) {
-                socket.emit("chatControl", buildMessage({ msg: `${msg.user} rolled ${msg.payload.payload}` }));
+                if(socket){
+                    socket.emit("chatControl", buildMessage({ msg: `${msg.user} rolled ${msg.payload.payload}` }));
+                }                
             }
         } else {
             dispatch(updateBoard(msg.payload));
             if(msg.payload.action === "MOVE"){
-                const toState = boardState[msg.payload.payload.to.x][msg.payload.payload.to.y];
-                if(currentPlayerColor === "Y" && (toState.match(/Y/g) || []).length === 4){
+                const yellowEndState = boardState[YellowEndBlock.x][YellowEndBlock.y];
+                const redEndState = boardState[RedEndBlock.x][RedEndBlock.y];
+                if(msg.payload.payload.playerColor === "Y" && (yellowEndState.match(/Y/g) || []).length === 4){
                     socket.emit("move", buildMessage({ action: "GAME_END", payload: {  player:findCurrentPlayer() } }, 0));
                 }
-                else if(currentPlayerColor === "R" && (toState.match(/R/g) || []).length === 4){
+                else if(msg.payload.payload.playerColor === "R" && (redEndState.match(/R/g) || []).length === 4){
                     socket.emit("move", buildMessage({ action: "GAME_END", payload: { player:findCurrentPlayer() } }, 0));
                 }
             }
         }
-
-
         console.log("Received: " + JSON.stringify(msg));
     }
 
@@ -91,13 +92,43 @@ export default function GameBoard({ gameId, roomId, game, user, boardState, curr
         }
     }, [boardState])
 
+    useEffect(() => {
+        if (game) {
+            game.moves.forEach(m => {
+                handleMoveMessage(m.payload);
+                // if(m.payload.payload.action === "INIT"){
+                //     // dispatch(setupGa())
+                // }else{
+                //     if (m.payload.action === "INIT") {
+                //         setAllowedAction(EnumAllowedActions.ROLL_DICE)
+                //     }
+                //     if(m.payload.action === "CHANGE_TURN"){
+                //         setAllowedAction(EnumAllowedActions.ROLL_DICE);
+                //     }
+                //     if (m.payload.action === "ROLL_DICE") {
+                //         setAllowedAction(EnumAllowedActions.MOVE_PAWN);
+                //         if (m.payload.p === 1) {
+                //             setPlayer1DiceValue(m.payload.payload);
+                //         } else if (m.payload.p === 2) {
+                //             setPlayer2DiceValue(m.payload.payload);
+                //         }
+                //     } else {
+                //         dispatch(updateBoard(m.payload.payload));
+                //         setPlayerTurn(m.payload.switchTurn);
+                //     }
+            
+                    
+                // }
+            });
+       }
+    }, [game])
+
 
     function onPawnClick(x, y) {
         const selectedMove = legalMoves.find(lm => lm.from.x === x && lm.from.y === y);
         const p = findCurrentPlayer();
         const nextTurn = Number(p.game_position) === 1 ? 2 : 1
-        audio.play();
-        
+        audio.play();        
         socket.emit("move", buildMessage({ action: "MOVE", payload: { from: selectedMove.from, to: selectedMove.to, playerColor: currentPlayerColor } }, nextTurn));
     }
 
@@ -133,7 +164,7 @@ export default function GameBoard({ gameId, roomId, game, user, boardState, curr
         const playerColors = ["", "Y", "R", "G", "B"]
         const cp = findCurrentPlayer();
         if(cp){
-            return playerColors[cp.game_position];
+            return playerColors[Number(cp.game_position)];
         }else{
             return "";
         }
@@ -295,7 +326,8 @@ export default function GameBoard({ gameId, roomId, game, user, boardState, curr
         socket.on("move", handleMoveMessage)
 
         socket.on("leave", (msg) => {
-            alert(JSON.stringify(msg));
+            // alert(JSON.stringify(msg));
+            console.log("User left room");
         })
 
 
@@ -345,7 +377,7 @@ export default function GameBoard({ gameId, roomId, game, user, boardState, curr
         <div className={styles.mainDiv}>
             <div className={styles.mainContainer}>
                 <div className={styles.player1}>{playerTurn === 1 ? "*" : ""}{findPlayerByGamePosition(1).member.user.username}
-                    <Die face={player1DiceValue} />
+                    &nbsp;&nbsp;<Die face={player1DiceValue} />
                     {playerTurn === 1 &&
                         <div>
                             {allowedAction === EnumAllowedActions.ROLL_DICE && findPlayerByGamePosition(playerTurn).member.user.username === user.username && <div className={styles.handPointer} onClick={() => rollDice(1)} ><i class="fa-solid fa-hand-point-up fa-2xl fa-bounce"></i></div>}
@@ -370,12 +402,12 @@ export default function GameBoard({ gameId, roomId, game, user, boardState, curr
                             </div>
                         }
                     </div>
-                    {currentGameState.state === "GAME_END" && <div className={styles.gameWon}>Game won by Player {currentGameState.winner.member.user.username} </div>
+                    {currentGameState.state === "GAME_END" && <div className={styles.gameWon}>Game won by Player {currentGameState.winner.member.user.username}</div>
                     || <LudoBoard boardState={boardState} currentPlayerColor={currentPlayerColor} legalMoves={legalMoves} isMyTurn={allowedAction === EnumAllowedActions.MOVE_PAWN && findCurrentPlayer() && playerTurn === Number(findCurrentPlayer().game_position)} onPawnClick={onPawnClick} passTurnToNextPlayer={passTurnToNextPlayer} />
                     }
                 </div>
                 <div className={styles.player2}>{playerTurn === 2 ? "*" : ""}{findPlayerByGamePosition(2) ? findPlayerByGamePosition(2).member.user.username: "Waiting for Player 2"}
-                    <Die face={player2DiceValue} />
+                    &nbsp;&nbsp;<Die face={player2DiceValue} />
                     {playerTurn === 2 &&
                         <div>
                             {

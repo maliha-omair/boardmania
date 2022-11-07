@@ -271,16 +271,16 @@ export const getGameThunk = (gameId) => async dispatch => {
         const result = await res.json();
         dispatch(setCurrentGame(result))
         dispatch(setupGameBoard(result))
-        result.moves.forEach(m => {
-            if(m.payload.payload.action === "INIT"){
-                dispatch(setupGameBoard())
-            }else{
-                if(m.payload.payload.action === "MOVE" ||m.payload.payload.action === "GAME_END" ){
-                    dispatch(updateBoard(m.payload.payload));
-                }
+        // result.moves.forEach(m => {
+        //     if(m.payload.payload.action === "INIT"){
+        //         dispatch(setupGameBoard())
+        //     }else{
+        //         if(m.payload.payload.action === "MOVE" ||m.payload.payload.action === "GAME_END" ){
+        //             dispatch(updateBoard(m.payload.payload));
+        //         }
                 
-            }
-        });
+        //     }
+        // });
         return result
     }
 }
