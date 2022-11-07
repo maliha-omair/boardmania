@@ -1,4 +1,5 @@
 from .db import db
+import json
 
 class GameMove(db.Model):
     __tablename__ = "game_moves"
@@ -18,5 +19,6 @@ class GameMove(db.Model):
             'id': self.id,
             'game_id': self.game_id,
             'move_order': self.move_order,
+            'payload': json.loads(self.payload)
            
         }

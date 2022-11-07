@@ -52,6 +52,7 @@ export default function Game({ game }) {
     }, [members, game, user])
 
     const dispatch = useDispatch()
+
     function handleJoin() {
         console.log(game.room_id)
         dispatch(joinGameThunk(game.id)).then((res) => {
@@ -63,11 +64,21 @@ export default function Game({ game }) {
             }
         });
     }
+
+    function handleView() {
+        console.log(game.room_id)
+        history.push(`/rooms/${game.room_id}/games/${game.id}`)
+    }
+    
+    
     function handleDelete() {
         dispatch(deleteGameThunk(game.id)).then((res) => {
             dispatch(getGamesByRoomID(game.room_id))
         })
     }
+
+
+
     function handleEdit() {
         setError([]);
         if (gameName.length > 20) setError("Name should be less than 20 characters");
@@ -117,10 +128,9 @@ export default function Game({ game }) {
                 <div className={styles.icon}>
                     <div className={styles.buttonDiv}>
 
-                        {showJoinButton ? <div className={styles.joinButton}
-                            onClick={handleJoin} title="join game">
-                            <i class="fa-solid fa-user-plus" ></i>
-                        </div> : <div className={styles.joinButton} onClick={handleJoin} title="view game"><i class="fa-regular fa-eye"></i></div>}
+                        {showJoinButton 
+                        ? <div className={styles.joinButton} onClick={handleJoin} title="join game"> <i class="fa-solid fa-user-plus" ></i></div> 
+                        : <div className={styles.joinButton} onClick={handleView} title="view game"><i class="fa-regular fa-eye"></i></div>}
                     </div>
 
                     {showEditButton && <div className={styles.editButton} onClick={() => setEditMode(true)}><i class="fa-solid fa-pen-to-square"></i></div>}

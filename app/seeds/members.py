@@ -28,7 +28,7 @@ def seed_members():
         db.session.add(member4)
 
     member5 = Member(
-        user_id='2', room_id='3', membership_status="pending")
+        user_id='2', room_id='3', membership_status="member")
     if Member.query.filter(Member.user_id == member5.user_id, Member.room_id == member5.room_id).first() is None:
         db.session.add(member5)
 

@@ -13,7 +13,7 @@ export default function Die({face}) {
         if(face !== 0){
             let intervalId = setInterval(()=>{
                 setShake(true);
-                setTempFace(Math.floor(Math.random() * 6)+1);
+                setTempFace(Math.floor(Math.random() * 6) +1 );
             },100);
             setTimeout(()=> {
                 clearInterval(intervalId)
@@ -25,8 +25,8 @@ export default function Die({face}) {
     },[])
 
     return shake && 
-            <FontAwesomeIcon icon={icons[tempFace]}  /> 
-            || <FontAwesomeIcon icon={icons[face]}  /> 
+            <FontAwesomeIcon icon={icons[tempFace] } /> 
+            || <FontAwesomeIcon icon={icons[face]} /> 
         
         
 }

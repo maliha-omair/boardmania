@@ -52,6 +52,12 @@
     width: 100%;;
     /* border: solid yellow; */
 }
+
+.gameWon{
+    font-family: Nunito,Arial,"Helvetica Neue",Helvetica,sans-serif;
+    font-size: 40px;
+
+} 
 .chatInput{
     width: 250px;
     height: 35px;

@@ -38,5 +38,7 @@ class Game(db.Model):
             'game_status': self.game_status ,
             'mode': self.mode,
             'name': self.name,
-            'players': [p.to_dict() for p in self.players]
+            'players': [p.to_dict() for p in self.players],
+            'moves': [m.to_dict() for m in self.game_moves]
+
         }

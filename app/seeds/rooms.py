@@ -4,8 +4,6 @@ from app.models import db, Room
 # Adds a demo user, you can add other users here if you want
 def seed_rooms():
     
-    # roomDemo = Room(
-    #     title='Demo', description='this is a demo room', isPublic=True, owner_id= 1)
    
     friendsClub = Room(
         title='Friends Club', description='this is a room for friends to play ludo', isPublic=False, owner_id= 1)
@@ -19,8 +17,6 @@ def seed_rooms():
     ludoCrew = Room(
         title='Ludo Crew', description='Ludo crew is the best room', isPublic=True, owner_id= 2)
 
-    if Room.query.filter_by(title=roomDemo.title).first() is None:
-        db.session.add(roomDemo)
     if Room.query.filter_by(title=friendsClub.title).first() is None:
         db.session.add(friendsClub)
     if Room.query.filter_by(title=Club.title).first() is None:

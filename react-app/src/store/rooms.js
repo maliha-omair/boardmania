@@ -15,8 +15,8 @@ const UPDATE_BOARD = "rooms/UPDATE_BOARD"
 const initialGameBoard = [
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    ["", "", "G", "G", "", "", "", "", "", "", "", "R", "R", "", ""],
-    ["", "", "G", "G", "", "", "", "", "", "", "", "R", "R", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "R", "R", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "R", "R", "", ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
@@ -25,11 +25,31 @@ const initialGameBoard = [
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
-    ["", "", "Y", "Y", "", "", "", "", "", "", "", "B", "B", "", ""],
-    ["", "", "Y", "Y", "", "", "", "", "", "", "", "B", "B", "", ""],
+    ["", "", "Y", "Y", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "Y", "Y", "", "", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
     ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
 ]
+
+const initialDemoGameBoard = [
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "R", "R", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "R", "R", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "YYY", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "Y", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+    ["", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+]
+
+
 
 const setPublicRooms = (rooms) => ({
     type: SET_PUBLIC_ROOMS,
@@ -235,7 +255,7 @@ export const createGameThunk = (gameId, name) => async dispatch => {
 
     if (res.ok) {
         const result = await res.json();
-        dispatch(setCurrentGame(result))
+        dispatch(setCurrentGame(result));
         return result
     } else {
         throw res;
@@ -251,6 +271,16 @@ export const getGameThunk = (gameId) => async dispatch => {
         const result = await res.json();
         dispatch(setCurrentGame(result))
         dispatch(setupGameBoard(result))
+        result.moves.forEach(m => {
+            if(m.payload.payload.action === "INIT"){
+                dispatch(setupGameBoard())
+            }else{
+                if(m.payload.payload.action === "MOVE" ||m.payload.payload.action === "GAME_END" ){
+                    dispatch(updateBoard(m.payload.payload));
+                }
+                
+            }
+        });
         return result
     }
 }
@@ -297,7 +327,7 @@ export const editGameThunk = (gameId, name) => async dispatch => {
 }
 
 
-const initialState = null;
+const initialState = {gameStatus:{state : "NEW"}};
 export default function roomsReducer(state = initialState, action) {
     let newState = { ...state };
     switch (action.type) {
@@ -336,6 +366,11 @@ export default function roomsReducer(state = initialState, action) {
             return newState;
         case UPDATE_BOARD:
             newState.board = cloneBoard(executeMove(state.board,action.payload));
+            if(action.payload.action === "GAME_END"){
+                newState.gameStatus = {state : "GAME_END", winner : action.payload.payload.player};
+            }else{
+                newState.gameStatus = {state : "IN_PROGRESS", winner : null};
+            }
             return newState;
         default:
             return state;
@@ -389,7 +424,8 @@ function movePawn(from, to, color, board) {
 function executeMove(board, move) {
     if (!move) return board;
     if (move.action === "INIT") return initialGameBoard;
-    if (move.action === "ROLL_DICE") {
+    if (move.action === "INIT_DEMO") return initialDemoGameBoard;
+    if (move.action === "ROLL_DICE" || move.action === "CHANGE_TURN" || move.action === "GAME_END") {
         return board;
     }
     if (move.action === "BASE_TO_START") {

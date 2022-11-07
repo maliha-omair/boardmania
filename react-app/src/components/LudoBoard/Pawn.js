@@ -1,6 +1,7 @@
 import styles from "../LudoBoard/LudoBoard.module.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faChessPawn, faCircle} from '@fortawesome/free-solid-svg-icons'
+import { useEffect } from "react";
 
 export default function Pawn({s,x,y, playable, shake, currentPlayerColor, onPawnClick}) {
 
@@ -11,7 +12,7 @@ export default function Pawn({s,x,y, playable, shake, currentPlayerColor, onPawn
 
 
     function handleClick(){
-        onPawnClick(x,y);
+        onPawnClick(x,y, currentPlayerColor);
     }
 
     return (
@@ -27,7 +28,7 @@ export default function Pawn({s,x,y, playable, shake, currentPlayerColor, onPawn
                                     <FontAwesomeIcon icon={faCircle} beat={shake && currentPlayerColor === "R"}/>
                                     <span className="fa-layers-text fa-inverse">{redPawnCount}</span>
                                 </div>
-                            || 
+                            ||
                                 <div>
                                     <FontAwesomeIcon icon={faCircle} />
                                     <span className="fa-layers-text fa-inverse">{redPawnCount}</span>

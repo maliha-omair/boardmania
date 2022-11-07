@@ -2,12 +2,6 @@ import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { getGameThunk, updateBoard } from "../../store/rooms"
-import styles from "../GameBoard/GameBoard.module.css"
-import LudoBoard from "../LudoBoard/LudoBoard"
-import { io } from 'socket.io-client';
-import { useState } from "react"
-import Die from "./Die"
-import { LegalMove, PawnCoordinate } from "../../types"
 import GameBoard from "./GameBoard"
 
 let socket;
@@ -17,6 +11,7 @@ export default function GameBoardWrapper() {
     const game = useSelector(state => state.rooms && state.rooms.currentGame);
     const user = useSelector(state => state.session.user);
     const boardState = useSelector(state => state.rooms &&  state.rooms.board);
+    const currentGameState =  useSelector(state => state.rooms &&  state.rooms.gameStatus);
 
     const { gameId, roomId } = useParams()
 
@@ -27,6 +22,6 @@ export default function GameBoardWrapper() {
     if (!(boardState && user && game)) return null;
     
     return boardState && user && game && (
-        <GameBoard key={"4b7ac114-b699-4902-82b1-022b463e63b0"} gameId={gameId} roomId={roomId} game={game} user={user} boardState={boardState}/>
+        <GameBoard key={"4b7ac114-b699-4902-82b1-022b463e63b0"} gameId={gameId} roomId={roomId} game={game} user={user} boardState={boardState} currentGameState={currentGameState}/>
     )
 }

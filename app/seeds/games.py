@@ -9,13 +9,13 @@ def seed_games():
 
     member6 = Member.query.filter(Member.user_id ==1, Member.room_id==1).first()
 
-    game1 = Game(room_id=1, name="Game 001", game_status='onGoing', mode=MyMode.twoPlayer)
+    game1 = Game(room_id=1, name="Game 001", game_status='new', mode=MyMode.twoPlayer)
 
-    game2 = Game(room_id=1, name="Game 002", game_status='onGoing', mode=MyMode.twoPlayer)
+    game2 = Game(room_id=1, name="Game 002", game_status='new', mode=MyMode.twoPlayer)
 
-    game3 = Game(room_id=1, name="Game 003", game_status='done', mode=MyMode.twoPlayer)
+    game3 = Game(room_id=1, name="Game 003", game_status='new', mode=MyMode.twoPlayer)
 
-    game4 = Game(room_id=1, name="Game 004", game_status='done', mode=MyMode.twoPlayer)
+    game4 = Game(room_id=1, name="Game 004", game_status='new', mode=MyMode.twoPlayer)
 
 
     if Game.query.filter(Game.name == game1.name).first() is None:
