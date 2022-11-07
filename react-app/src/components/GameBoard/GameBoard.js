@@ -74,11 +74,13 @@ export default function GameBoard({ gameId, roomId, game, user, boardState, curr
             if(msg.payload.action === "MOVE"){
                 const yellowEndState = boardState[YellowEndBlock.x][YellowEndBlock.y];
                 const redEndState = boardState[RedEndBlock.x][RedEndBlock.y];
-                if(msg.payload.payload.playerColor === "Y" && (yellowEndState.match(/Y/g) || []).length === 4){
-                    socket.emit("move", buildMessage({ action: "GAME_END", payload: {  player:findCurrentPlayer() } }, 0));
-                }
-                else if(msg.payload.payload.playerColor === "R" && (redEndState.match(/R/g) || []).length === 4){
-                    socket.emit("move", buildMessage({ action: "GAME_END", payload: { player:findCurrentPlayer() } }, 0));
+                if(findCurrentPlayer()){
+                    if(msg.payload.payload.playerColor === "Y" && (yellowEndState.match(/Y/g) || []).length === 4){
+                        socket.emit("move", buildMessage({ action: "GAME_END", payload: {  player:findCurrentPlayer() } }, 0));
+                    }
+                    else if(msg.payload.payload.playerColor === "R" && (redEndState.match(/R/g) || []).length === 4){
+                        socket.emit("move", buildMessage({ action: "GAME_END", payload: { player:findCurrentPlayer() } }, 0));
+                    }
                 }
             }
         }
