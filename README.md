@@ -94,4 +94,4 @@ A user can click on join game if there is only one player as only 2 player can p
 
 A user can view game or play game by clicking on eye next to that game. 
 
-![Join game](screenshots_readme/game_page.png)
+![Join game](screenshots_readme/OnGoingGame.png)
