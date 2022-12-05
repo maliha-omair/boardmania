@@ -5,18 +5,41 @@
     flex-direction: row;
     margin: 0 auto;
     
-    width: 80%;
+    width: 100%;
     /* border: solid white;     */
     justify-content: center;
     align-items: center;
     
-    width: 400px;
+    /* width: 400px; */
     /* border: solid white; */
     
 }
 
+.form{
+    min-width: 200px;
+}
+
+
 .innerDiv{
     padding-bottom: 2px;
+}
+
+.formDiv{
+    display: flex;
+    width: 60%;
+}
+
+
+.imageDiv{
+    /* border: solid 2px red; */
+    display: flex;
+    min-width: 40%;
+    justify-content: center;
+}
+
+.image{
+    height:200px;
+    width: 350px;
 }
 
 .mainContainer{
@@ -26,7 +49,7 @@
     align-items: center;
     justify-items: center;
     /* border: solid white;     */
-    max-width: 950px;
+    max-width: 100%;
     margin: 0 auto;
 }
 

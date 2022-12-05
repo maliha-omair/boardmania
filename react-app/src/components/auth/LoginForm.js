@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
 import styles from "../auth/LoginForm.module.css"
-import image from "../../assets/gameBoard.png"
+import image from "../../assets/logo.png"
 
 const LoginForm = () => {
   const [errors, setErrors] = useState([]);
@@ -55,6 +55,10 @@ const LoginForm = () => {
      
       <div className={styles.mainContainer}>
         <div className={styles.mainDiv}>
+          <div className={styles.imageDiv}>
+            <img src={image} className={styles.image}></img>
+          </div>
+          <div className={styles.formDiv}>
           <form className={styles.form} onSubmit={onLogin}>
             <div className={styles.errorMessage}>
               {errors.map((error, ind) => (
@@ -89,6 +93,7 @@ const LoginForm = () => {
               <button className={styles.button} type='submit' onClick={() => setDemo(true)}>Demo User</button>
             </div>
           </form>
+          </div>
         </div>
         <div className={styles.signUpContainer}>
           <div className={styles.signUpDiv}>
