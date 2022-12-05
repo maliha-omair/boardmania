@@ -6,7 +6,7 @@ import { getUserRoomsThunk } from "../../store/rooms";
 import { getUserMemberships } from "../../store/session";
 import styles from "../UserRooms/UserRooms.module.css"
 import UserRoom from "./UserRoom";
-import { Watch } from "react-loader-spinner";
+import { ThreeDots } from "react-loader-spinner";
 
 export default function OwnedRooms() {
     const dispatch = useDispatch();
@@ -19,16 +19,14 @@ export default function OwnedRooms() {
         history.push("/newRoom")
     }
     if (!rooms) return (
-        <Watch
-            height="80"
-            width="80"
-            radius="48"
-            color="#4fa94d"
-            ariaLabel="watch-loading"
-            wrapperStyle={{}}
-            wrapperClassName=""
-            visible={true}
-        />
+        <ThreeDots
+                height="80"
+                width="80"
+                radius="50"
+                color="#DA7F14"
+                ariaLabel="three-dots-loading"
+                visible={true}
+            />
     )
     return rooms && (rooms.length > 0 && (
         <div className={styles.mainContainer}>

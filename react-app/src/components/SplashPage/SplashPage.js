@@ -1,6 +1,7 @@
 import { useSelector } from "react-redux"
 import styles from "../SplashPage/SplashPage.module.css"
 import image from "../../assets/ludoBoard.png"
+import gameDemo from "../../assets/ludoDemo.gif"
 export default function SplashPage() {
     const user = useSelector(state => state.session.user)
     if (!user) return null

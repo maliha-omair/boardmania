@@ -93,13 +93,13 @@
 }
 
 .rightDiv{
-    /* border: solid red; */
     margin-top: 5px;
     position: relative;
     height:800px;
-    overflow: hidden;
-    
+    overflow: hidden;    
+   /* border: solid 2px red; */   
 }
+
 .sendField{
     position:absolute;
     bottom:0px;
@@ -108,6 +108,7 @@
 .divider{
    
    /* border: solid px #DA7F14; */
+   margin-left: 10px;
    
 }
 .chatDiv{

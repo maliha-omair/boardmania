@@ -4,6 +4,7 @@ import CreateRoom from "../CreateRoom/CreateRoom"
 import EditRoom from "../EditRoom/EditRoom";
 import GameBoard from "../GameBoard/GameBoard";
 import GameBoardWrapper from "../GameBoard/GameBoardWrapper";
+import GameDemo from "../GameDemo/GameDemo";
 import styles from "../Home/Home.module.css"
 import PublicRooms from "../PublicRooms/PublicRooms"
 import SingleRoom from "../SingleRoom/SingleRoom";
@@ -35,6 +36,11 @@ export default function Home() {
                 >
                     <NavLink className={styles.yourRoom} to={`/userRoom`} >Your Rooms</NavLink>
                 </div>
+                <div className={styles.newRoomDiv} 
+                    onClick={()=>history.push(`/gameDemo`)}
+                >
+                    <NavLink className={styles.newRoom} to={`/gameDemo`} >GameDemo</NavLink>
+                </div>
 
             </div>
             <div className={styles.centerDiv}>
@@ -48,6 +54,9 @@ export default function Home() {
                     </Route>
                     <Route exact path="/publicRoom">
                         <PublicRooms />
+                    </Route>
+                    <Route exact path="/gameDemo">
+                        <GameDemo />
                     </Route>
                     <Route exact path="/userRoom">
                          <UserRooms />

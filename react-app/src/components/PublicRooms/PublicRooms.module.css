@@ -84,3 +84,10 @@
     font-size: 23px;
     margin-left:200px;
 }
+
+.progressWatch{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px red;
+}
